@@ -349,12 +349,16 @@ h3 {
   margin: 0 auto;
 }
 
+.community-section {
+  width: min(1320px, 94vw);
+}
+
 .community-grid {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(290px, 0.75fr) minmax(440px, 1.25fr);
+  grid-template-columns: minmax(300px, 0.62fr) minmax(700px, 1.38fr);
   align-items: center;
-  gap: clamp(30px, 5vw, 62px);
+  gap: clamp(28px, 4vw, 54px);
   min-height: 500px;
   padding: 58px 0 66px;
 }
@@ -402,10 +406,10 @@ h3 {
 
 .copy-photo-node {
   position: absolute;
-  display: grid;
+  display: flex;
+  align-items: center;
   width: max-content;
-  justify-items: center;
-  gap: 10px;
+  gap: 14px;
 }
 
 .copy-photo-node span {
@@ -423,20 +427,33 @@ h3 {
   object-fit: cover;
 }
 
-.copy-photo-node strong {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
+.copy-node-text,
+.partner-node-copy {
+  max-width: 190px;
   border: 1px solid rgba(53, 54, 58, 0.08);
-  border-radius: 999px;
+  border-radius: 8px;
   background: rgba(255, 255, 255, 0.96);
+  padding: 12px 14px;
+  box-shadow: 0 12px 24px rgba(53, 54, 58, 0.09);
+}
+
+.copy-node-text strong,
+.partner-node-copy strong {
+  display: block;
   color: var(--charcoal);
   font-family: var(--font-heading);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 800;
-  line-height: 1;
-  padding: 8px 16px;
-  box-shadow: 0 12px 24px rgba(53, 54, 58, 0.09);
+  line-height: 1.15;
+}
+
+.copy-node-text p,
+.partner-node-copy p {
+  max-width: none;
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.45;
 }
 
 .copy-photo-top {
@@ -449,6 +466,11 @@ h3 {
   bottom: 0;
 }
 
+.copy-photo-bottom .copy-node-text {
+  order: -1;
+  text-align: right;
+}
+
 .copy-photo-bottom span {
   width: 196px;
   height: 196px;
@@ -457,8 +479,9 @@ h3 {
 .africa-showcase {
   position: relative;
   display: grid;
-  justify-items: center;
-  min-height: 560px;
+  overflow: visible;
+  justify-items: start;
+  min-height: 600px;
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(255, 253, 248, 0.8), rgba(255, 253, 248, 0.98)),
@@ -489,6 +512,8 @@ h3 {
 
 .showcase-topline {
   display: grid;
+  width: min(500px, 62%);
+  justify-self: start;
   gap: 10px;
   justify-items: center;
   margin-bottom: 18px;
@@ -511,7 +536,7 @@ h3 {
 }
 
 .africa-photo-map {
-  width: min(510px, 100%);
+  width: min(500px, 62%);
   aspect-ratio: 0.86;
   background:
     linear-gradient(rgba(125, 42, 145, 0.08), rgba(242, 102, 34, 0.08)),
@@ -530,16 +555,18 @@ h3 {
 .partner-node {
   position: absolute;
   z-index: 4;
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 14px;
 }
 
 .partner-node span {
   position: relative;
-  width: 154px;
-  height: 154px;
+  order: 1;
+  flex: 0 0 auto;
+  width: 184px;
+  height: 184px;
   overflow: hidden;
   border: 8px solid white;
   border-radius: 999px;
@@ -551,31 +578,32 @@ h3 {
   object-fit: cover;
 }
 
-.partner-node strong {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  border: 1px solid rgba(53, 54, 58, 0.08);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.96);
-  color: var(--charcoal);
-  font-family: var(--font-heading);
-  font-size: 0.8rem;
-  font-weight: 800;
-  line-height: 1;
-  padding: 8px 16px;
-  box-shadow: 0 12px 24px rgba(53, 54, 58, 0.09);
-  white-space: nowrap;
+.partner-node-copy {
+  order: 2;
+  max-width: 174px;
 }
 
 .partner-university {
-  top: 74px;
-  right: -22px;
+  top: 78px;
+  right: auto;
+  left: clamp(520px, 70%, 610px);
+}
+
+.partner-university .partner-node-copy,
+.partner-community .partner-node-copy {
+  order: 2;
+  text-align: left;
 }
 
 .partner-community {
-  right: -34px;
-  bottom: 72px;
+  right: auto;
+  bottom: 78px;
+  left: clamp(510px, 68%, 600px);
+}
+
+.partner-community span {
+  width: 196px;
+  height: 196px;
 }
 
 .showcase-words {
@@ -1227,6 +1255,54 @@ h3 {
     margin: 12px auto 0;
   }
 
+  .showcase-topline,
+  .africa-photo-map {
+    width: min(500px, 100%);
+    justify-self: center;
+  }
+
+  .partner-nodes {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 18px;
+    pointer-events: auto;
+  }
+
+  .partner-node,
+  .partner-university,
+  .partner-community,
+  .partner-labs {
+    position: relative;
+    inset: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    top: auto;
+  }
+
+  .partner-node {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .partner-node span,
+  .partner-community span {
+    width: 150px;
+    height: 150px;
+  }
+
+  .partner-node-copy,
+  .partner-university .partner-node-copy,
+  .partner-community .partner-node-copy {
+    order: 2;
+    max-width: 180px;
+    text-align: center;
+  }
+
   .inline-heading {
     align-items: flex-start;
     flex-direction: column;
@@ -1324,10 +1400,21 @@ h3 {
     border-width: 6px;
   }
 
-  .copy-photo-node strong {
-    min-height: 30px;
+  .copy-node-text,
+  .partner-node-copy {
+    max-width: 150px;
+    padding: 10px 11px;
+  }
+
+  .copy-node-text strong,
+  .partner-node-copy strong {
     font-size: 0.72rem;
-    padding: 7px 12px;
+  }
+
+  .copy-node-text p,
+  .partner-node-copy p {
+    font-size: 0.68rem;
+    line-height: 1.38;
   }
 
   .copy-photo-top {
@@ -1364,45 +1451,25 @@ h3 {
     width: min(330px, 84vw);
   }
 
-  .partner-nodes {
-    position: relative;
-    inset: auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 18px;
-    pointer-events: auto;
-  }
-
-  .partner-node,
-  .partner-university,
-  .partner-community,
-  .partner-labs {
-    position: relative;
-    inset: auto;
-    right: auto;
-    bottom: auto;
-    left: auto;
-    top: auto;
-  }
-
   .partner-node {
-    grid-template-columns: 1fr;
     gap: 8px;
     padding: 0;
+  }
+
+  .partner-node span {
+    order: 1;
+  }
+
+  .partner-university .partner-node-copy,
+  .partner-community .partner-node-copy {
+    order: 2;
+    text-align: center;
   }
 
   .partner-node span {
     width: 116px;
     height: 116px;
     border-width: 6px;
-  }
-
-  .partner-node strong {
-    min-height: 30px;
-    font-size: 0.72rem;
-    padding: 7px 12px;
   }
 
   .showcase-words {

@@ -69,24 +69,28 @@ const partners = [
   {
     name: "Health ministries",
     label: "Ministries",
+    text: "Align research priorities with public health systems.",
     image: "/images/project-training.png",
     className: "partner-ministry",
   },
   {
     name: "Universities",
     label: "Universities",
+    text: "Strengthen research methods, ethics, and learning.",
     image: "/images/project-ai-lab.png",
     className: "partner-university",
   },
   {
     name: "Community health teams",
     label: "Communities",
+    text: "Shape the questions, data, and action from the ground.",
     image: "/images/project-community-equity.png",
     className: "partner-community",
   },
   {
     name: "AI + data labs",
     label: "AI labs",
+    text: "Build responsible tools for better health insight.",
     image: "/images/iahl-media-meeting.png",
     className: "partner-labs",
   },
@@ -153,35 +157,38 @@ export default function Home() {
       </header>
 
       <section className="hero-section">
-        <Image
-          src="/images/hero-community-ai-health.png"
-          alt="Community members and a health research facilitator discussing data on a tablet"
-          fill
-          priority
-          unoptimized
-          className="hero-image"
-        />
-        <div className="hero-overlay" />
+  <div className="hero-left">
+    <p className="eyebrow">Innovate AI HealthLab</p>
 
-        <div className="hero-content">
-          <p className="eyebrow">Innovate AI HealthLab</p>
-          <h1>AI-powered health research, shaped by community.</h1>
-          <p>
-            We bring communities, researchers, and strategic partners together
-            to design trustworthy AI solutions for equitable health outcomes.
-          </p>
+    <h1>
+      AI-powered health research,
+      <span> shaped by community.</span>
+    </h1>
 
-          <div className="hero-actions">
-            <a href="#work" className="button button-primary">
-              Explore Our Work
-            </a>
-            <a href="#involved" className="button button-ghost">
-              Partner With Us
-            </a>
-          </div>
-        </div>
-      </section>
+    <p>
+      We bring communities, researchers, and strategic partners together
+      to design trustworthy AI solutions for equitable health outcomes.
+    </p>
 
+    <div className="hero-actions">
+      <a href="#work" className="button button-primary">Explore Our Work</a>
+      <a href="#involved" className="button button-ghost">Partner With Us</a>
+    </div>
+  </div>
+
+  <div className="hero-right">
+    <div className="hero-image-box">
+      <Image
+        src="/images/hero-community-ai-health.png"
+        alt="Community members and a health research facilitator discussing data on a tablet"
+        fill
+        priority
+        unoptimized
+        className="hero-image"
+      />
+    </div>
+  </div>
+</section>
       <section className="community-section">
         <div className="community-grid">
           <div className="community-copy">
@@ -194,7 +201,10 @@ export default function Home() {
                   sizes="184px"
                 />
               </span>
-              <strong>Ministries</strong>
+              <div className="copy-node-text">
+                <strong>Ministries</strong>
+                <p>Align research priorities with public health systems.</p>
+              </div>
             </div>
             <p className="section-kicker">Where we begin</p>
             <h2>Africa-led health research.</h2>
@@ -211,7 +221,10 @@ export default function Home() {
                   sizes="196px"
                 />
               </span>
-              <strong>Community</strong>
+              <div className="copy-node-text">
+                <strong>Health teams</strong>
+                <p>Bring local realities into the evidence we build.</p>
+              </div>
             </div>
           </div>
 
@@ -235,7 +248,10 @@ export default function Home() {
                       sizes="154px"
                     />
                   </span>
-                  <strong>{partner.label}</strong>
+                  <div className="partner-node-copy">
+                    <strong>{partner.label}</strong>
+                    <p>{partner.text}</p>
+                  </div>
                 </article>
               ))}
             </div>
