@@ -65,6 +65,33 @@ const stories = [
   "Partnership models for equitable health innovation",
 ];
 
+const partners = [
+  {
+    name: "Health ministries",
+    label: "Ministries",
+    image: "/images/project-training.png",
+    className: "partner-ministry",
+  },
+  {
+    name: "Universities",
+    label: "Universities",
+    image: "/images/project-ai-lab.png",
+    className: "partner-university",
+  },
+  {
+    name: "Community health teams",
+    label: "Communities",
+    image: "/images/project-community-equity.png",
+    className: "partner-community",
+  },
+  {
+    name: "AI + data labs",
+    label: "AI labs",
+    image: "/images/iahl-media-meeting.png",
+    className: "partner-labs",
+  },
+];
+
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -158,12 +185,34 @@ export default function Home() {
       <section className="community-section">
         <div className="community-grid">
           <div className="community-copy">
+            <div className="copy-photo-node copy-photo-top">
+              <span>
+                <Image
+                  src="/images/project-training.png"
+                  alt=""
+                  fill
+                  sizes="184px"
+                />
+              </span>
+              <strong>Ministries</strong>
+            </div>
             <p className="section-kicker">Where we begin</p>
             <h2>Africa-led health research.</h2>
             <p>
               People, evidence, and responsible AI working together for fairer
               health outcomes.
             </p>
+            <div className="copy-photo-node copy-photo-bottom">
+              <span>
+                <Image
+                  src="/images/project-community-equity.png"
+                  alt=""
+                  fill
+                  sizes="196px"
+                />
+              </span>
+              <strong>Community</strong>
+            </div>
           </div>
 
           <div className="africa-showcase" aria-label="Africa-led health research visual">
@@ -172,6 +221,24 @@ export default function Home() {
               <strong>Continental Research Network</strong>
             </div>
             <div className="africa-photo-map" aria-hidden="true" />
+            <div className="partner-nodes" aria-label="IAHL partner ecosystem">
+              {partners.slice(1, 3).map((partner) => (
+                <article
+                  className={`partner-node ${partner.className}`}
+                  key={partner.name}
+                >
+                  <span>
+                    <Image
+                      src={partner.image}
+                      alt=""
+                      fill
+                      sizes="154px"
+                    />
+                  </span>
+                  <strong>{partner.label}</strong>
+                </article>
+              ))}
+            </div>
             <div className="showcase-words" aria-label="IAHL approach keywords">
               <span>People</span>
               <span>Evidence</span>

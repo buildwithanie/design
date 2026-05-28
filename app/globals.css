@@ -372,6 +372,8 @@ h3 {
 .community-copy {
   position: relative;
   z-index: 2;
+  padding-top: 220px;
+  padding-bottom: 220px;
 }
 
 .community-grid h2,
@@ -398,11 +400,65 @@ h3 {
   line-height: 1.85;
 }
 
+.copy-photo-node {
+  position: absolute;
+  display: grid;
+  width: max-content;
+  justify-items: center;
+  gap: 10px;
+}
+
+.copy-photo-node span {
+  position: relative;
+  width: 184px;
+  height: 184px;
+  overflow: hidden;
+  border: 8px solid white;
+  border-radius: 999px;
+  background: #eee;
+  box-shadow: 0 24px 48px rgba(53, 54, 58, 0.14);
+}
+
+.copy-photo-node img {
+  object-fit: cover;
+}
+
+.copy-photo-node strong {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid rgba(53, 54, 58, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--charcoal);
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 8px 16px;
+  box-shadow: 0 12px 24px rgba(53, 54, 58, 0.09);
+}
+
+.copy-photo-top {
+  top: 0;
+  left: 0;
+}
+
+.copy-photo-bottom {
+  right: 18px;
+  bottom: 0;
+}
+
+.copy-photo-bottom span {
+  width: 196px;
+  height: 196px;
+}
+
 .africa-showcase {
   position: relative;
   display: grid;
   justify-items: center;
-  min-height: 500px;
+  min-height: 560px;
   border-radius: 8px;
   background:
     linear-gradient(180deg, rgba(255, 253, 248, 0.8), rgba(255, 253, 248, 0.98)),
@@ -463,6 +519,63 @@ h3 {
   filter: drop-shadow(0 26px 42px rgba(53, 54, 58, 0.17));
   mask: url("/images/africa-map-mask.svg") center / contain no-repeat;
   -webkit-mask: url("/images/africa-map-mask.svg") center / contain no-repeat;
+}
+
+.partner-nodes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.partner-node {
+  position: absolute;
+  z-index: 4;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.partner-node span {
+  position: relative;
+  width: 154px;
+  height: 154px;
+  overflow: hidden;
+  border: 8px solid white;
+  border-radius: 999px;
+  background: #eee;
+  box-shadow: 0 22px 42px rgba(53, 54, 58, 0.15);
+}
+
+.partner-node span img {
+  object-fit: cover;
+}
+
+.partner-node strong {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  border: 1px solid rgba(53, 54, 58, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--charcoal);
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 8px 16px;
+  box-shadow: 0 12px 24px rgba(53, 54, 58, 0.09);
+  white-space: nowrap;
+}
+
+.partner-university {
+  top: 74px;
+  right: -22px;
+}
+
+.partner-community {
+  right: -34px;
+  bottom: 72px;
 }
 
 .showcase-words {
@@ -1200,6 +1313,39 @@ h3 {
     padding: 52px 0 58px;
   }
 
+  .community-copy {
+    padding-top: 178px;
+    padding-bottom: 184px;
+  }
+
+  .copy-photo-node span {
+    width: 136px;
+    height: 136px;
+    border-width: 6px;
+  }
+
+  .copy-photo-node strong {
+    min-height: 30px;
+    font-size: 0.72rem;
+    padding: 7px 12px;
+  }
+
+  .copy-photo-top {
+    width: max-content;
+    height: auto;
+  }
+
+  .copy-photo-bottom {
+    right: 0;
+    width: max-content;
+    height: auto;
+  }
+
+  .copy-photo-bottom span {
+    width: 146px;
+    height: 146px;
+  }
+
   .community-grid::before {
     display: none;
   }
@@ -1216,6 +1362,47 @@ h3 {
 
   .africa-photo-map {
     width: min(330px, 84vw);
+  }
+
+  .partner-nodes {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 18px;
+    pointer-events: auto;
+  }
+
+  .partner-node,
+  .partner-university,
+  .partner-community,
+  .partner-labs {
+    position: relative;
+    inset: auto;
+    right: auto;
+    bottom: auto;
+    left: auto;
+    top: auto;
+  }
+
+  .partner-node {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0;
+  }
+
+  .partner-node span {
+    width: 116px;
+    height: 116px;
+    border-width: 6px;
+  }
+
+  .partner-node strong {
+    min-height: 30px;
+    font-size: 0.72rem;
+    padding: 7px 12px;
   }
 
   .showcase-words {
