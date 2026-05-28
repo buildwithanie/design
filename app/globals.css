@@ -232,37 +232,86 @@ h3 {
 
 .hero-section {
   position: relative;
-  min-height: clamp(650px, 82vh, 820px);
   display: grid;
-  align-items: start;
+  min-height: clamp(620px, 82vh, 780px);
+  grid-template-columns: minmax(390px, 0.84fr) minmax(620px, 1.16fr);
+  align-items: stretch;
   overflow: hidden;
-  border-bottom: 8px solid var(--orange);
+  background:
+    radial-gradient(circle at 12% 18%, rgba(54, 172, 208, 0.09), transparent 22%),
+    linear-gradient(135deg, #fffdf8 0%, #ffffff 58%, rgba(152, 174, 56, 0.08) 100%);
+  isolation: isolate;
+}
+
+.hero-left {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(86px, 10vw, 130px) clamp(44px, 7vw, 108px)
+    clamp(62px, 8vw, 94px) max(6vw, 56px);
+  color: var(--charcoal);
+}
+
+.hero-left::after {
+  position: absolute;
+  right: clamp(22px, 4vw, 72px);
+  bottom: clamp(34px, 5vw, 72px);
+  width: 86px;
+  height: 5px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--cyan), var(--green), var(--orange));
+  content: "";
+}
+
+.hero-left h1 {
+  max-width: 730px;
+  margin: 0;
+  color: var(--charcoal);
+  font-size: clamp(3rem, 5.2vw, 5.7rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: 0;
+}
+
+.hero-left h1 span {
+  display: block;
+  margin-left: clamp(18px, 3.2vw, 56px);
+  color: var(--purple);
+}
+
+.hero-left p:not(.eyebrow) {
+  max-width: 600px;
+  margin: 24px 0 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.2vw, 1.13rem);
+  line-height: 1.85;
+}
+
+.hero-right {
+  position: relative;
+  min-height: inherit;
+  margin-left: clamp(-82px, -5vw, -46px);
+  clip-path: polygon(9% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.hero-image-box {
+  position: absolute;
+  inset: 0;
 }
 
 .hero-image {
   object-fit: cover;
-  object-position: center;
+  object-position: center center;
 }
 
-.hero-overlay {
+.hero-right::after {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(20, 23, 24, 0.88) 0%,
-    rgba(20, 23, 24, 0.6) 38%,
-    rgba(20, 23, 24, 0.15) 75%,
-    rgba(20, 23, 24, 0) 100%
-  );
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  width: min(740px, 86vw);
-  margin-left: 7vw;
-  margin-top: clamp(78px, 9vw, 132px);
-  color: white;
+  background: linear-gradient(90deg, rgba(53, 54, 58, 0.1), transparent 34%);
+  content: "";
+  pointer-events: none;
 }
 
 .eyebrow,
@@ -273,25 +322,6 @@ h3 {
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
-}
-
-.hero-content h1 {
-  margin: 0;
-  max-width: 720px;
-  font-size: clamp(2.65rem, 5.6vw, 5.8rem);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: 0;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.28);
-}
-
-.hero-content p:not(.eyebrow) {
-  max-width: 575px;
-  margin: 22px 0 0;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: clamp(1rem, 1.25vw, 1.16rem);
-  line-height: 1.8;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.22);
 }
 
 .hero-actions {
@@ -328,17 +358,8 @@ h3 {
 }
 
 .button-ghost {
-  border-color: rgba(255, 255, 255, 0.72);
-  color: white;
-}
-
-.hero-side-mark {
-  position: absolute;
-  right: -8px;
-  top: 36%;
-  width: 28px;
-  height: 120px;
-  background: var(--orange);
+  border-color: rgba(53, 54, 58, 0.18);
+  color: var(--charcoal);
 }
 
 .community-section,
@@ -1225,9 +1246,20 @@ h3 {
     display: flex;
   }
 
-  .hero-content {
-    margin-left: 5vw;
-    margin-top: 72px;
+  .hero-section {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-left {
+    min-height: 520px;
+    padding: 96px 7vw 76px;
+  }
+
+  .hero-right {
+    min-height: clamp(340px, 56vw, 520px);
+    margin-left: 0;
+    clip-path: polygon(0 8%, 100% 0, 100% 100%, 0 100%);
   }
 
   .community-grid,
@@ -1348,24 +1380,31 @@ h3 {
 
 @media (max-width: 640px) {
   .hero-section {
-    min-height: 680px;
+    min-height: auto;
   }
 
-  .hero-overlay {
-    background: linear-gradient(
-      180deg,
-      rgba(20, 23, 24, 0.3) 0%,
-      rgba(20, 23, 24, 0.8) 100%
-    );
+  .hero-left {
+    min-height: auto;
+    padding: 78px 5vw 54px;
   }
 
-  .hero-content {
-    width: min(90vw, 560px);
-    margin-top: 62px;
+  .hero-left::after {
+    right: 5vw;
+    bottom: 28px;
+    width: 72px;
   }
 
-  .hero-content h1 {
-    font-size: clamp(2.35rem, 12vw, 4.3rem);
+  .hero-left h1 {
+    font-size: clamp(2.45rem, 11vw, 4.1rem);
+  }
+
+  .hero-left h1 span {
+    margin-left: 0;
+  }
+
+  .hero-right {
+    min-height: 360px;
+    clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 100%);
   }
 
   .hero-actions,
