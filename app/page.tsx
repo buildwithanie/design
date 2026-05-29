@@ -297,7 +297,7 @@ export default function Home() {
         </div>
 
         <div className="project-showcase">
-          {projects.map((project, index) => (
+          {projects.map((project) => (
             <article className="project-card" key={project.title}>
               <div className="project-image">
                 <Image
@@ -308,9 +308,6 @@ export default function Home() {
                 />
               </div>
               <div className="project-body">
-                <span className="project-step">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
                 <p>{project.tag}</p>
                 <h3>{project.title}</h3>
                 <span>{project.text}</span>
