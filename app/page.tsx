@@ -326,9 +326,8 @@ export default function Home() {
           <p className="section-kicker">Media Center</p>
           <h2>Latest thinking from IAHL</h2>
           <div className="story-grid">
-            {stories.map((story, index) => (
+            {stories.map((story) => (
               <article className="story-card" key={story}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
                 <h3>{story}</h3>
                 <a href="#">Read article</a>
               </article>
