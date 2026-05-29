@@ -96,37 +96,11 @@ const partners = [
   },
 ];
 
-const impactPanels = [
-  {
-    label: "Community voice",
-    marker: "CV",
-    image: "/images/project-community-equity.png",
-    title: "Start with what communities already know.",
-    text: "Research becomes more useful when local priorities shape the questions, the evidence, and the way findings return to people.",
-  },
-  {
-    label: "Ethical AI",
-    marker: "AI",
-    image: "/images/project-ai-lab.png",
-    title: "Use AI with accountability, not distance.",
-    text: "IAHL applies responsible data systems and transparent AI methods so insight supports trust, equity, and better health decisions.",
-  },
-  {
-    label: "Action-ready insight",
-    marker: "AR",
-    image: "/images/innovative.png",
-    title: "Move evidence into practical health action.",
-    text: "Partnerships help translate research into tools, training, and decisions that health teams can use with confidence.",
-  },
-];
-
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeImpact, setActiveImpact] = useState(0);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
-  const currentImpact = impactPanels[activeImpact];
 
   return (
     <main className="site-shell">
@@ -291,11 +265,7 @@ export default function Home() {
                 </article>
               ))}
             </div>
-            <div className="showcase-words" aria-label="IAHL approach keywords">
-              <span>People</span>
-              <span>Evidence</span>
-              <span>AI</span>
-            </div>
+            
           </div>
         </div>
       </section>
@@ -422,31 +392,45 @@ export default function Home() {
       </section>
 
       <section className="work-with-us">
-        <div className="section-heading">
-          <p className="section-kicker">Work With Us</p>
-          <h2>Build a more equitable health future</h2>
+        <div className="work-content">
+          <div className="section-heading">
+            <p className="section-kicker">Work With Us</p>
+            <h2>Build a more equitable health future</h2>
+          </div>
+
+          <div className="work-grid">
+            <article>
+              <h3>Careers</h3>
+              <p>
+                Join a team blending AI, research, and community-centered
+                health innovation.
+              </p>
+              <a href="#">Open roles</a>
+            </article>
+
+            <article>
+              <h3>Partner with IAHL</h3>
+              <p>
+                Collaborate on research, training, digital health pilots, and
+                strategic programs.
+              </p>
+              <a href="#">Partnerships</a>
+            </article>
+          </div>
         </div>
-        <div className="work-grid">
-          <article>
-            <h3>Careers</h3>
-            <p>
-              Join a team blending AI, research, and community-centered health
-              innovation.
-            </p>
-            <a href="#">Open roles</a>
-          </article>
-          <article>
-            <h3>Partner with IAHL</h3>
-            <p>
-              Collaborate on research, training, digital health pilots, and
-              strategic programs.
-            </p>
-            <a href="#">Partnerships</a>
-          </article>
+
+        <div className="work-person-frame">
+          <Image
+            src="/work.png"
+            alt="Professional welcoming partner"
+            fill
+            sizes="(max-width: 980px) 82vw, 34vw"
+            className="work-person"
+          />
         </div>
       </section>
 
-      <footer className="site-footer">
+   <footer className="site-footer">
         <div className="footer-brand">
           <Image
             src="/images/iahl-logo.jpeg"
