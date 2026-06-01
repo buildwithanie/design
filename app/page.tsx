@@ -3,6 +3,10 @@
 import Image from "next/image";
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+
 const navItems = ["Home", "About", "Our Work", "Media Center", "Get Involved"];
 
 const projects = [
@@ -177,12 +181,12 @@ export default function Home() {
     </p>
 
     <div className="hero-actions">
-      <a href="#work" className="button button-primary">
-        Explore Our Work
-      </a>
-      <a href="#involved" className="button button-ghost">
-        Partner With Us
-      </a>
+      <Button asChild className="button button-primary">
+        <a href="#work">Explore Our Work</a>
+      </Button>
+      <Button asChild variant="outline" className="button button-ghost">
+        <a href="#involved">Partner With Us</a>
+      </Button>
     </div>
   </div>
 
@@ -271,20 +275,20 @@ export default function Home() {
       </section>
 
       <section className="mission-vision">
-        <article className="vision-card">
+        <Card className="vision-card border-0 shadow-none">
           <p>Our Vision</p>
           <h2>
             A future where health research promotes equity and equality at the
             community level.
           </h2>
-        </article>
-        <article className="mission-card">
+        </Card>
+        <Card className="mission-card border-0 shadow-none">
           <p>Our Mission</p>
           <h2>
             To advance health research through AI, innovation, and strategic
             partnerships for equitable health outcomes.
           </h2>
-        </article>
+        </Card>
       </section>
 
       <section className="projects-section" id="work">
@@ -293,14 +297,14 @@ export default function Home() {
             <p className="section-kicker">Projects</p>
             <h2>Focused work with measurable community value</h2>
           </div>
-          <a href="#" className="small-link">
-            View all
-          </a>
+          <Button asChild variant="outline" size="sm" className="small-link">
+            <a href="#">View all</a>
+          </Button>
         </div>
 
         <div className="project-showcase">
           {projects.map((project) => (
-            <article className="project-card" key={project.title}>
+            <Card className="project-card" key={project.title}>
               <div className="project-image">
                 <Image
                   src={project.image}
@@ -309,13 +313,13 @@ export default function Home() {
                   sizes="(max-width: 900px) 100vw, 33vw"
                 />
               </div>
-              <div className="project-body">
+              <CardContent className="project-body">
                 <p>{project.tag}</p>
                 <h3>{project.title}</h3>
                 <span>{project.text}</span>
                 <a href="#">Read more</a>
-              </div>
-            </article>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </section>
@@ -327,10 +331,10 @@ export default function Home() {
           <h2>Latest thinking from IAHL</h2>
           <div className="story-grid">
             {stories.map((story) => (
-              <article className="story-card" key={story}>
+              <Card className="story-card" key={story}>
                 <h3>{story}</h3>
                 <a href="#">Read article</a>
-              </article>
+              </Card>
             ))}
           </div>
         </div>
@@ -459,8 +463,8 @@ export default function Home() {
             <h3>Stay updated via email</h3>
             <label htmlFor="email">Email address</label>
             <div>
-              <input id="email" type="email" placeholder="you@example.com" />
-              <button type="submit">Sign up</button>
+              <Input id="email" type="email" placeholder="you@example.com" />
+              <Button type="submit">Sign up</Button>
             </div>
           </form>
         </div>
