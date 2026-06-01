@@ -204,10 +204,10 @@ export default function Home() {
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_20%,rgba(54,172,208,0.1),transparent_28rem),radial-gradient(circle_at_88%_18%,rgba(242,102,34,0.08),transparent_30rem),linear-gradient(135deg,#fffdf8_0%,#ffffff_58%,#fff8f0_100%)]" />
 
         <div className="mx-auto w-[min(92vw,1180px)] py-16 lg:col-span-2 lg:grid lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-8 lg:py-20">
+          <p className="mb-8 text-center text-sm font-bold uppercase tracking-[0.18em] text-primary lg:col-span-2 lg:mb-0">
+            Innovate AI HealthLab
+          </p>
           <div className="max-w-2xl">
-            <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary">
-              Innovate AI HealthLab
-            </p>
             <h1 className="text-balance text-5xl font-bold leading-[0.98] text-foreground sm:text-6xl lg:text-7xl xl:text-8xl">
               AI-powered health research,{" "}
               <span className="text-[var(--purple)]">shaped by community.</span>
@@ -254,7 +254,7 @@ export default function Home() {
       <section id="about" className="overflow-hidden py-14 sm:py-16 lg:py-20">
         <div className="mx-auto w-[min(1180px,94vw)]">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-muted-foreground">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
               Where we begin
             </p>
             <h2 className="text-balance text-5xl font-bold leading-[1.05] sm:text-6xl">
@@ -613,30 +613,23 @@ export default function Home() {
       <section id="involved" className="relative overflow-hidden py-16 sm:py-20">
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
           <div className="relative">
-            
-            <div className="relative min-h-[340px] overflow-hidden rounded-lg sm:min-h-[430px] lg:min-h-[540px]">
-              <Image
-                src="/images/iahl-media-meeting.png"
-                alt="IAHL partners in a meeting discussing AI health research"
-                fill
-                sizes="(max-width: 1024px) 92vw, 54vw"
-                className="object-cover object-center"
-              />
-            </div>
-          
+            <Image
+              src="/images/iahl-media-meeting.png"
+              alt="IAHL partners in a meeting discussing AI health research"
+              width={2048}
+              height={1024}
+              sizes="(max-width: 1024px) 92vw, 54vw"
+              className="h-auto w-full rounded-lg object-contain"
+            />
           </div>
 
           <div className="relative">
-            <div className="mb-8 flex items-center gap-3">
-              <span className="h-[3px] w-16 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
-              <span className="size-3 rounded-full bg-primary" />
-              <span className="size-3 rounded-full bg-[var(--purple)]" />
-            </div>
+          
 
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-primary">
               Get involved
             </p>
-            <h2 className="max-w-md text-balance text-5xl font-bold leading-[1.02] sm:text-6xl">
+            <h2 className="max-w-none whitespace-nowrap text-[clamp(2.35rem,5vw,4rem)] font-bold leading-[1.02]">
               Partner with us
             </h2>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
@@ -646,11 +639,7 @@ export default function Home() {
               sustainable solutions that make a real difference.
             </p>
 
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
-              <span>Research</span>
-              <span className="text-primary">Training</span>
-              <span>Community</span>
-            </div>
+          
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 rounded-md px-6">
