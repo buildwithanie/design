@@ -613,7 +613,7 @@ export default function Home() {
       <section id="involved" className="relative overflow-hidden py-16 sm:py-20">
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
           <div className="relative">
-            <div className="absolute -left-4 top-8 hidden h-[72%] w-2 rounded-full bg-[linear-gradient(var(--cyan),var(--green),var(--orange),var(--purple))] lg:block" />
+            
             <div className="relative min-h-[340px] overflow-hidden rounded-lg sm:min-h-[430px] lg:min-h-[540px]">
               <Image
                 src="/images/iahl-media-meeting.png"
@@ -623,7 +623,7 @@ export default function Home() {
                 className="object-cover object-center"
               />
             </div>
-            <div className="mt-4 h-[3px] w-48 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+          
           </div>
 
           <div className="relative">
