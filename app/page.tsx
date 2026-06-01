@@ -199,7 +199,7 @@ export default function Home() {
 
       <section
         id="home"
-        className="relative grid min-h-screen items-center overflow-hidden pt-28 lg:grid-cols-[0.92fr_1.08fr]"
+        className="relative grid min-h-screen items-center overflow-hidden pt-10 lg:grid-cols-[0.92fr_1.08fr]"
       >
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_20%,rgba(54,172,208,0.1),transparent_28rem),radial-gradient(circle_at_88%_18%,rgba(242,102,34,0.08),transparent_30rem),linear-gradient(135deg,#fffdf8_0%,#ffffff_58%,#fff8f0_100%)]" />
 
@@ -251,7 +251,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="overflow-hidden py-14 sm:py-16 lg:py-20">
+      <section id="about" className="overflow-hidden py-5 sm:py-10 lg:py-5">
         <div className="mx-auto w-[min(1180px,94vw)]">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
@@ -266,7 +266,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="mx-auto mt-10 max-w-6xl lg:mt-8">
+          <div className="mx-auto mt-5 max-w-6xl lg:mt-8">
             <div className="lg:hidden">
               <div className="text-center">
                 <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
@@ -446,7 +446,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="work" className="py-16 sm:py-20">
+      <section id="work" className="py-10 sm:py-10">
         <div className="mx-auto w-[min(1180px,92vw)]">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
@@ -610,7 +610,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="involved" className="relative overflow-hidden py-16 sm:py-20">
+      <section id="involved" className="relative overflow-hidden py-10 sm:py-10">
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
           <div className="relative">
             <Image
