@@ -251,174 +251,169 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about" className="overflow-hidden py-16 sm:py-20 lg:py-24">
-        <div className="mx-auto grid w-[min(1280px,94vw)] gap-10 lg:min-h-[650px] lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
-          <div className="relative min-h-0 lg:min-h-[620px]">
-            <div className="absolute left-0 top-0 hidden size-44 rounded-[44%_56%_61%_39%] bg-[rgba(54,172,208,0.08)] lg:block" />
-
-            <div className="hidden items-center gap-4 lg:absolute lg:left-10 lg:top-0 lg:flex">
-              <div className="relative size-40 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
-                <Image
-                  src={researchNodes[0].image}
-                  alt=""
-                  fill
-                  sizes="160px"
-                  className="object-cover"
-                />
-              </div>
-              <Card className="max-w-[190px] rounded-lg bg-background/95 shadow-lg">
-                <CardContent className="p-4">
-                  <h3 className="text-base font-bold">{researchNodes[0].title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {researchNodes[0].text}
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="relative z-10 max-w-xl lg:py-56">
-              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-muted-foreground">
-                Where we begin
-              </p>
-              <h2 className="text-balance text-5xl font-bold leading-[1.05] sm:text-6xl">
-                Africa-led health research.
-              </h2>
-              <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
-                People, evidence, and responsible AI working together for fairer
-                health outcomes.
-              </p>
-            </div>
-
-            <div className="hidden items-center gap-4 lg:absolute lg:bottom-0 lg:left-4 lg:flex">
-              <Card className="max-w-[190px] rounded-lg bg-background/95 text-right shadow-lg">
-                <CardContent className="p-4">
-                  <h3 className="text-base font-bold">{researchNodes[3].title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {researchNodes[3].text}
-                  </p>
-                </CardContent>
-              </Card>
-              <div className="relative size-44 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
-                <Image
-                  src={researchNodes[3].image}
-                  alt=""
-                  fill
-                  sizes="176px"
-                  className="object-cover"
-                />
-              </div>
-            </div>
-
-            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:hidden">
-              {[researchNodes[0], researchNodes[3]].map((node) => (
-                <Card key={node.title} className="rounded-lg shadow-sm">
-                  <CardContent className="flex items-center gap-4 p-4">
-                    <div className="relative size-20 shrink-0 overflow-hidden rounded-full border-4 border-background bg-secondary shadow-md">
-                      <Image
-                        src={node.image}
-                        alt=""
-                        fill
-                        sizes="80px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-bold">{node.title}</h3>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        {node.text}
-                      </p>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+      <section id="about" className="overflow-hidden py-14 sm:py-16 lg:py-20">
+        <div className="mx-auto w-[min(1180px,94vw)]">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-muted-foreground">
+              Where we begin
+            </p>
+            <h2 className="text-balance text-5xl font-bold leading-[1.05] sm:text-6xl">
+              Africa-led health research.
+            </h2>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
+              People, evidence, and responsible AI working together for fairer
+              health outcomes.
+            </p>
           </div>
 
-          <div className="relative min-h-[580px] lg:min-h-[650px]">
-            <div className="absolute left-1/2 top-2 hidden -translate-x-1/2 text-center lg:block">
-              <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
-              <div className="mx-auto mb-2 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
-              <p className="text-sm font-bold uppercase text-[var(--purple)]">
-                Continental Research Network
-              </p>
-            </div>
+          <div className="mx-auto mt-10 max-w-6xl lg:mt-8">
+            <div className="lg:hidden">
+              <div className="text-center">
+                <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
+                <div className="mx-auto mb-2 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                <p className="text-sm font-bold uppercase text-[var(--purple)]">
+                  Continental Research Network
+                </p>
+              </div>
 
-            <div className="absolute left-1/2 top-20 aspect-[0.86] w-[min(470px,74vw)] -translate-x-1/2 lg:left-[34%] lg:top-36 lg:w-[min(460px,56%)] xl:left-[36%]">
-              <div
-                className="absolute inset-0 bg-[linear-gradient(rgba(125,42,145,0.08),rgba(242,102,34,0.08)),url('/images/hero-community-ai-health.png')] bg-cover bg-center drop-shadow-2xl"
-                style={{
-                  WebkitMask:
-                    'url("/images/africa-map-mask.svg") center / contain no-repeat',
-                  mask: 'url("/images/africa-map-mask.svg") center / contain no-repeat',
-                }}
-              />
-            </div>
-
-            <div className="hidden items-center gap-4 lg:absolute lg:right-0 lg:top-24 lg:flex">
-              <div className="relative size-40 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
-                <Image
-                  src={researchNodes[1].image}
-                  alt=""
-                  fill
-                  sizes="160px"
-                  className="object-cover"
+              <div className="relative mx-auto mt-8 aspect-[0.86] w-[min(430px,82vw)]">
+                <div
+                  className="absolute inset-0 bg-[linear-gradient(rgba(125,42,145,0.08),rgba(242,102,34,0.08)),url('/images/hero-community-ai-health.png')] bg-cover bg-center drop-shadow-2xl"
+                  style={{
+                    WebkitMask:
+                      'url("/images/africa-map-mask.svg") center / contain no-repeat',
+                    mask: 'url("/images/africa-map-mask.svg") center / contain no-repeat',
+                  }}
                 />
               </div>
-              <Card className="max-w-[170px] rounded-lg bg-background/95 shadow-lg">
-                <CardContent className="p-4">
-                  <h3 className="text-base font-bold">{researchNodes[1].title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {researchNodes[1].text}
-                  </p>
-                </CardContent>
-              </Card>
+
+              <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                {researchNodes.map((node) => (
+                  <Card key={node.title} className="rounded-lg shadow-sm">
+                    <CardContent className="flex items-center gap-4 p-4">
+                      <div className="relative size-20 shrink-0 overflow-hidden rounded-full border-4 border-background bg-secondary shadow-md">
+                        <Image
+                          src={node.image}
+                          alt=""
+                          fill
+                          sizes="80px"
+                          className="object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="font-bold">{node.title}</h3>
+                        <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                          {node.text}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
             </div>
 
-            <div className="hidden items-center gap-4 lg:absolute lg:bottom-10 lg:right-0 lg:flex">
-              <div>
-                <div className="mb-3 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
-                <div className="relative size-44 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
+            <div className="relative hidden min-h-[620px] lg:block">
+              <div className="absolute left-1/2 top-0 -translate-x-1/2 text-center">
+                <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
+                <div className="mx-auto mb-2 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                <p className="text-sm font-bold uppercase text-[var(--purple)]">
+                  Continental Research Network
+                </p>
+              </div>
+
+              <div className="absolute left-1/2 top-24 aspect-[0.86] w-[min(390px,34vw)] -translate-x-1/2 xl:w-[min(450px,42vw)]">
+                <div
+                  className="absolute inset-0 bg-[linear-gradient(rgba(125,42,145,0.08),rgba(242,102,34,0.08)),url('/images/hero-community-ai-health.png')] bg-cover bg-center drop-shadow-2xl"
+                  style={{
+                    WebkitMask:
+                      'url("/images/africa-map-mask.svg") center / contain no-repeat',
+                    mask: 'url("/images/africa-map-mask.svg") center / contain no-repeat',
+                  }}
+                />
+              </div>
+
+              <div className="absolute left-0 top-28 flex items-center gap-3 xl:gap-4">
+                <Card className="max-w-[160px] rounded-lg bg-background/95 text-right shadow-lg xl:max-w-[180px]">
+                  <CardContent className="p-4">
+                    <h3 className="text-base font-bold">{researchNodes[0].title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {researchNodes[0].text}
+                    </p>
+                  </CardContent>
+                </Card>
+                <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
                   <Image
-                    src={researchNodes[2].image}
+                    src={researchNodes[0].image}
                     alt=""
                     fill
-                    sizes="176px"
+                    sizes="144px"
                     className="object-cover"
                   />
                 </div>
               </div>
-              <Card className="max-w-[170px] rounded-lg bg-background/95 shadow-lg">
-                <CardContent className="p-4">
-                  <h3 className="text-base font-bold">{researchNodes[2].title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                    {researchNodes[2].text}
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
 
-            <div className="absolute inset-x-0 bottom-0 grid gap-4 sm:grid-cols-2 lg:hidden">
-              {[researchNodes[1], researchNodes[2]].map((node) => (
-                <Card key={node.title} className="rounded-lg shadow-sm">
-                  <CardContent className="flex items-center gap-4 p-4">
-                    <div className="relative size-20 shrink-0 overflow-hidden rounded-full border-4 border-background bg-secondary shadow-md">
-                      <Image
-                        src={node.image}
-                        alt=""
-                        fill
-                        sizes="80px"
-                        className="object-cover"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="font-bold">{node.title}</h3>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        {node.text}
-                      </p>
-                    </div>
+              <div className="absolute right-0 top-28 flex items-center gap-3 xl:gap-4">
+                <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
+                  <Image
+                    src={researchNodes[1].image}
+                    alt=""
+                    fill
+                    sizes="144px"
+                    className="object-cover"
+                  />
+                </div>
+                <Card className="max-w-[160px] rounded-lg bg-background/95 shadow-lg xl:max-w-[180px]">
+                  <CardContent className="p-4">
+                    <h3 className="text-base font-bold">{researchNodes[1].title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {researchNodes[1].text}
+                    </p>
                   </CardContent>
                 </Card>
-              ))}
+              </div>
+
+              <div className="absolute bottom-8 left-0 flex items-center gap-3 xl:gap-4">
+                <Card className="max-w-[160px] rounded-lg bg-background/95 text-right shadow-lg xl:max-w-[180px]">
+                  <CardContent className="p-4">
+                    <h3 className="text-base font-bold">{researchNodes[3].title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {researchNodes[3].text}
+                    </p>
+                  </CardContent>
+                </Card>
+                <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
+                  <Image
+                    src={researchNodes[3].image}
+                    alt=""
+                    fill
+                    sizes="144px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="absolute bottom-8 right-0 flex items-center gap-3 xl:gap-4">
+                <div>
+                  <div className="mb-3 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                  <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
+                    <Image
+                      src={researchNodes[2].image}
+                      alt=""
+                      fill
+                      sizes="144px"
+                      className="object-cover"
+                    />
+                  </div>
+                </div>
+                <Card className="max-w-[160px] rounded-lg bg-background/95 shadow-lg xl:max-w-[180px]">
+                  <CardContent className="p-4">
+                    <h3 className="text-base font-bold">{researchNodes[2].title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                      {researchNodes[2].text}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
             </div>
           </div>
         </div>
@@ -615,12 +610,11 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="involved" className="py-16 sm:py-20">
-        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <section id="involved" className="relative overflow-hidden py-16 sm:py-20">
+        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
           <div className="relative">
-            <div className="absolute -left-5 -top-5 hidden h-28 w-28 rounded-lg border-2 border-primary/30 lg:block" />
-            <div className="absolute -bottom-5 -right-5 hidden h-32 w-32 rounded-lg bg-[linear-gradient(135deg,var(--cyan),var(--green),var(--orange))] opacity-80 lg:block" />
-            <div className="relative min-h-[340px] overflow-hidden rounded-lg border border-border bg-card shadow-2xl sm:min-h-[420px] lg:min-h-[500px]">
+            <div className="absolute -left-4 top-8 hidden h-[72%] w-2 rounded-full bg-[linear-gradient(var(--cyan),var(--green),var(--orange),var(--purple))] lg:block" />
+            <div className="relative min-h-[340px] overflow-hidden rounded-lg sm:min-h-[430px] lg:min-h-[540px]">
               <Image
                 src="/images/iahl-media-meeting.png"
                 alt="IAHL partners in a meeting discussing AI health research"
@@ -629,21 +623,35 @@ export default function Home() {
                 className="object-cover object-center"
               />
             </div>
+            <div className="mt-4 h-[3px] w-48 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
           </div>
 
-          <div className="lg:pl-8">
-            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+          <div className="relative">
+            <div className="mb-8 flex items-center gap-3">
+              <span className="h-[3px] w-16 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+              <span className="size-3 rounded-full bg-primary" />
+              <span className="size-3 rounded-full bg-[var(--purple)]" />
+            </div>
+
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-primary">
               Get involved
             </p>
-            <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+            <h2 className="max-w-md text-balance text-5xl font-bold leading-[1.02] sm:text-6xl">
               Partner with us
             </h2>
-            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
               We believe meaningful change happens through collaboration. By
               partnering with us, you become part of a network dedicated to
               innovation, growth, and community impact. Together, we can create
               sustainable solutions that make a real difference.
             </p>
+
+            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold uppercase tracking-[0.12em] text-muted-foreground">
+              <span>Research</span>
+              <span className="text-primary">Training</span>
+              <span>Community</span>
+            </div>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 rounded-md px-6">
                 <a href="#work">
@@ -654,7 +662,7 @@ export default function Home() {
                 asChild
                 variant="outline"
                 size="lg"
-                className="h-12 rounded-md px-6"
+                className="h-12 rounded-md bg-background/70 px-6"
               >
                 <a href="#footer">Contact IAHL</a>
               </Button>
