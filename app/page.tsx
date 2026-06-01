@@ -2,12 +2,24 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Menu,
+  X,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-const navItems = ["Home", "About", "Our Work", "Media Center", "Get Involved"];
+const navItems = [
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Our Work", href: "#work" },
+  { label: "Media Center", href: "#media" },
+  { label: "Get Involved", href: "#involved" },
+];
 
 const projects = [
   {
@@ -34,32 +46,60 @@ const values = [
   {
     title: "Innovation",
     marker: "AI",
+    color: "bg-[var(--cyan)]",
     image: "/images/project-ai-lab.png",
-    text: "We explore practical AI, technology, and forward-thinking research methods that respond to evolving health needs.",
+    text: "Practical AI, technology, and forward-thinking research methods for evolving health needs.",
   },
   {
     title: "Impact",
     marker: "IM",
+    color: "bg-[var(--green)]",
     image: "/images/hero-health-research.png",
-    text: "We focus on measurable change for communities facing immediate health challenges and long-term health goals.",
+    text: "Measurable change for communities facing immediate and long-term health challenges.",
   },
   {
     title: "Sustainability",
     marker: "SU",
+    color: "bg-[var(--orange)]",
     image: "/images/project-training.png",
-    text: "We design research initiatives with resource efficiency, environmental responsibility, and continuity in mind.",
+    text: "Research initiatives built for resource efficiency, responsibility, and continuity.",
   },
   {
     title: "Responsibility",
     marker: "RE",
+    color: "bg-[var(--purple)]",
     image: "/images/project-community-equity.png",
-    text: "We work with accountability, ethical integrity, transparency, trust, and respect for every community involved.",
+    text: "Accountability, ethics, transparency, trust, and respect for every community involved.",
   },
   {
     title: "Empowerment",
     marker: "EM",
+    color: "bg-foreground",
     image: "/images/project-training.png",
-    text: "We equip communities, researchers, and stakeholders with the tools and opportunities to shape better health outcomes.",
+    text: "Tools and opportunities that help communities shape better health outcomes.",
+  },
+];
+
+const researchNodes = [
+  {
+    title: "Ministries",
+    image: "/images/project-training.png",
+    text: "Align research with public health systems.",
+  },
+  {
+    title: "Universities",
+    image: "/images/project-ai-lab.png",
+    text: "Strengthen research methods, ethics, and learning.",
+  },
+  {
+    title: "Communities",
+    image: "/images/project-community-equity.png",
+    text: "Shape the questions, data, and action from the ground.",
+  },
+  {
+    title: "Health teams",
+    image: "/images/project-community-equity.png",
+    text: "Bring local realities into the evidence we build.",
   },
 ];
 
@@ -69,404 +109,667 @@ const stories = [
   "Partnership models for equitable health innovation",
 ];
 
-const partners = [
-  {
-    name: "Health ministries",
-    label: "Ministries",
-    text: "Align research priorities with public health systems.",
-    image: "/images/project-training.png",
-    className: "partner-ministry",
-  },
-  {
-    name: "Universities",
-    label: "Universities",
-    text: "Strengthen research methods, ethics, and learning.",
-    image: "/images/project-ai-lab.png",
-    className: "partner-university",
-  },
-  {
-    name: "Community health teams",
-    label: "Communities",
-    text: "Shape the questions, data, and action from the ground.",
-    image: "/images/project-community-equity.png",
-    className: "partner-community",
-  },
-  {
-    name: "AI + data labs",
-    label: "AI labs",
-    text: "Build responsible tools for better health insight.",
-    image: "/images/iahl-media-meeting.png",
-    className: "partner-labs",
-  },
+const footerLinks = {
+  Explore: ["About", "Our work", "Media center", "Reports"],
+  Connect: ["Partnerships", "Careers", "Contact", "Newsletter"],
+};
+
+const approachOffsets = [
+  "lg:ml-[5%]",
+  "lg:mr-[10%] lg:justify-self-end",
+  "lg:ml-[14%]",
+  "lg:mr-[5%] lg:justify-self-end",
+  "lg:ml-[18%]",
 ];
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
   return (
-    <main className="site-shell">
-      <header className="site-header">
-        <a className="brand" href="#" aria-label="IAHL home" onClick={closeMenu}>
-          <Image
-            src="/images/iahl-logo.jpeg"
-            alt="Innovate AI HealthLab logo"
-            width={164}
-            height={120}
-            priority
-          />
-        </a>
+    <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
+      <header className="fixed inset-x-0 top-0 z-50 border-b border-border/80 bg-background/95 shadow-sm backdrop-blur">
+        <div className="mx-auto flex min-h-24 w-[min(1180px,92vw)] items-center justify-between gap-6">
+          <a
+            className="flex shrink-0 items-center"
+            href="#home"
+            aria-label="IAHL home"
+            onClick={closeMenu}
+          >
+            <Image
+              src="/images/iahl-logo.jpeg"
+              alt="Innovate AI HealthLab logo"
+              width={164}
+              height={120}
+              priority
+              className="h-16 w-auto object-contain md:h-[76px]"
+            />
+          </a>
 
-        {/* Desktop Navigation */}
-        <nav className="main-nav desktop-only" aria-label="Main navigation">
-          {navItems.map((item, index) => (
-            <a className={index === 0 ? "active" : ""} href="#" key={item}>
-              {item}
-            </a>
-          ))}
-        </nav>
-
-        {/* Hamburger Menu Toggle */}
-        <button
-          className={`menu-toggle ${isMenuOpen ? "active" : ""}`}
-          onClick={toggleMenu}
-          aria-label="Toggle navigation menu"
-          aria-expanded={isMenuOpen}
-        >
-          <span className="hamburger-bar"></span>
-          <span className="hamburger-bar"></span>
-          <span className="hamburger-bar"></span>
-        </button>
-
-        {/* Mobile Navigation Drawer */}
-        <div
-          className={`mobile-menu-overlay ${isMenuOpen ? "active" : ""}`}
-          onClick={closeMenu}
-        >
-          <nav className="mobile-nav" onClick={(e) => e.stopPropagation()}>
+          <nav
+            className="hidden items-center gap-2 rounded-full border border-border bg-card/80 p-2 shadow-sm lg:flex"
+            aria-label="Main navigation"
+          >
             {navItems.map((item, index) => (
               <a
-                className={index === 0 ? "active" : ""}
-                href="#"
-                key={item}
-                onClick={closeMenu}
+                className={`rounded-full px-4 py-2 text-sm font-semibold transition hover:bg-accent hover:text-primary ${
+                  index === navItems.length - 1
+                    ? "bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground"
+                    : "text-muted-foreground"
+                }`}
+                href={item.href}
+                key={item.label}
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </nav>
-        </div>
-      </header>
 
-     <section className="hero-section">
-  <div className="hero-left">
-    <p className="eyebrow">Innovate AI HealthLab</p>
-
-    <h1>
-      AI-powered
-      <br />
-      health research,
-      <span>
-        shaped by
-        <br />
-        community.
-      </span>
-    </h1>
-
-    <p>
-      We bring communities, researchers, and strategic partners together
-      to design trustworthy AI solutions for equitable health outcomes.
-    </p>
-
-    <div className="hero-actions">
-      <Button asChild className="button button-primary">
-        <a href="#work">Explore Our Work</a>
-      </Button>
-      <Button asChild variant="outline" className="button button-ghost">
-        <a href="#involved">Partner With Us</a>
-      </Button>
-    </div>
-  </div>
-
-  <div className="hero-right hero-image-editorial">
-    <div className="hero-image-box">
-      <Image
-        src="/images/hero-community-ai-health.png"
-        alt="Community members and a health research facilitator discussing data on a tablet"
-        fill
-        priority
-        unoptimized
-        className="hero-image"
-      />
-    </div>
-  </div>
-</section>
-      <section className="community-section">
-        <div className="community-grid">
-          <div className="community-copy">
-            <div className="copy-photo-node copy-photo-top">
-              <span>
-                <Image
-                  src="/images/project-training.png"
-                  alt=""
-                  fill
-                  sizes="184px"
-                />
-              </span>
-              <div className="copy-node-text">
-                <strong>Ministries</strong>
-                <p>Align research priorities with public health systems.</p>
-              </div>
-            </div>
-            <p className="section-kicker">Where we begin</p>
-            <h2>Africa-led health research.</h2>
-            <p>
-              People, evidence, and responsible AI working together for fairer
-              health outcomes.
-            </p>
-            <div className="copy-photo-node copy-photo-bottom">
-              <span>
-                <Image
-                  src="/images/project-community-equity.png"
-                  alt=""
-                  fill
-                  sizes="196px"
-                />
-              </span>
-              <div className="copy-node-text">
-                <strong>Health teams</strong>
-                <p>Bring local realities into the evidence we build.</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="africa-showcase" aria-label="Africa-led health research visual">
-            <div className="showcase-topline">
-              <span />
-              <strong>Continental Research Network</strong>
-            </div>
-            <div className="africa-photo-map" aria-hidden="true" />
-            <div className="partner-nodes" aria-label="IAHL partner ecosystem">
-              {partners.slice(1, 3).map((partner) => (
-                <article
-                  className={`partner-node ${partner.className}`}
-                  key={partner.name}
-                >
-                  <span>
-                    <Image
-                      src={partner.image}
-                      alt=""
-                      fill
-                      sizes="154px"
-                    />
-                  </span>
-                  <div className="partner-node-copy">
-                    <strong>{partner.label}</strong>
-                    <p>{partner.text}</p>
-                  </div>
-                </article>
-              ))}
-            </div>
-            
-          </div>
-        </div>
-      </section>
-
-      <section className="mission-vision">
-        <Card className="vision-card border-0 shadow-none">
-          <p>Our Vision</p>
-          <h2>
-            A future where health research promotes equity and equality at the
-            community level.
-          </h2>
-        </Card>
-        <Card className="mission-card border-0 shadow-none">
-          <p>Our Mission</p>
-          <h2>
-            To advance health research through AI, innovation, and strategic
-            partnerships for equitable health outcomes.
-          </h2>
-        </Card>
-      </section>
-
-      <section className="projects-section" id="work">
-        <div className="section-heading inline-heading projects-heading">
-          <div>
-            <p className="section-kicker">Projects</p>
-            <h2>Focused work with measurable community value</h2>
-          </div>
-          <Button asChild variant="outline" size="sm" className="small-link">
-            <a href="#">View all</a>
+          <Button
+            className="size-11 rounded-full lg:hidden"
+            variant="outline"
+            size="icon"
+            type="button"
+            aria-label="Toggle navigation menu"
+            aria-expanded={isMenuOpen}
+            onClick={() => setIsMenuOpen((open) => !open)}
+          >
+            {isMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
           </Button>
         </div>
 
-        <div className="project-showcase">
-          {projects.map((project) => (
-            <Card className="project-card" key={project.title}>
-              <div className="project-image">
+        {isMenuOpen ? (
+          <div className="border-t border-border bg-background lg:hidden">
+            <nav className="mx-auto grid w-[min(92vw,420px)] gap-2 py-5">
+              {navItems.map((item) => (
+                <a
+                  className="rounded-lg px-4 py-3 text-base font-semibold text-muted-foreground transition hover:bg-accent hover:text-primary"
+                  href={item.href}
+                  key={item.label}
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          </div>
+        ) : null}
+      </header>
+
+      <section
+        id="home"
+        className="relative grid min-h-screen items-center overflow-hidden pt-28 lg:grid-cols-[0.92fr_1.08fr]"
+      >
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_12%_20%,rgba(54,172,208,0.1),transparent_28rem),radial-gradient(circle_at_88%_18%,rgba(242,102,34,0.08),transparent_30rem),linear-gradient(135deg,#fffdf8_0%,#ffffff_58%,#fff8f0_100%)]" />
+
+        <div className="mx-auto w-[min(92vw,1180px)] py-16 lg:col-span-2 lg:grid lg:grid-cols-[0.82fr_1.18fr] lg:items-center lg:gap-8 lg:py-20">
+          <div className="max-w-2xl">
+            <p className="mb-4 text-sm font-bold uppercase tracking-[0.18em] text-primary">
+              Innovate AI HealthLab
+            </p>
+            <h1 className="text-balance text-5xl font-bold leading-[0.98] text-foreground sm:text-6xl lg:text-7xl xl:text-8xl">
+              AI-powered health research,{" "}
+              <span className="text-[var(--purple)]">shaped by community.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
+              We bring communities, researchers, and strategic partners together
+              to design trustworthy AI solutions for equitable health outcomes.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="h-12 rounded-md px-6">
+                <a href="#work">
+                  Explore Our Work <ArrowRight className="size-4" />
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-12 rounded-md px-6"
+              >
+                <a href="#involved">Partner With Us</a>
+              </Button>
+            </div>
+          </div>
+
+          <div className="mt-12 lg:-mr-14 lg:mt-0 xl:-mr-24">
+            <div className="relative overflow-visible rounded-lg">
+              <div className="relative aspect-[1619/972] w-full overflow-hidden rounded-lg bg-transparent shadow-2xl lg:w-[112%] xl:w-[120%]">
                 <Image
-                  src={project.image}
-                  alt=""
+                  src="/images/hero-community-ai-health.png"
+                  alt="Community members and a health research facilitator discussing data on a tablet"
                   fill
-                  sizes="(max-width: 900px) 100vw, 33vw"
+                  priority
+                  unoptimized
+                  sizes="(max-width: 1024px) 92vw, 66vw"
+                  className="object-cover"
                 />
               </div>
-              <CardContent className="project-body">
-                <p>{project.tag}</p>
-                <h3>{project.title}</h3>
-                <span>{project.text}</span>
-                <a href="#">Read more</a>
-              </CardContent>
-            </Card>
-          ))}
+            </div>
+          </div>
         </div>
       </section>
 
+      <section id="about" className="overflow-hidden py-16 sm:py-20 lg:py-24">
+        <div className="mx-auto grid w-[min(1280px,94vw)] gap-10 lg:min-h-[650px] lg:grid-cols-[0.74fr_1.26fr] lg:items-center">
+          <div className="relative min-h-0 lg:min-h-[620px]">
+            <div className="absolute left-0 top-0 hidden size-44 rounded-[44%_56%_61%_39%] bg-[rgba(54,172,208,0.08)] lg:block" />
 
-      <section className="insights-band">
-        <div className="insights-inner">
-          <p className="section-kicker">Media Center</p>
-          <h2>Latest thinking from IAHL</h2>
-          <div className="story-grid">
-            {stories.map((story) => (
-              <Card className="story-card" key={story}>
-                <h3>{story}</h3>
-                <a href="#">Read article</a>
+            <div className="hidden items-center gap-4 lg:absolute lg:left-10 lg:top-0 lg:flex">
+              <div className="relative size-40 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
+                <Image
+                  src={researchNodes[0].image}
+                  alt=""
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                />
+              </div>
+              <Card className="max-w-[190px] rounded-lg bg-background/95 shadow-lg">
+                <CardContent className="p-4">
+                  <h3 className="text-base font-bold">{researchNodes[0].title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {researchNodes[0].text}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="relative z-10 max-w-xl lg:py-56">
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-muted-foreground">
+                Where we begin
+              </p>
+              <h2 className="text-balance text-5xl font-bold leading-[1.05] sm:text-6xl">
+                Africa-led health research.
+              </h2>
+              <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
+                People, evidence, and responsible AI working together for fairer
+                health outcomes.
+              </p>
+            </div>
+
+            <div className="hidden items-center gap-4 lg:absolute lg:bottom-0 lg:left-4 lg:flex">
+              <Card className="max-w-[190px] rounded-lg bg-background/95 text-right shadow-lg">
+                <CardContent className="p-4">
+                  <h3 className="text-base font-bold">{researchNodes[3].title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {researchNodes[3].text}
+                  </p>
+                </CardContent>
+              </Card>
+              <div className="relative size-44 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
+                <Image
+                  src={researchNodes[3].image}
+                  alt=""
+                  fill
+                  sizes="176px"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:hidden">
+              {[researchNodes[0], researchNodes[3]].map((node) => (
+                <Card key={node.title} className="rounded-lg shadow-sm">
+                  <CardContent className="flex items-center gap-4 p-4">
+                    <div className="relative size-20 shrink-0 overflow-hidden rounded-full border-4 border-background bg-secondary shadow-md">
+                      <Image
+                        src={node.image}
+                        alt=""
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{node.title}</h3>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                        {node.text}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative min-h-[580px] lg:min-h-[650px]">
+            <div className="absolute left-1/2 top-2 hidden -translate-x-1/2 text-center lg:block">
+              <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
+              <div className="mx-auto mb-2 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+              <p className="text-sm font-bold uppercase text-[var(--purple)]">
+                Continental Research Network
+              </p>
+            </div>
+
+            <div className="absolute left-1/2 top-20 aspect-[0.86] w-[min(470px,74vw)] -translate-x-1/2 lg:left-[34%] lg:top-36 lg:w-[min(460px,56%)] xl:left-[36%]">
+              <div
+                className="absolute inset-0 bg-[linear-gradient(rgba(125,42,145,0.08),rgba(242,102,34,0.08)),url('/images/hero-community-ai-health.png')] bg-cover bg-center drop-shadow-2xl"
+                style={{
+                  WebkitMask:
+                    'url("/images/africa-map-mask.svg") center / contain no-repeat',
+                  mask: 'url("/images/africa-map-mask.svg") center / contain no-repeat',
+                }}
+              />
+            </div>
+
+            <div className="hidden items-center gap-4 lg:absolute lg:right-0 lg:top-24 lg:flex">
+              <div className="relative size-40 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
+                <Image
+                  src={researchNodes[1].image}
+                  alt=""
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                />
+              </div>
+              <Card className="max-w-[170px] rounded-lg bg-background/95 shadow-lg">
+                <CardContent className="p-4">
+                  <h3 className="text-base font-bold">{researchNodes[1].title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {researchNodes[1].text}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="hidden items-center gap-4 lg:absolute lg:bottom-10 lg:right-0 lg:flex">
+              <div>
+                <div className="mb-3 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                <div className="relative size-44 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl">
+                  <Image
+                    src={researchNodes[2].image}
+                    alt=""
+                    fill
+                    sizes="176px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+              <Card className="max-w-[170px] rounded-lg bg-background/95 shadow-lg">
+                <CardContent className="p-4">
+                  <h3 className="text-base font-bold">{researchNodes[2].title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                    {researchNodes[2].text}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="absolute inset-x-0 bottom-0 grid gap-4 sm:grid-cols-2 lg:hidden">
+              {[researchNodes[1], researchNodes[2]].map((node) => (
+                <Card key={node.title} className="rounded-lg shadow-sm">
+                  <CardContent className="flex items-center gap-4 p-4">
+                    <div className="relative size-20 shrink-0 overflow-hidden rounded-full border-4 border-background bg-secondary shadow-md">
+                      <Image
+                        src={node.image}
+                        alt=""
+                        fill
+                        sizes="80px"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div>
+                      <h3 className="font-bold">{node.title}</h3>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
+                        {node.text}
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-10">
+        <div className="mx-auto grid w-[min(1180px,92vw)] gap-5 lg:grid-cols-2">
+          <Card className="rounded-lg border-0 bg-primary text-primary-foreground shadow-lg">
+            <CardContent className="p-7 sm:p-9">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] opacity-90">
+                Our Vision
+              </p>
+              <h2 className="mt-4 text-balance text-2xl font-bold leading-tight sm:text-3xl">
+                A future where health research promotes equity and equality at
+                the community level.
+              </h2>
+            </CardContent>
+          </Card>
+          <Card className="rounded-lg border-0 bg-[var(--purple)] text-white shadow-lg">
+            <CardContent className="p-7 sm:p-9">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] opacity-90">
+                Our Mission
+              </p>
+              <h2 className="mt-4 text-balance text-2xl font-bold leading-tight sm:text-3xl">
+                To advance health research through AI, innovation, and strategic
+                partnerships for equitable health outcomes.
+              </h2>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      <section id="work" className="py-16 sm:py-20">
+        <div className="mx-auto w-[min(1180px,92vw)]">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+              Projects
+            </p>
+            <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
+              Focused work with measurable community value
+            </h2>
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className="mt-7 h-11 rounded-md"
+            >
+              <a href="#work">View all</a>
+            </Button>
+          </div>
+
+          <div className="mt-10 grid gap-6 md:grid-cols-3">
+            {projects.map((project) => (
+              <Card
+                key={project.title}
+                className="group overflow-hidden rounded-lg shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+              >
+                <div className="relative aspect-[1.35] bg-secondary">
+                  <Image
+                    src={project.image}
+                    alt=""
+                    fill
+                    sizes="(max-width: 900px) 92vw, 32vw"
+                    className="object-cover transition duration-300 group-hover:scale-105"
+                  />
+                </div>
+                <CardContent className="p-6 text-center">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">
+                    {project.tag}
+                  </p>
+                  <h3 className="mt-3 text-xl font-bold leading-snug">
+                    {project.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-7 text-muted-foreground">
+                    {project.text}
+                  </p>
+                  <Button
+                    asChild
+                    variant="link"
+                    className="mt-4 h-auto p-0 text-primary"
+                  >
+                    <a href="#">
+                      Read more <ArrowRight className="size-4" />
+                    </a>
+                  </Button>
+                </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="approach-section">
-        <div className="approach-blob approach-blob-one" aria-hidden="true" />
-        <div className="approach-blob approach-blob-two" aria-hidden="true" />
-        <div className="approach-blob approach-blob-three" aria-hidden="true" />
-        <div className="section-heading">
-          <p className="section-kicker">Our Approach</p>
-          <h2>Five values that shape every research partnership</h2>
-        </div>
-        <div className="approach-map">
-          {values.map((value, index) => (
-            <article
-              className={`approach-item ${index % 2 === 1 ? "is-reverse" : ""}`}
-              key={value.title}
-            >
-              <div className="approach-photo">
-                <Image
-                  src={value.image}
-                  alt=""
-                  fill
-                  sizes="150px"
-                />
-              </div>
-              <div className="approach-pin" aria-hidden="true">
-                {value.marker}
-              </div>
-              <div className="approach-copy">
-                <h3>{value.title}</h3>
-                <p>{value.text}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="get-involved" id="involved">
-        <div className="involved-heading">
-          <p className="section-kicker">Get involved</p>
-          <h2>Partner with us</h2>
-          <p className="involved-subtitle">
-            Let us advance AI-powered health research with communities at the center.
-          </p>
-        </div>
-        <div className="involved-media">
-          <Image
-            src="/images/iahl-media-meeting.png"
-            alt="IAHL partners in a meeting discussing AI health research"
-            width={2048}
-            height={1024}
-            sizes="(max-width: 900px) 100vw, 68vw"
-            className="involved-image"
-          />
-        </div>
-      </section>
-
-      <section className="work-with-us">
-        <div className="work-content">
-          <div className="section-heading">
-            <p className="section-kicker">Work With Us</p>
-            <h2>Build a more equitable health future</h2>
-          </div>
-
-          <div className="work-grid">
-            <article>
-              <h3>Careers</h3>
-              <p>
-                Join a team blending AI, research, and community-centered
-                health innovation.
-              </p>
-              <a href="#">Open roles</a>
-            </article>
-
-            <article>
-              <h3>Partner with IAHL</h3>
-              <p>
-                Collaborate on research, training, digital health pilots, and
-                strategic programs.
-              </p>
-              <a href="#">Partnerships</a>
-            </article>
-          </div>
-        </div>
-
-        <div className="work-person-frame">
-          <Image
-            src="/work.png"
-            alt="Professional welcoming partner"
-            fill
-            sizes="(max-width: 980px) 82vw, 34vw"
-            className="work-person"
-          />
-        </div>
-      </section>
-
-   <footer className="site-footer">
-        <div className="footer-brand">
-          <Image
-            src="/images/iahl-logo.jpeg"
-            alt="Innovate AI HealthLab logo"
-            width={128}
-            height={94}
-          />
-          <p>
-            Advancing health research through AI, innovation, and strategic
-            partnerships for equitable health outcomes.
-          </p>
-        </div>
-        <div className="footer-columns">
-          <div>
-            <h3>Explore</h3>
-            <a href="#">About</a>
-            <a href="#">Our work</a>
-            <a href="#">Media center</a>
-          </div>
-          <div>
-            <h3>Connect</h3>
-            <a href="#">Partnerships</a>
-            <a href="#">Careers</a>
-            <a href="#">Contact</a>
-          </div>
-          <form className="newsletter">
-            <h3>Stay updated via email</h3>
-            <label htmlFor="email">Email address</label>
+      <section id="media" className="bg-[var(--charcoal)] py-16 text-white sm:py-20">
+        <div className="mx-auto w-[min(1180px,92vw)]">
+          <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
             <div>
-              <Input id="email" type="email" placeholder="you@example.com" />
-              <Button type="submit">Sign up</Button>
+              <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+                Media Center
+              </p>
+              <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
+                Latest thinking from IAHL
+              </h2>
             </div>
-          </form>
+            <div className="grid gap-4 md:grid-cols-3">
+              {stories.map((story) => (
+                <Card
+                  className="rounded-lg border-white/10 bg-white/10 text-white shadow-none"
+                  key={story}
+                >
+                  <CardContent className="p-5">
+                    <h3 className="text-lg font-bold leading-snug">{story}</h3>
+                    <Button
+                      asChild
+                      variant="link"
+                      className="mt-5 h-auto p-0 text-primary"
+                    >
+                      <a href="#">
+                        Read article <ArrowRight className="size-4" />
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="overflow-hidden py-16 sm:py-20">
+        <div className="mx-auto w-[min(1180px,92vw)]">
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+              Our Approach
+            </p>
+            <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
+              Five values that shape every research partnership
+            </h2>
+          </div>
+
+          <div className="relative mx-auto mt-12 grid max-w-[940px] gap-8 lg:gap-2">
+            {values.map((value, index) => {
+              const isReverse = index % 2 === 1;
+
+              return (
+                <article
+                  className={`relative grid min-w-0 grid-cols-[92px_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-6 lg:w-[620px] lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-7 ${
+                    isReverse ? "lg:grid-cols-[minmax(0,1fr)_200px]" : ""
+                  } ${approachOffsets[index]}`}
+                  key={value.title}
+                >
+                  <div
+                    className={`relative z-10 col-start-1 row-start-1 size-[92px] overflow-hidden rounded-full border-[7px] border-background bg-secondary shadow-xl sm:size-[132px] lg:size-[200px] lg:border-[10px] ${
+                      isReverse ? "lg:col-start-2" : ""
+                    }`}
+                  >
+                    <Image
+                      src={value.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 92px, (max-width: 1024px) 132px, 200px"
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div
+                    className={`absolute left-[66px] top-1 z-20 grid size-10 place-items-center rounded-full border-[5px] border-background text-[0.64rem] font-bold text-white sm:left-[100px] sm:size-12 sm:text-xs lg:left-[162px] lg:top-5 lg:size-14 lg:border-8 lg:text-sm ${
+                      value.color
+                    } ${isReverse ? "lg:left-auto lg:right-[162px]" : ""}`}
+                  >
+                    {value.marker}
+                    <span
+                      className={`absolute left-1/2 top-8 -z-10 hidden h-20 w-1 -translate-x-1/2 rounded-full lg:block ${value.color}`}
+                    />
+                  </div>
+
+                  <div
+                    className={`col-start-2 row-start-1 min-w-0 ${
+                      isReverse
+                        ? "lg:col-start-1 lg:justify-self-end lg:text-right"
+                        : ""
+                    }`}
+                  >
+                    <h3 className="text-xl font-bold leading-snug sm:text-2xl">
+                      {value.title}
+                    </h3>
+                    <p className="mt-2 max-w-[360px] break-words text-sm leading-7 text-muted-foreground">
+                      {value.text}
+                    </p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section id="involved" className="py-16 sm:py-20">
+        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="relative">
+            <div className="absolute -left-5 -top-5 hidden h-28 w-28 rounded-lg border-2 border-primary/30 lg:block" />
+            <div className="absolute -bottom-5 -right-5 hidden h-32 w-32 rounded-lg bg-[linear-gradient(135deg,var(--cyan),var(--green),var(--orange))] opacity-80 lg:block" />
+            <div className="relative min-h-[340px] overflow-hidden rounded-lg border border-border bg-card shadow-2xl sm:min-h-[420px] lg:min-h-[500px]">
+              <Image
+                src="/images/iahl-media-meeting.png"
+                alt="IAHL partners in a meeting discussing AI health research"
+                fill
+                sizes="(max-width: 1024px) 92vw, 54vw"
+                className="object-cover object-center"
+              />
+            </div>
+          </div>
+
+          <div className="lg:pl-8">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+              Get involved
+            </p>
+            <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Partner with us
+            </h2>
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              We believe meaningful change happens through collaboration. By
+              partnering with us, you become part of a network dedicated to
+              innovation, growth, and community impact. Together, we can create
+              sustainable solutions that make a real difference.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button asChild size="lg" className="h-12 rounded-md px-6">
+                <a href="#work">
+                  Explore partnerships <ArrowRight className="size-4" />
+                </a>
+              </Button>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="h-12 rounded-md px-6"
+              >
+                <a href="#footer">Contact IAHL</a>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-accent/60 py-16 sm:py-20">
+        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1fr_360px] lg:items-center">
+          <div>
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
+              Work With Us
+            </p>
+            <h2 className="max-w-3xl text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
+              Build a more equitable health future
+            </h2>
+
+            <div className="mt-9 grid gap-5 md:grid-cols-2">
+              {[
+                {
+                  title: "Careers",
+                  text: "Join a team blending AI, research, and community-centered health innovation.",
+                  action: "Open roles",
+                },
+                {
+                  title: "Partner with IAHL",
+                  text: "Collaborate on research, training, digital health pilots, and strategic programs.",
+                  action: "Partnerships",
+                },
+              ].map((item) => (
+                <Card className="rounded-lg bg-background/90" key={item.title}>
+                  <CardContent className="p-6">
+                    <h3 className="text-xl font-bold">{item.title}</h3>
+                    <p className="mt-3 leading-7 text-muted-foreground">
+                      {item.text}
+                    </p>
+                    <Button
+                      asChild
+                      variant="link"
+                      className="mt-4 h-auto p-0 text-primary"
+                    >
+                      <a href="#">
+                        {item.action} <ArrowRight className="size-4" />
+                      </a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative mx-auto aspect-[0.78] w-[min(320px,78vw)] overflow-hidden rounded-lg border border-border bg-card shadow-xl">
+            <Image
+              src="/work.png"
+              alt="Professional welcoming partner"
+              fill
+              sizes="(max-width: 980px) 78vw, 320px"
+              className="object-cover object-center"
+            />
+          </div>
+        </div>
+      </section>
+
+      <footer id="footer" className="bg-[var(--charcoal)] text-white">
+        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 py-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <Image
+              src="/images/iahl-logo.jpeg"
+              alt="Innovate AI HealthLab logo"
+              width={128}
+              height={94}
+              className="h-16 w-auto rounded-sm bg-white object-contain"
+            />
+            <p className="mt-5 max-w-md leading-7 text-white/70">
+              Advancing health research through AI, innovation, and strategic
+              partnerships for equitable health outcomes.
+            </p>
+          </div>
+
+          <div className="grid gap-8 sm:grid-cols-3">
+            {Object.entries(footerLinks).map(([title, links]) => (
+              <div key={title}>
+                <h3 className="font-bold">{title}</h3>
+                <div className="mt-4 grid gap-2">
+                  {links.map((link) => (
+                    <a
+                      className="text-sm text-white/70 transition hover:text-primary"
+                      href="#"
+                      key={link}
+                    >
+                      {link}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+            <form>
+              <h3 className="font-bold">Stay updated</h3>
+              <p className="mt-3 text-sm leading-6 text-white/70">
+                Receive IAHL news and research updates.
+              </p>
+              <div className="mt-4 grid gap-2">
+                <Input
+                  type="email"
+                  placeholder="you@example.com"
+                  className="h-11 border-white/20 bg-white text-foreground"
+                />
+                <Button type="submit" className="h-11">
+                  Sign up <CheckCircle2 className="size-4" />
+                </Button>
+              </div>
+            </form>
+          </div>
         </div>
       </footer>
     </main>
