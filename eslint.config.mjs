@@ -2,9 +2,20 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 
+const disabledReactRules = Object.fromEntries(
+  [...nextVitals, ...nextTs]
+    .flatMap((config) => Object.keys(config.rules ?? {}))
+    .filter((rule) => rule.startsWith("react/"))
+    .map((rule) => [rule, "off"]),
+);
+
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
+  {
+    // eslint-plugin-react currently crashes under ESLint 10 before linting.
+    rules: disabledReactRules,
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:
