@@ -191,11 +191,75 @@ export default function GetInvolvedPage() {
       
       </section>
 
-    
+      <section
+        id="partner"
+        className="scroll-mt-28 overflow-hidden border-y border-border bg-[#f7f7f8]"
+      >
+        <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-165 lg:grid-cols-[0.55fr_0.45fr]">
+          <div className="flex items-center justify-center bg-white">
+            <Image
+              src="/images/capacity-partnership-hands.png"
+              alt="Partners placing their hands together in a shared commitment"
+              width={1672}
+              height={941}
+              sizes="(max-width: 1024px) 100vw, 55vw"
+              className="h-auto w-full object-contain"
+            />
+          </div>
 
-      
+          <div className="relative isolate flex min-h-145 items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-155 lg:min-h-165 lg:bg-transparent lg:pl-[9vw] lg:pr-[5vw]">
+            <div
+              className="pointer-events-none absolute inset-0 -z-10 bg-[#f4eaf7] lg:left-8 lg:rounded-l-[48%]"
+              aria-hidden="true"
+            />
+            <div className="max-w-xl">
+              <div className="flex items-center gap-3">
+                <UsersRound className="size-6 text-(--purple)" />
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
+                  Partnerships
+                </p>
+              </div>
+              <span
+                className="mt-6 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
+                aria-hidden="true"
+              />
+              <h2 className="mt-6 text-balance text-4xl font-bold leading-tight sm:text-5xl">
+                Build research value together.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                IAHL works with communities, institutions, health teams, and
+                research partners where there is a shared question and a clear
+                path to useful public value.
+              </p>
 
-      <section id="careers" className="py-16 sm:py-24">
+              <div className="mt-8 divide-y divide-(--purple)/15 border-y border-(--purple)/15">
+                {[
+                  "Co-designed research and evidence programs",
+                  "Responsible AI and data collaboration",
+                  "Training and institutional capacity building",
+                ].map((item) => (
+                  <div
+                    className="flex items-center gap-3 py-4 font-bold"
+                    key={item}
+                  >
+                    <CheckCircle2 className="size-5 shrink-0 text-(--green)" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <Button asChild size="lg" className="mt-8 rounded-full">
+                <Link href="#contact">
+                  Start a partnership conversation
+                  <ArrowRight className="size-4" />
+                </Link>
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="careers" className="scroll-mt-28 py-16 sm:py-24">
         <div className="mx-auto grid w-[min(1240px,92vw)] gap-12 lg:grid-cols-[0.86fr_1.14fr] lg:items-start lg:gap-16">
           <div className="lg:sticky lg:top-32">
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
@@ -244,7 +308,7 @@ export default function GetInvolvedPage() {
 
       <section
         id="events"
-        className="relative overflow-hidden bg-(--charcoal) py-16 text-white sm:py-24"
+        className="relative scroll-mt-28 overflow-hidden bg-(--charcoal) py-16 text-white sm:py-24"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
@@ -316,7 +380,10 @@ export default function GetInvolvedPage() {
         </div>
       </section>
 
-      <section id="contact" className="overflow-hidden border-b border-border bg-white">
+      <section
+        id="contact"
+        className="scroll-mt-28 overflow-hidden border-b border-border bg-white"
+      >
         <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-180 lg:grid-cols-[0.45fr_0.55fr]">
           <div className="relative isolate flex min-h-162.5 items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-172.5 lg:min-h-180 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
             <div

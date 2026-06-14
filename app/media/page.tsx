@@ -81,24 +81,32 @@ const coverage = [
     title: "Designing responsible health AI around public value",
     outlet: "Research briefing",
     color: "bg-[var(--purple)]",
+    href: "/work#responsible-ai",
+    action: "Explore responsible AI",
   },
   {
     date: "May 2026",
     title: "Why locally led evidence matters for stronger health systems",
     outlet: "Partner feature",
     color: "bg-[var(--green)]",
+    href: "/work#community-intelligence",
+    action: "Explore community research",
   },
   {
     date: "April 2026",
     title: "Community participation is a research method, not a final step",
     outlet: "Opinion",
     color: "bg-primary",
+    href: "/work#community-intelligence",
+    action: "See the research pathway",
   },
   {
     date: "March 2026",
     title: "Building institutional confidence in data-informed decisions",
     outlet: "Program update",
     color: "bg-[var(--cyan)]",
+    href: "/work#capacity-partnership",
+    action: "Explore capacity building",
   },
 ];
 
@@ -253,7 +261,7 @@ export default function MediaPage() {
 
       <section
         id="photos"
-        className="relative overflow-hidden border-y border-border bg-[#eff7f8] py-16 sm:py-24"
+        className="relative scroll-mt-28 overflow-hidden border-y border-border bg-[#eff7f8] py-16 sm:py-24"
       >
         <div
           className="pointer-events-none absolute -left-36 -top-44 size-107.5 rounded-full border-68 border-(--cyan)/10"
@@ -302,7 +310,7 @@ export default function MediaPage() {
 
       <section
         id="videos"
-        className="relative overflow-hidden bg-(--charcoal) py-16 text-white sm:py-24"
+        className="relative scroll-mt-28 overflow-hidden bg-(--charcoal) py-16 text-white sm:py-24"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
@@ -395,7 +403,7 @@ export default function MediaPage() {
         </div>
       </section>
 
-      <section id="coverage" className="py-16 sm:py-24">
+      <section id="coverage" className="scroll-mt-28 py-16 sm:py-24">
         <div className="mx-auto w-[min(1240px,92vw)]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
@@ -433,9 +441,9 @@ export default function MediaPage() {
                 </p>
                 <Link
                   className="absolute bottom-7 left-7 flex items-center gap-2 text-sm font-bold"
-                  href="/work"
+                  href={item.href}
                 >
-                  Read more <ArrowRight className="size-4" />
+                  {item.action} <ArrowRight className="size-4" />
                 </Link>
                 <span
                   className="absolute bottom-5 right-6 text-7xl font-bold leading-none text-white/10"
@@ -449,7 +457,10 @@ export default function MediaPage() {
         </div>
       </section>
 
-      <section className="overflow-hidden border-y border-border bg-[#f4eaf7] py-14 sm:py-16">
+      <section
+        id="newsletter"
+        className="scroll-mt-28 overflow-hidden border-y border-border bg-[#f4eaf7] py-14 sm:py-16"
+      >
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
@@ -464,7 +475,10 @@ export default function MediaPage() {
             <h2 className="text-balance text-3xl font-bold leading-tight sm:text-4xl">
               Receive research updates, field stories, and new media from IAHL.
             </h2>
-            <form className="mt-7 flex max-w-2xl flex-col gap-3 sm:flex-row">
+            <form
+              className="mt-7 flex max-w-2xl flex-col gap-3 sm:flex-row"
+              onSubmit={(event) => event.preventDefault()}
+            >
               <Input
                 type="email"
                 placeholder="you@example.com"
@@ -517,10 +531,10 @@ export default function MediaPage() {
               <h3 className="font-bold">Media</h3>
               <div className="mt-4 grid gap-2">
                 {[
-                  ["Stories", "#stories"],
                   ["Photos", "#photos"],
                   ["Videos", "#videos"],
                   ["Coverage", "#coverage"],
+                  ["Newsletter", "#newsletter"],
                 ].map(([label, href]) => (
                   <Link
                     className="text-sm text-white/70 transition hover:text-primary"
@@ -533,7 +547,7 @@ export default function MediaPage() {
               </div>
             </div>
 
-            <form>
+            <form onSubmit={(event) => event.preventDefault()}>
               <h3 className="font-bold">Stay updated</h3>
               <p className="mt-3 text-sm leading-6 text-white/70">
                 Receive IAHL news and research updates.
