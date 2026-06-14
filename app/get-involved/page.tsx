@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   CalendarDays,
@@ -53,6 +53,29 @@ export default function GetInvolvedPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  useEffect(() => {
+    const scrollToHash = () => {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+
+      if (!id) {
+        return;
+      }
+
+      document.getElementById(id)?.scrollIntoView({ block: "start" });
+    };
+
+    const firstFrame = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(scrollToHash);
+    });
+
+    window.addEventListener("hashchange", scrollToHash);
+
+    return () => {
+      window.cancelAnimationFrame(firstFrame);
+      window.removeEventListener("hashchange", scrollToHash);
+    };
+  }, []);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -157,21 +180,7 @@ export default function GetInvolvedPage() {
                 Work with IAHL through research partnerships, careers, public
                 events, and conversations grounded in shared health priorities.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button asChild size="lg" className="h-12 rounded-full px-6">
-                  <Link href="#partner">
-                    Explore ways to engage <ArrowRight className="size-4" />
-                  </Link>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-12 rounded-full border-(--purple)/20 bg-white/65 px-6"
-                >
-                  <Link href="#contact">Contact IAHL</Link>
-                </Button>
-              </div>
+              
             </div>
           </div>
 
@@ -190,6 +199,8 @@ export default function GetInvolvedPage() {
 
       
       </section>
+
+     
 
       <section
         id="partner"

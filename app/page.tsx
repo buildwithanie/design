@@ -251,7 +251,7 @@ export default function Home() {
                 size="lg"
                 className="h-12 rounded-md px-6"
               >
-                <a href="/get-involved">Partner With Us</a>
+                <a href="/get-involved#partner">Partner With Us</a>
               </Button>
             </div>
           </div>

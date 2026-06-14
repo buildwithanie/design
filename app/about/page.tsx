@@ -22,28 +22,6 @@ const navItems = [
   { label: "Get Involved", href: "/get-involved" },
 ];
 
-const storySteps = [
-  {
-    title: "Listen",
-    text: "Begin with the health questions people are already asking.",
-    color: "bg-[var(--cyan)]",
-  },
-  {
-    title: "Connect",
-    text: "Bring community knowledge, research practice, and public systems together.",
-    color: "bg-primary",
-  },
-  {
-    title: "Build",
-    text: "Develop evidence and responsible technology around real priorities.",
-    color: "bg-[var(--purple)]",
-  },
-  {
-    title: "Return",
-    text: "Make knowledge understandable, useful, and available for action.",
-    color: "bg-[var(--green)]",
-  },
-];
 
 const participants = [
   {
@@ -345,22 +323,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div className="relative mt-14 grid gap-8 md:grid-cols-4 md:gap-5">
-            <div className="absolute left-0 right-0 top-5 hidden h-px bg-border md:block" />
-            {storySteps.map((step, index) => (
-              <article className="relative" key={step.title}>
-                <div
-                  className={`relative z-10 grid size-10 place-items-center rounded-full text-sm font-bold text-white ${step.color}`}
-                >
-                  {index + 1}
-                </div>
-                <h3 className="mt-5 text-2xl font-bold">{step.title}</h3>
-                <p className="mt-3 leading-7 text-muted-foreground">
-                  {step.text}
-                </p>
-              </article>
-            ))}
-          </div>
+          
         </div>
       </section>
 
@@ -390,21 +353,7 @@ export default function AboutPage() {
             className="h-auto w-full object-contain"
           />
 
-          <div className="grid border-x border-b border-white/15 sm:grid-cols-3">
-            {[
-              ["01", "Research that can be understood"],
-              ["02", "Learning that strengthens practice"],
-              ["03", "Innovation that remains accountable"],
-            ].map(([number, text]) => (
-              <div
-                className="flex items-start gap-4 border-b border-white/15 p-6 last:border-b-0 sm:border-b-0 sm:border-r last:sm:border-r-0"
-                key={number}
-              >
-                <span className="text-sm font-bold text-primary">{number}</span>
-                <p className="font-bold leading-7">{text}</p>
-              </div>
-            ))}
-          </div>
+         
         </div>
       </section>
 

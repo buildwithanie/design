@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import {
   Activity,
   ArrowRight,
@@ -29,7 +29,6 @@ const navItems = [
 
 const pathways = [
   {
-    number: "01",
     eyebrow: "Community intelligence",
     title: "Research begins with questions people recognize as their own.",
     text: "IAHL works with communities and health teams to identify priorities, understand lived realities, and build evidence that reflects the context in which decisions will be made.",
@@ -44,7 +43,6 @@ const pathways = [
     accent: "text-primary",
   },
   {
-    number: "02",
     eyebrow: "Responsible AI and data",
     title: "Technology supports judgment. It does not replace responsibility.",
     text: "We explore how data systems and responsible AI can help research teams identify patterns, ask better questions, and act earlier while protecting transparency, privacy, and human oversight.",
@@ -59,7 +57,6 @@ const pathways = [
     accent: "text-[var(--cyan)]",
   },
   {
-    number: "03",
     eyebrow: "Capacity and partnership",
     title: "Useful research lasts when people and institutions can carry it forward.",
     text: "IAHL strengthens research practice through training, shared methods, institutional collaboration, and partnership models designed for continuity beyond a single project.",
@@ -114,33 +111,7 @@ const focusAreas = [
   },
 ];
 
-const workProcess = [
-  {
-    number: "01",
-    title: "Frame",
-    text: "Define the health question with the people closest to it.",
-  },
-  {
-    number: "02",
-    title: "Co-design",
-    text: "Agree on methods, responsibilities, ethics, and intended value.",
-  },
-  {
-    number: "03",
-    title: "Investigate",
-    text: "Generate evidence through field research, data, and analysis.",
-  },
-  {
-    number: "04",
-    title: "Translate",
-    text: "Turn findings into understandable choices and practical tools.",
-  },
-  {
-    number: "05",
-    title: "Strengthen",
-    text: "Build the capacity and partnerships needed to sustain action.",
-  },
-];
+
 
 const workStandards = [
   {
@@ -169,6 +140,38 @@ export default function WorkPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const closeMenu = () => setIsMenuOpen(false);
+
+  const scrollToPathways = (event: MouseEvent<HTMLAnchorElement>) => {
+    const target = document.getElementById("pathways");
+
+    if (!target) {
+      return;
+    }
+
+    event.preventDefault();
+    window.history.pushState(null, "", "/work#pathways");
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  useEffect(() => {
+    if (window.location.hash !== "#pathways") {
+      return;
+    }
+
+    const scrollToTarget = () => {
+      document
+        .getElementById("pathways")
+        ?.scrollIntoView({ behavior: "auto", block: "start" });
+    };
+
+    const frame = window.requestAnimationFrame(scrollToTarget);
+    const retry = window.setTimeout(scrollToTarget, 150);
+
+    return () => {
+      window.cancelAnimationFrame(frame);
+      window.clearTimeout(retry);
+    };
+  }, []);
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -284,7 +287,7 @@ export default function WorkPage() {
                   size="lg"
                   className="h-12 rounded-full px-6"
                 >
-                  <Link href="#pathways">
+                  <Link href="/work#pathways" onClick={scrollToPathways}>
                     Explore our pathways <ArrowRight className="size-4" />
                   </Link>
                 </Button>
@@ -317,9 +320,9 @@ export default function WorkPage() {
 
         <div className="grid border-y border-border sm:grid-cols-3">
           {[
-            ["01", "Questions shaped with communities"],
-            ["02", "Evidence strengthened by responsible methods"],
-            ["03", "Action sustained through partnership"],
+            ["Questions shaped with communities"],
+            ["Evidence strengthened by responsible methods"],
+            ["Action sustained through partnership"],
           ].map(([number, text]) => (
             <div
               className="flex items-start gap-4 border-b border-border px-[6vw] py-6 last:border-b-0 sm:border-b-0 sm:border-r sm:px-8 last:sm:border-r-0"
@@ -420,7 +423,7 @@ export default function WorkPage() {
 
               <div className="max-w-lg">
                 <div className="flex items-center gap-4">
-                  <span className="text-sm font-bold text-primary">01</span>
+                  <span className="text-sm font-bold text-primary"></span>
                   <span className="text-sm font-bold uppercase tracking-[0.16em] text-(--purple)">
                     Community intelligence
                   </span>
@@ -531,7 +534,7 @@ export default function WorkPage() {
 
             <div>
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-(--cyan)">02</span>
+                <span className="text-sm font-bold text-(--cyan)"></span>
                 <span className="text-sm font-bold uppercase tracking-[0.16em] text-(--cyan)">
                   Responsible AI and data
                 </span>
@@ -590,7 +593,7 @@ export default function WorkPage() {
 
               <div className="max-w-lg">
                 <div className="flex items-center gap-4">
-                  <span className="text-sm font-bold text-primary">03</span>
+                  <span className="text-sm font-bold text-primary"></span>
                   <span className="text-sm font-bold uppercase tracking-[0.16em] text-(--purple)">
                     Capacity and partnership
                   </span>
@@ -710,20 +713,7 @@ export default function WorkPage() {
             </p>
           </div>
 
-          <div className="relative mt-12 grid gap-8 md:grid-cols-5 md:gap-5">
-            <div className="absolute left-0 right-0 top-5 hidden h-px bg-primary-foreground/35 md:block" />
-            {workProcess.map((step) => (
-              <article className="relative" key={step.number}>
-                <div className="relative z-10 grid size-10 place-items-center rounded-full border border-primary-foreground/50 bg-primary text-sm font-bold">
-                  {step.number}
-                </div>
-                <h3 className="mt-5 text-2xl font-bold">{step.title}</h3>
-                <p className="mt-3 text-sm leading-7 text-primary-foreground/75">
-                  {step.text}
-                </p>
-              </article>
-            ))}
-          </div>
+          
         </div>
       </section>
 
@@ -866,7 +856,12 @@ export default function WorkPage() {
                       size="lg"
                       className="h-12 rounded-full border-(--purple)/20 bg-white/70 px-6 hover:bg-white"
                     >
-                      <Link href="#pathways">Explore the work</Link>
+                      <Link
+                        href="/work#pathways"
+                        onClick={scrollToPathways}
+                      >
+                        Explore the work
+                      </Link>
                     </Button>
                   </div>
                 </div>
