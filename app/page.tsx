@@ -143,7 +143,7 @@ export default function Home() {
               width={164}
               height={120}
               priority
-              className="h-16 w-auto object-contain md:h-[76px]"
+              className="h-16 w-auto object-contain md:h-19"
             />
           </a>
 
@@ -210,7 +210,7 @@ export default function Home() {
           <div className="max-w-2xl">
             <h1 className="text-balance text-5xl font-bold leading-[0.98] text-foreground sm:text-6xl lg:text-7xl xl:text-8xl">
               AI-powered health research,{" "}
-              <span className="text-[var(--purple)]">shaped by community.</span>
+              <span className="text-(--purple)">shaped by community.</span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
               We bring communities, researchers, and strategic partners together
@@ -235,7 +235,7 @@ export default function Home() {
 
           <div className="mt-12 lg:-mr-14 lg:mt-0 xl:-mr-24">
             <div className="relative overflow-visible rounded-lg">
-              <div className="relative aspect-[1619/972] w-full overflow-hidden rounded-lg bg-transparent shadow-2xl lg:w-[112%] xl:w-[120%]">
+              <div className="relative aspect-1619/972 w-full overflow-hidden rounded-lg bg-transparent shadow-2xl lg:w-[112%] xl:w-[120%]">
                 <Image
                   src="/images/hero-community-ai-health.png"
                   alt="Community members and a health research facilitator discussing data on a tablet"
@@ -270,8 +270,8 @@ export default function Home() {
             <div className="lg:hidden">
               <div className="text-center">
                 <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
-                <div className="mx-auto mb-2 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
-                <p className="text-sm font-bold uppercase text-[var(--purple)]">
+                <div className="mx-auto mb-2 h-0.75 w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                <p className="text-sm font-bold uppercase text-(--purple)">
                   Continental Research Network
                 </p>
               </div>
@@ -312,11 +312,11 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="relative hidden min-h-[620px] lg:block">
+            <div className="relative hidden min-h-155 lg:block">
               <div className="absolute left-1/2 top-0 -translate-x-1/2 text-center">
                 <div className="mx-auto mb-3 size-11 rounded-full bg-[radial-gradient(circle_at_50%_50%,white_0_24%,transparent_25%),conic-gradient(var(--cyan),var(--green),var(--orange),var(--purple),var(--cyan))] shadow-lg" />
-                <div className="mx-auto mb-2 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
-                <p className="text-sm font-bold uppercase text-[var(--purple)]">
+                <div className="mx-auto mb-2 h-0.75 w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                <p className="text-sm font-bold uppercase text-(--purple)">
                   Continental Research Network
                 </p>
               </div>
@@ -333,7 +333,7 @@ export default function Home() {
               </div>
 
               <div className="absolute left-0 top-28 flex items-center gap-3 xl:gap-4">
-                <Card className="max-w-[160px] rounded-lg bg-background/95 text-right shadow-lg xl:max-w-[180px]">
+                <Card className="max-w-40 rounded-lg bg-background/95 text-right shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
                     <h3 className="text-base font-bold">{researchNodes[0].title}</h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -362,7 +362,7 @@ export default function Home() {
                     className="object-cover"
                   />
                 </div>
-                <Card className="max-w-[160px] rounded-lg bg-background/95 shadow-lg xl:max-w-[180px]">
+                <Card className="max-w-40 rounded-lg bg-background/95 shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
                     <h3 className="text-base font-bold">{researchNodes[1].title}</h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -373,7 +373,7 @@ export default function Home() {
               </div>
 
               <div className="absolute bottom-8 left-0 flex items-center gap-3 xl:gap-4">
-                <Card className="max-w-[160px] rounded-lg bg-background/95 text-right shadow-lg xl:max-w-[180px]">
+                <Card className="max-w-40 rounded-lg bg-background/95 text-right shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
                     <h3 className="text-base font-bold">{researchNodes[3].title}</h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -394,7 +394,7 @@ export default function Home() {
 
               <div className="absolute bottom-8 right-0 flex items-center gap-3 xl:gap-4">
                 <div>
-                  <div className="mb-3 h-[3px] w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
+                  <div className="mb-3 h-0.75 w-28 rounded-full bg-[linear-gradient(90deg,var(--cyan),var(--green),var(--orange))]" />
                   <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
                     <Image
                       src={researchNodes[2].image}
@@ -405,7 +405,7 @@ export default function Home() {
                     />
                   </div>
                 </div>
-                <Card className="max-w-[160px] rounded-lg bg-background/95 shadow-lg xl:max-w-[180px]">
+                <Card className="max-w-40 rounded-lg bg-background/95 shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
                     <h3 className="text-base font-bold">{researchNodes[2].title}</h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
@@ -432,7 +432,7 @@ export default function Home() {
               </h2>
             </CardContent>
           </Card>
-          <Card className="rounded-lg border-0 bg-[var(--purple)] text-white shadow-lg">
+          <Card className="rounded-lg border-0 bg-(--purple) text-white shadow-lg">
             <CardContent className="p-7 sm:p-9">
               <p className="text-sm font-bold uppercase tracking-[0.16em] opacity-90">
                 Our Mission
@@ -506,7 +506,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="media" className="bg-[var(--charcoal)] py-16 text-white sm:py-20">
+      <section id="media" className="bg-(--charcoal) py-16 text-white sm:py-20">
         <div className="mx-auto w-[min(1180px,92vw)]">
           <div className="grid gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:items-end">
             <div>
@@ -562,19 +562,19 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="relative mx-auto mt-12 grid max-w-[940px] gap-8 lg:gap-2">
+          <div className="relative mx-auto mt-12 grid max-w-235 gap-8 lg:gap-2">
             {values.map((value, index) => {
               const isReverse = index % 2 === 1;
 
               return (
                 <article
-                  className={`relative grid min-w-0 grid-cols-[92px_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-6 lg:w-[620px] lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-7 ${
+                  className={`relative grid min-w-0 grid-cols-[92px_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-6 lg:w-155 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-7 ${
                     isReverse ? "lg:grid-cols-[minmax(0,1fr)_200px]" : ""
                   } ${approachOffsets[index]}`}
                   key={value.title}
                 >
                   <div
-                    className={`relative z-10 col-start-1 row-start-1 size-[92px] overflow-hidden rounded-full border-[7px] border-background bg-secondary shadow-xl sm:size-[132px] lg:size-[200px] lg:border-[10px] ${
+                    className={`relative z-10 col-start-1 row-start-1 size-23 overflow-hidden rounded-full border-[7px] border-background bg-secondary shadow-xl sm:size-33 lg:size-50 lg:border-10 ${
                       isReverse ? "lg:col-start-2" : ""
                     }`}
                   >
@@ -588,9 +588,9 @@ export default function Home() {
                   </div>
 
                   <div
-                    className={`absolute left-[66px] top-1 z-20 grid size-10 place-items-center rounded-full border-[5px] border-background text-[0.64rem] font-bold text-white sm:left-[100px] sm:size-12 sm:text-xs lg:left-[162px] lg:top-5 lg:size-14 lg:border-8 lg:text-sm ${
+                    className={`absolute left-16.5 top-1 z-20 grid size-10 place-items-center rounded-full border-[5px] border-background text-[0.64rem] font-bold text-white sm:left-25 sm:size-12 sm:text-xs lg:left-40.5 lg:top-5 lg:size-14 lg:border-8 lg:text-sm ${
                       value.color
-                    } ${isReverse ? "lg:left-auto lg:right-[162px]" : ""}`}
+                    } ${isReverse ? "lg:left-auto lg:right-40.5" : ""}`}
                   >
                     {value.marker}
                     <span
@@ -608,7 +608,7 @@ export default function Home() {
                     <h3 className="text-xl font-bold leading-snug sm:text-2xl">
                       {value.title}
                     </h3>
-                    <p className="mt-2 max-w-[360px] break-words text-sm leading-7 text-muted-foreground">
+                    <p className="mt-2 max-w-90 wrap-break-word text-sm leading-7 text-muted-foreground">
                       {value.text}
                     </p>
                   </div>
@@ -731,7 +731,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer id="footer" className="bg-[var(--charcoal)] text-white">
+      <footer id="footer" className="bg-(--charcoal) text-white">
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 py-12 lg:grid-cols-[0.9fr_1.1fr]">
           <div>
             <Image

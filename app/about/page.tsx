@@ -112,7 +112,7 @@ export default function AboutPage() {
               width={164}
               height={120}
               priority
-              className="h-16 w-auto object-contain md:h-[76px]"
+              className="h-16 w-auto object-contain md:h-19"
             />
           </Link>
 
@@ -169,21 +169,21 @@ export default function AboutPage() {
       </header>
 
       <section className="overflow-hidden pt-24">
-        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-[650px] lg:grid-cols-[0.43fr_0.57fr]">
-          <div className="relative isolate flex min-h-[560px] items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-[600px] lg:min-h-[650px] lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
+        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-162.5 lg:grid-cols-[0.43fr_0.57fr]">
+          <div className="relative isolate flex min-h-140 items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-150 lg:min-h-162.5 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
             <div
               className="pointer-events-none absolute inset-0 -z-20 bg-secondary lg:right-4 lg:rounded-r-[48%]"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -right-10 top-14 -z-10 hidden size-28 rounded-full border-[18px] border-[var(--green)]/25 bg-[var(--purple)]/10 lg:block"
+              className="pointer-events-none absolute -right-10 top-14 -z-10 hidden size-28 rounded-full border-18 border-(--green)/25 bg-(--purple)/10 lg:block"
               aria-hidden="true"
             />
 
             <div className="max-w-xl">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-2.5 rounded-full bg-[var(--purple)]"
+                  className="size-2.5 rounded-full bg-(--purple)"
                   aria-hidden="true"
                 />
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
@@ -236,21 +236,21 @@ export default function AboutPage() {
       </section>
 
       <section className="overflow-hidden border-y border-border bg-white">
-        <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-[640px] lg:grid-cols-[0.44fr_0.56fr]">
-          <div className="relative isolate flex min-h-[560px] items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-[600px] lg:min-h-[640px] lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
+        <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-160 lg:grid-cols-[0.44fr_0.56fr]">
+          <div className="relative isolate flex min-h-140 items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-150 lg:min-h-160 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
             <div
               className="pointer-events-none absolute inset-0 -z-20 bg-[#f4eaf7] lg:right-4 lg:rounded-r-[48%]"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -right-10 bottom-16 -z-10 hidden size-32 rounded-full border-[20px] border-[var(--green)]/30 bg-[var(--purple)]/10 lg:block"
+              className="pointer-events-none absolute -right-10 bottom-16 -z-10 hidden size-32 rounded-full border-20 border-(--green)/30 bg-(--purple)/10 lg:block"
               aria-hidden="true"
             />
 
             <div className="max-w-xl">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-2.5 rounded-full bg-[var(--green)]"
+                  className="size-2.5 rounded-full bg-(--green)"
                   aria-hidden="true"
                 />
                 <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
@@ -270,7 +270,7 @@ export default function AboutPage() {
                 keeping African priorities at the center.
               </p>
 
-              <div className="mt-8 border-l-4 border-[var(--green)] pl-5">
+              <div className="mt-8 border-l-4 border-(--green) pl-5">
                 <p className="font-bold">Africa remains the point of focus.</p>
                 <p className="mt-2 text-sm leading-7 text-muted-foreground">
                   The wider map represents the global knowledge and partnership
@@ -291,7 +291,7 @@ export default function AboutPage() {
           <div className="flex min-w-0 flex-col items-center justify-center bg-white px-[4vw] py-10 lg:py-14">
             <div className="relative w-full">
               <div
-                className="pointer-events-none absolute inset-x-[12%] bottom-[7%] h-12 rounded-[50%] bg-[var(--cyan)]/10 blur-2xl"
+                className="pointer-events-none absolute inset-x-[12%] bottom-[7%] h-12 rounded-[50%] bg-(--cyan)/10 blur-2xl"
                 aria-hidden="true"
               />
               <Image
@@ -327,7 +327,7 @@ export default function AboutPage() {
               </p>
             </div>
 
-            <div className="grid min-h-[390px] content-between bg-primary p-8 text-primary-foreground sm:p-12 lg:p-16">
+            <div className="grid min-h-97.5 content-between bg-primary p-8 text-primary-foreground sm:p-12 lg:p-16">
               <span className="text-sm font-bold uppercase tracking-[0.16em] text-primary-foreground/75">
                 The question
               </span>
@@ -360,7 +360,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-[var(--charcoal)] py-16 text-white sm:py-24">
+      <section className="bg-(--charcoal) py-16 text-white sm:py-24">
         <div className="mx-auto w-[min(1320px,94vw)]">
           <div className="mb-9 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>

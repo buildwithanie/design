@@ -186,7 +186,7 @@ export default function WorkPage() {
               width={164}
               height={120}
               priority
-              className="h-16 w-auto object-contain md:h-[76px]"
+              className="h-16 w-auto object-contain md:h-19"
             />
           </Link>
 
@@ -243,21 +243,21 @@ export default function WorkPage() {
       </header>
 
       <section className="overflow-hidden pt-24">
-        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-[700px] lg:grid-cols-[0.46fr_0.54fr]">
-          <div className="relative isolate flex min-h-[620px] items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-[660px] sm:py-16 lg:min-h-[700px] lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
+        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-175 lg:grid-cols-[0.46fr_0.54fr]">
+          <div className="relative isolate flex min-h-155 items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-165 sm:py-16 lg:min-h-175 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
             <div
               className="pointer-events-none absolute inset-0 -z-20 bg-secondary lg:right-4 lg:rounded-r-[48%]"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -right-12 top-12 -z-10 hidden size-28 rounded-full border-[18px] border-primary/20 bg-[var(--purple)]/10 lg:block"
+              className="pointer-events-none absolute -right-12 top-12 -z-10 hidden size-28 rounded-full border-18 border-primary/20 bg-(--purple)/10 lg:block"
               aria-hidden="true"
             />
 
             <div className="max-w-xl">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-2.5 rounded-full bg-[var(--purple)]"
+                  className="size-2.5 rounded-full bg-(--purple)"
                   aria-hidden="true"
                 />
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
@@ -292,7 +292,7 @@ export default function WorkPage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-12 rounded-full border-[var(--purple)]/20 bg-white/65 px-6 hover:bg-white"
+                  className="h-12 rounded-full border-(--purple)/20 bg-white/65 px-6 hover:bg-white"
                 >
                   <Link href="/get-involved#partner">
                     Discuss a partnership
@@ -333,8 +333,8 @@ export default function WorkPage() {
       </section>
 
       <section className="overflow-hidden border-b border-border bg-secondary">
-        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-[600px] lg:grid-cols-[0.42fr_0.58fr]">
-          <div className="relative isolate flex min-h-[460px] items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-[500px] sm:py-16 lg:min-h-[600px] lg:bg-transparent lg:px-[6vw] lg:pr-[5vw]">
+        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-150 lg:grid-cols-[0.42fr_0.58fr]">
+          <div className="relative isolate flex min-h-115 items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-125 sm:py-16 lg:min-h-150 lg:bg-transparent lg:px-[6vw] lg:pr-[5vw]">
             <div
               className="pointer-events-none absolute inset-0 -z-10 bg-secondary lg:right-8 lg:rounded-r-[46%]"
               aria-hidden="true"
@@ -343,10 +343,10 @@ export default function WorkPage() {
             <div className="max-w-lg">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-2.5 rounded-full bg-[var(--purple)]"
+                  className="size-2.5 rounded-full bg-(--purple)"
                   aria-hidden="true"
                 />
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--purple)]">
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                   What the work must do
                 </p>
               </div>
@@ -367,9 +367,9 @@ export default function WorkPage() {
                 context or trust.
               </p>
 
-              <div className="mt-8 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-[var(--green)]">
+              <div className="mt-8 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-(--green)">
                 <span
-                  className="h-px w-8 bg-[var(--green)]"
+                  className="h-px w-8 bg-(--green)"
                   aria-hidden="true"
                 />
                 Evidence made useful
@@ -377,7 +377,7 @@ export default function WorkPage() {
             </div>
 
             <div
-              className="pointer-events-none absolute bottom-12 right-12 hidden size-14 rounded-full border-[10px] border-primary bg-[var(--purple)] sm:block lg:bottom-auto lg:right-16 lg:top-12"
+              className="pointer-events-none absolute bottom-12 right-12 hidden size-14 rounded-full border-10 border-primary bg-(--purple) sm:block lg:bottom-auto lg:right-16 lg:top-12"
               aria-hidden="true"
             />
           </div>
@@ -397,7 +397,7 @@ export default function WorkPage() {
 
       <div id="pathways">
         <section className="overflow-hidden border-t border-border bg-white">
-          <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-[650px] lg:grid-cols-[0.58fr_0.42fr]">
+          <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-162.5 lg:grid-cols-[0.58fr_0.42fr]">
             <div className="flex items-center justify-center bg-white">
               <Image
                 src="/images/community-intelligence-feature.png"
@@ -409,7 +409,7 @@ export default function WorkPage() {
               />
             </div>
 
-            <div className="relative isolate flex min-h-[570px] items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-[610px] sm:py-16 lg:min-h-[650px] lg:bg-transparent lg:pl-[9vw] lg:pr-[5vw]">
+            <div className="relative isolate flex min-h-142.5 items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-152.5 sm:py-16 lg:min-h-162.5 lg:bg-transparent lg:pl-[9vw] lg:pr-[5vw]">
               <div
                 className="pointer-events-none absolute inset-0 -z-10 bg-secondary lg:left-8 lg:rounded-l-[46%]"
                 aria-hidden="true"
@@ -418,7 +418,7 @@ export default function WorkPage() {
               <div className="max-w-lg">
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-bold text-primary">01</span>
-                  <span className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--purple)]">
+                  <span className="text-sm font-bold uppercase tracking-[0.16em] text-(--purple)">
                     Community intelligence
                   </span>
                 </div>
@@ -444,7 +444,7 @@ export default function WorkPage() {
                       className="flex items-center gap-3 py-3.5 font-bold"
                       key={bullet}
                     >
-                      <CheckCircle2 className="size-5 shrink-0 text-[var(--green)]" />
+                      <CheckCircle2 className="size-5 shrink-0 text-(--green)" />
                       <span>{bullet}</span>
                     </div>
                   ))}
@@ -452,14 +452,14 @@ export default function WorkPage() {
               </div>
 
               <div
-                className="pointer-events-none absolute bottom-10 left-12 hidden size-14 rounded-full border-[10px] border-primary bg-[var(--purple)] sm:block lg:bottom-auto lg:left-16 lg:top-12"
+                className="pointer-events-none absolute bottom-10 left-12 hidden size-14 rounded-full border-10 border-primary bg-(--purple) sm:block lg:bottom-auto lg:left-16 lg:top-12"
                 aria-hidden="true"
               />
             </div>
           </div>
         </section>
 
-        <section className="relative overflow-hidden border-t border-white/10 bg-[var(--charcoal)] py-16 text-white sm:py-24">
+        <section className="relative overflow-hidden border-t border-white/10 bg-(--charcoal) py-16 text-white sm:py-24">
           <div
             className="pointer-events-none absolute inset-0 opacity-35"
             style={{
@@ -475,7 +475,7 @@ export default function WorkPage() {
           <div className="relative mx-auto grid w-[min(1380px,92vw)] gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-20">
             <div className="relative mx-auto w-full max-w-2xl px-5 py-8 sm:px-10 sm:py-12">
               <div
-                className="absolute inset-2 translate-x-4 translate-y-4 border-2 border-[var(--cyan)]/70 sm:inset-6"
+                className="absolute inset-2 translate-x-4 translate-y-4 border-2 border-(--cyan)/70nset-6"
                 style={{
                   clipPath:
                     "polygon(10% 0, 90% 0, 100% 16%, 100% 84%, 90% 100%, 10% 100%, 0 84%, 0 16%)",
@@ -501,11 +501,11 @@ export default function WorkPage() {
               </div>
 
               <div
-                className="absolute left-0 top-1/4 size-16 rounded-full border-[10px] border-[var(--charcoal)] bg-[var(--purple)] sm:size-20 sm:border-[12px]"
+                className="absolute left-0 top-1/4 size-16 rounded-full border-10 border-(--charcoal) bg-(--purple) sm:size-20 sm:border-12"
                 aria-hidden="true"
               />
               <div
-                className="absolute bottom-2 right-0 grid size-14 place-items-center rounded-full border-[8px] border-[var(--charcoal)] bg-primary sm:size-16"
+                className="absolute bottom-2 right-0 grid size-14 place-items-center rounded-full border-8 border-(--charcoal) bg-primary sm:size-16"
                 aria-hidden="true"
               >
                 <span className="size-2 rounded-full bg-white" />
@@ -516,7 +516,7 @@ export default function WorkPage() {
               >
                 {[0, 1, 2, 3].map((dot) => (
                   <span
-                    className="size-2 rounded-full bg-[var(--green)]"
+                    className="size-2 rounded-full bg-(--green)"
                     key={dot}
                   />
                 ))}
@@ -525,14 +525,14 @@ export default function WorkPage() {
 
             <div>
               <div className="flex items-center gap-4">
-                <span className="text-sm font-bold text-[var(--cyan)]">02</span>
-                <span className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--cyan)]">
+                <span className="text-sm font-bold text-(--cyan)">02</span>
+                <span className="text-sm font-bold uppercase tracking-[0.16em] text-(--cyan)">
                   Responsible AI and data
                 </span>
               </div>
 
               <span
-                className="mt-7 block h-1 w-14 bg-[var(--purple)]"
+                className="mt-7 block h-1 w-14 bg-(--purple)"
                 aria-hidden="true"
               />
 
@@ -554,7 +554,7 @@ export default function WorkPage() {
                     className="flex items-center gap-3 py-4 font-bold"
                     key={bullet}
                   >
-                    <CheckCircle2 className="size-5 shrink-0 text-[var(--cyan)]" />
+                    <CheckCircle2 className="size-5 shrink-0 text-(--cyan)" />
                     <span>{bullet}</span>
                   </div>
                 ))}
@@ -564,14 +564,14 @@ export default function WorkPage() {
         </section>
 
         <section className="overflow-hidden border-t border-border bg-white">
-          <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-[650px] lg:grid-cols-[0.44fr_0.56fr]">
-            <div className="relative isolate flex min-h-[590px] items-center overflow-hidden bg-[#f5edf7] px-[6vw] py-14 sm:min-h-[630px] sm:py-16 lg:min-h-[650px] lg:bg-transparent lg:px-[6vw] lg:pr-[7vw]">
+          <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-162.5 lg:grid-cols-[0.44fr_0.56fr]">
+            <div className="relative isolate flex min-h-147.5 items-center overflow-hidden bg-[#f5edf7] px-[6vw] py-14 sm:min-h-157.5 sm:py-16 lg:min-h-162.5 lg:bg-transparent lg:px-[6vw] lg:pr-[7vw]">
               <div
                 className="pointer-events-none absolute inset-y-8 left-7 right-0 -z-30 hidden rounded-r-[48%] bg-primary lg:block"
                 aria-hidden="true"
               />
               <div
-                className="pointer-events-none absolute inset-y-4 left-3 right-4 -z-20 hidden rounded-r-[48%] bg-[var(--green)] lg:block"
+                className="pointer-events-none absolute inset-y-4 left-3 right-4 -z-20 hidden rounded-r-[48%] bg-(--green) lg:block"
                 aria-hidden="true"
               />
               <div
@@ -582,7 +582,7 @@ export default function WorkPage() {
               <div className="max-w-lg">
                 <div className="flex items-center gap-4">
                   <span className="text-sm font-bold text-primary">03</span>
-                  <span className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--purple)]">
+                  <span className="text-sm font-bold uppercase tracking-[0.16em] text-(--purple)">
                     Capacity and partnership
                   </span>
                 </div>
@@ -603,13 +603,13 @@ export default function WorkPage() {
                   designed for continuity beyond a single project.
                 </p>
 
-                <div className="mt-8 divide-y divide-[var(--purple)]/15 border-t border-[var(--purple)]/15">
+                <div className="mt-8 divide-y divide-(--purple)/15 border-t border-(--purple)/15">
                   {pathways[2].bullets.map((bullet) => (
                     <div
                       className="flex items-center gap-3 py-3.5 font-bold"
                       key={bullet}
                     >
-                      <CheckCircle2 className="size-5 shrink-0 text-[var(--green)]" />
+                      <CheckCircle2 className="size-5 shrink-0 text-(--green)" />
                       <span>{bullet}</span>
                     </div>
                   ))}
@@ -617,10 +617,10 @@ export default function WorkPage() {
               </div>
 
               <div
-                className="pointer-events-none absolute bottom-10 right-12 hidden size-16 rounded-full border-[10px] border-[#f5edf7] bg-[var(--cyan)] sm:block lg:bottom-auto lg:right-14 lg:top-12"
+                className="pointer-events-none absolute bottom-10 right-12 hidden size-16 rounded-full border-10der-[#f5edf7] bg-(--cyan) sm:block lg:bottom-auto lg:right-14 lg:top-12"
                 aria-hidden="true"
               >
-                <span className="absolute inset-3 rounded-full bg-[var(--purple)]" />
+                <span className="absolute inset-3 rounded-full bg-(--purple)" />
               </div>
             </div>
 
@@ -713,7 +713,7 @@ export default function WorkPage() {
       </section>
 
       <section className="overflow-hidden border-y border-border bg-white">
-        <div className="mx-auto w-[min(1600px,100%)] lg:relative lg:min-h-[760px]">
+        <div className="mx-auto w-[min(1600px,100%)] lg:relative lg:min-h-190">
           <div className="flex items-center justify-center bg-white lg:absolute lg:inset-y-0 lg:left-0 lg:w-[68%]">
             <Image
               src="/images/work-selection-review.png"
@@ -725,14 +725,14 @@ export default function WorkPage() {
             />
           </div>
 
-          <div className="relative z-10 flex min-h-[650px] items-center bg-secondary px-[6vw] py-14 sm:min-h-[700px] sm:py-16 lg:ml-auto lg:min-h-[760px] lg:w-[52%] lg:rounded-l-[48%] lg:bg-secondary lg:pl-[11vw] lg:pr-[5vw]">
+          <div className="relative z-10 flex min-h-162.5 items-center bg-secondary px-[6vw] py-14 sm:min-h-175 sm:py-16 lg:ml-auto lg:min-h-190 lg:w-[52%] lg:rounded-l-[48%] lg:bg-secondary lg:pl-[11vw] lg:pr-[5vw]">
             <div className="w-full max-w-2xl">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-2.5 rounded-full bg-[var(--purple)]"
+                  className="size-2.5 rounded-full bg-(--purple)"
                   aria-hidden="true"
                 />
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--purple)]">
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                   How we choose work
                 </p>
               </div>
@@ -746,15 +746,15 @@ export default function WorkPage() {
                 Not every promising idea becomes an IAHL project.
               </h2>
 
-              <div className="mt-9 grid border-t border-[var(--purple)]/15 sm:grid-cols-2">
+              <div className="mt-9 grid border-t border-(--purple)/15 sm:grid-cols-2">
                 {workStandards.map((standard, index) => (
                   <article
-                    className={`relative py-5 sm:min-h-[175px] sm:px-5 ${
+                    className={`relative py-5 sm:min-h-43.75 sm:px-5 ${
                       index % 2 === 0
-                        ? "sm:border-r sm:border-[var(--purple)]/15 sm:pl-0"
+                        ? "sm:border-r sm:border-(--purple)/15 sm:pl-0"
                         : "sm:pr-0"
                     } ${
-                      index < 3 ? "border-b border-[var(--purple)]/15" : ""
+                      index < 3 ? "border-b border-(--purple)/15" : ""
                     } ${index === 2 ? "sm:border-b-0" : ""}`}
                     key={standard.title}
                   >
@@ -775,18 +775,18 @@ export default function WorkPage() {
                 className="mt-7 flex items-center gap-2"
                 aria-hidden="true"
               >
-                <span className="h-1 w-8 bg-[var(--purple)]" />
-                <span className="h-1 w-8 bg-[var(--green)]" />
+                <span className="h-1 w-8 bg-(--purple)" />
+                <span className="h-1 w-8 bg-(--green)" />
                 <span className="h-1 w-8 bg-primary" />
-                <span className="h-1 w-8 bg-[var(--cyan)]" />
+                <span className="h-1 w-8 bg-(--cyan)" />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="overflow-hidden border-y border-border bg-[var(--charcoal)]">
-        <div className="relative mx-auto w-[min(1600px,100%)] bg-[var(--charcoal)]">
+      <section className="overflow-hidden border-y border-border bg-(--charcoal)">
+        <div className="relative mx-auto w-[min(1600px,100%)] bg-(--charcoal)">
           <div className="bg-white">
             <Image
               src="/images/community-partnership-conversation.png"
@@ -801,11 +801,11 @@ export default function WorkPage() {
           <div className="relative z-10 mx-auto -mt-2 w-[min(1180px,92vw)] pb-14 sm:pb-16 lg:-mt-44">
             <div className="relative ml-auto overflow-hidden rounded-[3rem_3rem_1rem_3rem] bg-[#f4eaf7] p-8 shadow-[0_28px_80px_rgba(20,20,24,0.26)] sm:p-10 lg:w-[72%] lg:rounded-[7rem_7rem_1.25rem_7rem] lg:px-16 lg:py-12">
               <div
-                className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full border-[54px] border-[var(--purple)]/8"
+                className="pointer-events-none absolute -right-20 -top-24 size-72 rounded-full border-54 border-(--purple)/8"
                 aria-hidden="true"
               />
               <div
-                className="pointer-events-none absolute -bottom-16 left-10 size-40 rounded-full border-[32px] border-[var(--green)]/10"
+                className="pointer-events-none absolute -bottom-16 left-10 size-40 rounded-full border-32 border-(--green)/10"
                 aria-hidden="true"
               />
 
@@ -813,10 +813,10 @@ export default function WorkPage() {
                 <div>
                   <div className="flex items-center gap-3">
                     <span
-                      className="size-2.5 rounded-full bg-[var(--green)]"
+                      className="size-2.5 rounded-full bg-(--green)"
                       aria-hidden="true"
                     />
-                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--purple)]">
+                    <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                       Built with, not for
                     </p>
                   </div>
@@ -846,7 +846,7 @@ export default function WorkPage() {
                       asChild
                       variant="outline"
                       size="lg"
-                      className="h-12 rounded-full border-[var(--purple)]/20 bg-white/70 px-6 hover:bg-white"
+                      className="h-12 rounded-full border-(--purple)/20 bg-white/70 px-6 hover:bg-white"
                     >
                       <Link href="#pathways">Explore the work</Link>
                     </Button>

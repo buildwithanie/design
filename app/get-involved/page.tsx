@@ -70,7 +70,7 @@ export default function GetInvolvedPage() {
               width={164}
               height={120}
               priority
-              className="h-16 w-auto object-contain md:h-[76px]"
+              className="h-16 w-auto object-contain md:h-19"
             />
           </Link>
 
@@ -125,24 +125,24 @@ export default function GetInvolvedPage() {
       </header>
 
       <section className="overflow-hidden pt-24">
-        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-[660px] lg:grid-cols-[0.46fr_0.54fr]">
-          <div className="relative isolate flex min-h-[570px] items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-[610px] lg:min-h-[660px] lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
+        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-165 lg:grid-cols-[0.46fr_0.54fr]">
+          <div className="relative isolate flex min-h-142.5 items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-152.5 lg:min-h-165 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
             <div
               className="pointer-events-none absolute inset-0 -z-20 bg-[#f4eaf7] lg:right-4 lg:rounded-r-[48%]"
               aria-hidden="true"
             />
             <div
-              className="pointer-events-none absolute -right-12 top-12 -z-10 hidden size-28 rounded-full border-[18px] border-primary/20 bg-[var(--green)]/15 lg:block"
+              className="pointer-events-none absolute -right-12 top-12 -z-10 hidden size-28 rounded-full border-18 border-primary/20 bg-(--green)/15 lg:block"
               aria-hidden="true"
             />
 
             <div className="max-w-xl">
               <div className="flex items-center gap-3">
                 <span
-                  className="size-2.5 rounded-full bg-[var(--green)]"
+                  className="size-2.5 rounded-full bg-(--green)"
                   aria-hidden="true"
                 />
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--purple)]">
+                <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                   Get involved
                 </p>
               </div>
@@ -167,7 +167,7 @@ export default function GetInvolvedPage() {
                   asChild
                   variant="outline"
                   size="lg"
-                  className="h-12 rounded-full border-[var(--purple)]/20 bg-white/65 px-6"
+                  className="h-12 rounded-full border-(--purple)/20 bg-white/65 px-6"
                 >
                   <Link href="#contact">Contact IAHL</Link>
                 </Button>
@@ -210,8 +210,8 @@ export default function GetInvolvedPage() {
               and institutions the work is intended to serve.
             </p>
 
-            <div className="mt-8 rounded-[1.5rem_5rem_1.5rem_1.5rem] bg-[var(--charcoal)] p-7 text-white">
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-[var(--green)]">
+            <div className="mt-8 rounded-[1.5rem_5rem_1.5rem_1.5rem] bg-(--charcoal) p-7 text-white">
+              <p className="text-sm font-bold uppercase tracking-[0.16em] text-(--green)">
                 Current openings
               </p>
               <h3 className="mt-4 text-2xl font-bold">
@@ -244,7 +244,7 @@ export default function GetInvolvedPage() {
 
       <section
         id="events"
-        className="relative overflow-hidden bg-[var(--charcoal)] py-16 text-white sm:py-24"
+        className="relative overflow-hidden bg-(--charcoal) py-16 text-white sm:py-24"
       >
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
@@ -258,7 +258,7 @@ export default function GetInvolvedPage() {
         <div className="relative mx-auto w-[min(1240px,92vw)]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--cyan)]">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--cyan)">
                 Events
               </p>
               <h2 className="mt-4 text-balance text-4xl font-bold leading-tight sm:text-5xl">
@@ -274,11 +274,11 @@ export default function GetInvolvedPage() {
           <div className="mt-12 grid gap-6 lg:grid-cols-3">
             {eventSeries.map((event, index) => (
               <article
-                className="relative min-h-[360px] overflow-hidden rounded-[1.5rem_6rem_1.5rem_1.5rem] border border-white/10 bg-white/5 p-7"
+                className="relative min-h-90 overflow-hidden rounded-[1.5rem_6rem_1.5rem_1.5rem] border border-white/10 bg-white/5 p-7"
                 key={event.title}
               >
                 <div
-                  className={`absolute -right-12 -top-12 size-44 rounded-full border-[30px] border-white/15 ${event.color}`}
+                  className={`absolute -right-12 -top-12 size-44 rounded-full border-30 border-white/15 ${event.color}`}
                   aria-hidden="true"
                 />
                 <div className="relative flex items-center justify-between">
@@ -287,7 +287,7 @@ export default function GetInvolvedPage() {
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <p className="relative mt-10 text-xs font-bold uppercase tracking-[0.16em] text-[var(--green)]">
+                <p className="relative mt-10 text-xs font-bold uppercase tracking-[0.16em] text-(--green)">
                   {event.tag}
                 </p>
                 <h3 className="relative mt-3 text-2xl font-bold leading-tight">
@@ -317,14 +317,14 @@ export default function GetInvolvedPage() {
       </section>
 
       <section id="contact" className="overflow-hidden border-b border-border bg-white">
-        <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-[720px] lg:grid-cols-[0.45fr_0.55fr]">
-          <div className="relative isolate flex min-h-[650px] items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-[690px] lg:min-h-[720px] lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
+        <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-180 lg:grid-cols-[0.45fr_0.55fr]">
+          <div className="relative isolate flex min-h-162.5 items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-172.5 lg:min-h-180 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
             <div
               className="pointer-events-none absolute inset-0 -z-10 bg-[#f4eaf7] lg:right-4 lg:rounded-r-[48%]"
               aria-hidden="true"
             />
             <div className="max-w-xl">
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-[var(--purple)]">
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                 Contact IAHL
               </p>
               <h2 className="mt-4 text-balance text-4xl font-bold leading-tight sm:text-5xl">
@@ -350,7 +350,7 @@ export default function GetInvolvedPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="grid size-11 place-items-center rounded-full bg-white">
-                    <UsersRound className="size-5 text-[var(--green)]" />
+                    <UsersRound className="size-5 text-(--green)" />
                   </span>
                   <div>
                     <p className="font-bold">Best first step</p>
@@ -362,7 +362,7 @@ export default function GetInvolvedPage() {
               </div>
 
               <div className="mt-9 rounded-[1.25rem_4rem_1.25rem_1.25rem] bg-white/70 p-6">
-                <ShieldCheck className="size-7 text-[var(--purple)]" />
+                <ShieldCheck className="size-7 text-(--purple)" />
                 <h3 className="mt-4 font-bold">Respect and safeguarding</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   IAHL expects respectful, ethical engagement across research,
