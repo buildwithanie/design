@@ -15,10 +15,10 @@ import { Input } from "@/components/ui/input";
 
 const navItems = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Our Work", href: "#work" },
-  { label: "Media Center", href: "#media" },
-  { label: "Get Involved", href: "#involved" },
+  { label: "About", href: "/about" },
+  { label: "Our Work", href: "/work" },
+  { label: "Media Center", href: "/media" },
+  { label: "Get Involved", href: "/get-involved" },
 ];
 
 const projects = [
@@ -218,7 +218,7 @@ export default function Home() {
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 rounded-md px-6">
-                <a href="#work">
+                <a href="/work">
                   Explore Our Work <ArrowRight className="size-4" />
                 </a>
               </Button>
@@ -228,7 +228,7 @@ export default function Home() {
                 size="lg"
                 className="h-12 rounded-md px-6"
               >
-                <a href="#involved">Partner With Us</a>
+                <a href="/get-involved">Partner With Us</a>
               </Button>
             </div>
           </div>
@@ -461,7 +461,7 @@ export default function Home() {
               size="lg"
               className="mt-7 h-11 rounded-md"
             >
-              <a href="#work">View all</a>
+              <a href="/work">View all</a>
             </Button>
           </div>
 
@@ -516,6 +516,15 @@ export default function Home() {
               <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
                 Latest thinking from IAHL
               </h2>
+              <Button
+                asChild
+                variant="outline"
+                className="mt-6 rounded-full border-white/20 bg-white/5 text-white hover:bg-white hover:text-foreground"
+              >
+                <a href="/media">
+                  Visit the Media Center <ArrowRight className="size-4" />
+                </a>
+              </Button>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
               {stories.map((story) => (
@@ -530,7 +539,7 @@ export default function Home() {
                       variant="link"
                       className="mt-5 h-auto p-0 text-primary"
                     >
-                      <a href="#">
+                      <a href="/media">
                         Read article <ArrowRight className="size-4" />
                       </a>
                     </Button>
@@ -643,7 +652,7 @@ export default function Home() {
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 rounded-md px-6">
-                <a href="#work">
+                <a href="/get-involved#partner">
                   Explore partnerships <ArrowRight className="size-4" />
                 </a>
               </Button>
@@ -653,7 +662,7 @@ export default function Home() {
                 size="lg"
                 className="h-12 rounded-md bg-background/70 px-6"
               >
-                <a href="#footer">Contact IAHL</a>
+                <a href="/get-involved#contact">Contact IAHL</a>
               </Button>
             </div>
           </div>
@@ -694,7 +703,13 @@ export default function Home() {
                       variant="link"
                       className="mt-4 h-auto p-0 text-primary"
                     >
-                      <a href="#">
+                      <a
+                        href={
+                          item.title === "Careers"
+                            ? "/get-involved#careers"
+                            : "/get-involved#partner"
+                        }
+                      >
                         {item.action} <ArrowRight className="size-4" />
                       </a>
                     </Button>
@@ -740,7 +755,17 @@ export default function Home() {
                   {links.map((link) => (
                     <a
                       className="text-sm text-white/70 transition hover:text-primary"
-                      href="#"
+                      href={
+                        link === "Media center"
+                          ? "/media"
+                          : ["Partnerships", "Careers", "Contact"].includes(link)
+                            ? `/get-involved#${
+                                link === "Partnerships"
+                                  ? "partner"
+                                  : link.toLowerCase()
+                              }`
+                            : "#"
+                      }
                       key={link}
                     >
                       {link}
