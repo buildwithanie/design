@@ -395,8 +395,11 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <div id="pathways">
-        <section className="overflow-hidden border-t border-border bg-white">
+      <div id="pathways" className="scroll-mt-28">
+        <section
+          id="community-intelligence"
+          className="scroll-mt-28 overflow-hidden border-t border-border bg-white"
+        >
           <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-162.5 lg:grid-cols-[0.58fr_0.42fr]">
             <div className="flex items-center justify-center bg-white">
               <Image
@@ -459,7 +462,10 @@ export default function WorkPage() {
           </div>
         </section>
 
-        <section className="relative overflow-hidden border-t border-white/10 bg-(--charcoal) py-16 text-white sm:py-24">
+        <section
+          id="responsible-ai"
+          className="relative scroll-mt-28 overflow-hidden border-t border-white/10 bg-(--charcoal) py-16 text-white sm:py-24"
+        >
           <div
             className="pointer-events-none absolute inset-0 opacity-35"
             style={{
@@ -563,7 +569,10 @@ export default function WorkPage() {
           </div>
         </section>
 
-        <section className="overflow-hidden border-t border-border bg-white">
+        <section
+          id="capacity-partnership"
+          className="scroll-mt-28 overflow-hidden border-t border-border bg-white"
+        >
           <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-162.5 lg:grid-cols-[0.44fr_0.56fr]">
             <div className="relative isolate flex min-h-147.5 items-center overflow-hidden bg-[#f5edf7] px-[6vw] py-14 sm:min-h-157.5 sm:py-16 lg:min-h-162.5 lg:bg-transparent lg:px-[6vw] lg:pr-[7vw]">
               <div
@@ -638,7 +647,10 @@ export default function WorkPage() {
         </section>
       </div>
 
-      <section className="border-y border-border bg-[#f3f4f5] py-16 sm:py-24">
+      <section
+        id="practice-areas"
+        className="scroll-mt-28 border-y border-border bg-[#f3f4f5] py-16 sm:py-24"
+      >
         <div className="mx-auto w-[min(1180px,92vw)]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
@@ -678,7 +690,10 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="bg-primary py-16 text-primary-foreground sm:py-24">
+      <section
+        id="process"
+        className="scroll-mt-28 bg-primary py-16 text-primary-foreground sm:py-24"
+      >
         <div className="mx-auto w-[min(1180px,92vw)]">
           <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
             <div>
@@ -712,7 +727,10 @@ export default function WorkPage() {
         </div>
       </section>
 
-      <section className="overflow-hidden border-y border-border bg-white">
+      <section
+        id="selection"
+        className="scroll-mt-28 overflow-hidden border-y border-border bg-white"
+      >
         <div className="mx-auto w-[min(1600px,100%)] lg:relative lg:min-h-190">
           <div className="flex items-center justify-center bg-white lg:absolute lg:inset-y-0 lg:left-0 lg:w-[68%]">
             <Image
@@ -907,7 +925,7 @@ export default function WorkPage() {
                             ? "/get-involved#careers"
                             : item === "Contact"
                               ? "/get-involved#contact"
-                              : "/get-involved"
+                              : "/media#newsletter"
                       }
                       key={item}
                     >
@@ -918,7 +936,7 @@ export default function WorkPage() {
               </div>
             </div>
 
-            <form>
+            <form onSubmit={(event) => event.preventDefault()}>
               <h3 className="font-bold">Stay updated</h3>
               <p className="mt-3 text-sm leading-6 text-white/70">
                 Receive IAHL news and research updates.

@@ -73,21 +73,25 @@ const institutionalFoundations = [
     title: "Research governance",
     text: "Questions, methods, responsibilities, and review points are defined before the work moves forward.",
     link: "How decisions are guided",
+    href: "/work#selection",
   },
   {
     title: "Ethics and data stewardship",
     text: "Privacy, consent, transparency, and responsible technology are treated as research requirements.",
     link: "Our research standards",
+    href: "/work#responsible-ai",
   },
   {
     title: "Partnership accountability",
     text: "Collaborators work through shared objectives, clear roles, and learning that benefits every participant.",
     link: "How partnerships work",
+    href: "/get-involved#partner",
   },
   {
     title: "Public value",
     text: "Evidence is designed to be understandable and useful beyond reports, publications, or technical teams.",
     link: "From evidence to action",
+    href: "/work#process",
   },
 ];
 
@@ -280,7 +284,7 @@ export default function AboutPage() {
 
               <Link
                 className="mt-8 inline-flex items-center gap-2 font-bold text-primary"
-                href="/get-involved"
+                href="/get-involved#partner"
               >
                 Build a research connection
                 <ArrowUpRight className="size-4" />
@@ -475,7 +479,7 @@ export default function AboutPage() {
                     </p>
                     <Link
                       className="mt-5 flex items-center justify-between text-sm font-bold text-primary"
-                      href="/get-involved#partner"
+                      href={foundation.href}
                     >
                       {foundation.link}
                       <ChevronRight className="size-4" />
@@ -513,7 +517,7 @@ export default function AboutPage() {
                       </p>
                       <Link
                         className="mt-5 flex items-center justify-between text-sm font-bold text-primary"
-                        href="/get-involved#partner"
+                        href={foundation.href}
                       >
                         {foundation.link}
                         <ChevronRight className="size-4" />
@@ -577,7 +581,7 @@ export default function AboutPage() {
                             ? "/get-involved#careers"
                             : item === "Contact"
                               ? "/get-involved#contact"
-                              : "/get-involved"
+                              : "/media#newsletter"
                       }
                       key={item}
                     >
@@ -588,7 +592,7 @@ export default function AboutPage() {
               </div>
             </div>
 
-            <form>
+            <form onSubmit={(event) => event.preventDefault()}>
               <h3 className="font-bold">Stay updated</h3>
               <p className="mt-3 text-sm leading-6 text-white/70">
                 Receive IAHL news and research updates.

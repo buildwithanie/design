@@ -27,18 +27,21 @@ const projects = [
     tag: "Research",
     image: "/images/project-ai-lab.png",
     text: "Building responsible AI models that help researchers identify health gaps early and translate findings into local action.",
+    href: "/projects#ai-health-equity-lab",
   },
   {
     title: "Community Evidence Hubs",
     tag: "Field work",
     image: "/images/project-community-equity.png",
     text: "Working with communities to define research priorities, collect meaningful evidence, and return insights people can use.",
+    href: "/projects#community-evidence-hubs",
   },
   {
     title: "Digital Research Partnerships",
     tag: "Training",
     image: "/images/project-training.png",
     text: "Equipping health teams, researchers, and partners with practical tools for ethical, data-informed health programs.",
+    href: "/projects#digital-research-partnerships",
   },
 ];
 
@@ -104,14 +107,34 @@ const researchNodes = [
 ];
 
 const stories = [
-  "Responsible AI for public health decision-making",
-  "Community-led research that strengthens local trust",
-  "Partnership models for equitable health innovation",
+  {
+    title: "Responsible AI for public health decision-making",
+    href: "/work#responsible-ai",
+  },
+  {
+    title: "Community-led research that strengthens local trust",
+    href: "/work#community-intelligence",
+  },
+  {
+    title: "Partnership models for equitable health innovation",
+    href: "/work#capacity-partnership",
+  },
 ];
 
 const footerLinks = {
   Explore: ["About", "Our work", "Media center", "Reports"],
   Connect: ["Partnerships", "Careers", "Contact", "Newsletter"],
+};
+
+const footerLinkHrefs: Record<string, string> = {
+  About: "/about",
+  "Our work": "/work",
+  "Media center": "/media",
+  Reports: "/media#coverage",
+  Partnerships: "/get-involved#partner",
+  Careers: "/get-involved#careers",
+  Contact: "/get-involved#contact",
+  Newsletter: "/media#newsletter",
 };
 
 const approachOffsets = [
@@ -450,7 +473,7 @@ export default function Home() {
         <div className="mx-auto w-[min(1180px,92vw)]">
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
-              Projects
+              Featured projects
             </p>
             <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
               Focused work with measurable community value
@@ -461,7 +484,7 @@ export default function Home() {
               size="lg"
               className="mt-7 h-11 rounded-md"
             >
-              <a href="/work">View all</a>
+              <a href="/projects">View all projects</a>
             </Button>
           </div>
 
@@ -495,7 +518,7 @@ export default function Home() {
                     variant="link"
                     className="mt-4 h-auto p-0 text-primary"
                   >
-                    <a href="#">
+                    <a href={project.href}>
                       Read more <ArrowRight className="size-4" />
                     </a>
                   </Button>
@@ -530,17 +553,19 @@ export default function Home() {
               {stories.map((story) => (
                 <Card
                   className="rounded-lg border-white/10 bg-white/10 text-white shadow-none"
-                  key={story}
+                  key={story.title}
                 >
                   <CardContent className="p-5">
-                    <h3 className="text-lg font-bold leading-snug">{story}</h3>
+                    <h3 className="text-lg font-bold leading-snug">
+                      {story.title}
+                    </h3>
                     <Button
                       asChild
                       variant="link"
                       className="mt-5 h-auto p-0 text-primary"
                     >
-                      <a href="/media">
-                        Read article <ArrowRight className="size-4" />
+                      <a href={story.href}>
+                        Explore topic <ArrowRight className="size-4" />
                       </a>
                     </Button>
                   </CardContent>
@@ -755,17 +780,7 @@ export default function Home() {
                   {links.map((link) => (
                     <a
                       className="text-sm text-white/70 transition hover:text-primary"
-                      href={
-                        link === "Media center"
-                          ? "/media"
-                          : ["Partnerships", "Careers", "Contact"].includes(link)
-                            ? `/get-involved#${
-                                link === "Partnerships"
-                                  ? "partner"
-                                  : link.toLowerCase()
-                              }`
-                            : "#"
-                      }
+                      href={footerLinkHrefs[link]}
                       key={link}
                     >
                       {link}
@@ -775,7 +790,7 @@ export default function Home() {
               </div>
             ))}
 
-            <form>
+            <form onSubmit={(event) => event.preventDefault()}>
               <h3 className="font-bold">Stay updated</h3>
               <p className="mt-3 text-sm leading-6 text-white/70">
                 Receive IAHL news and research updates.
