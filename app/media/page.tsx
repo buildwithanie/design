@@ -75,40 +75,8 @@ const videos = [
   },
 ];
 
-const coverage = [
-  {
-    date: "June 2026",
-    title: "Designing responsible health AI around public value",
-    outlet: "Research briefing",
-    color: "bg-[var(--purple)]",
-    href: "/work#responsible-ai",
-    action: "Explore responsible AI",
-  },
-  {
-    date: "May 2026",
-    title: "Why locally led evidence matters for stronger health systems",
-    outlet: "Partner feature",
-    color: "bg-[var(--green)]",
-    href: "/work#community-intelligence",
-    action: "Explore community research",
-  },
-  {
-    date: "April 2026",
-    title: "Community participation is a research method, not a final step",
-    outlet: "Opinion",
-    color: "bg-primary",
-    href: "/work#community-intelligence",
-    action: "See the research pathway",
-  },
-  {
-    date: "March 2026",
-    title: "Building institutional confidence in data-informed decisions",
-    outlet: "Program update",
-    color: "bg-[var(--cyan)]",
-    href: "/work#capacity-partnership",
-    action: "Explore capacity building",
-  },
-];
+
+
 
 export default function MediaPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -403,59 +371,6 @@ export default function MediaPage() {
         </div>
       </section>
 
-      <section id="coverage" className="scroll-mt-28 py-16 sm:py-24">
-        <div className="mx-auto w-[min(1240px,92vw)]">
-          <div className="grid gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-end">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-                Media coverage
-              </p>
-              <h2 className="mt-4 text-balance text-4xl font-bold leading-tight sm:text-5xl">
-                IAHL in the wider conversation.
-              </h2>
-            </div>
-            <p className="max-w-xl text-lg leading-8 text-muted-foreground lg:justify-self-end">
-              Briefings, commentary, and partner features about responsible
-              innovation and equitable health research.
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {coverage.map((item, index) => (
-              <article
-                className={`relative min-h-82.5 overflow-hidden rounded-[1.5rem_6rem_1.5rem_1.5rem] p-7 text-white ${item.color}`}
-                key={item.title}
-              >
-                <div
-                  className="pointer-events-none absolute -right-12 -top-14 size-44 rounded-full border-30 border-white/15"
-                  aria-hidden="true"
-                />
-                <p className="relative text-xs font-bold uppercase tracking-[0.14em] text-white/70">
-                  {item.date}
-                </p>
-                <h3 className="relative mt-8 text-2xl font-bold leading-snug">
-                  {item.title}
-                </h3>
-                <p className="relative mt-5 text-sm font-bold uppercase tracking-[0.12em] text-white/70">
-                  {item.outlet}
-                </p>
-                <Link
-                  className="absolute bottom-7 left-7 flex items-center gap-2 text-sm font-bold"
-                  href={item.href}
-                >
-                  {item.action} <ArrowRight className="size-4" />
-                </Link>
-                <span
-                  className="absolute bottom-5 right-6 text-7xl font-bold leading-none text-white/10"
-                  aria-hidden="true"
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
 
       <section
         id="newsletter"
