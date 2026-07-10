@@ -4,6 +4,11 @@
   "scripts": {
     "dev": "pnpm --dir web dev",
     "build": "pnpm --dir web build",
-    "lint": "pnpm --dir web lint"
+    "lint": "pnpm --dir web lint",
+    "studio:dev": "pnpm --dir studio dev",
+    "studio:build": "pnpm --dir studio build",
+    "studio:deploy": "pnpm --dir studio deploy",
+    "deps:outdated": "pnpm -r outdated",
+    "deps:update": "pnpm -r up -i"
   }
 }
