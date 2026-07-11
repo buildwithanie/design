@@ -1,11 +1,8 @@
 import Image from "next/image";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
-import { SiteHeader } from "@/components/site-header";
-import { ClientForm } from "@/components/client-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
 import { sanityFetch } from "@/sanity/lib/live";
 import { urlForImage } from "@/sanity/lib/image";
@@ -88,22 +85,6 @@ const stories = [
   },
 ];
 
-const footerLinks = {
-  Explore: ["About", "Our work", "Media center", "Reports"],
-  Connect: ["Partnerships", "Careers", "Contact", "Newsletter"],
-};
-
-const footerLinkHrefs: Record<string, string> = {
-  About: "/about",
-  "Our work": "/work",
-  "Media center": "/media",
-  Reports: "/media#coverage",
-  Partnerships: "/get-involved#partner",
-  Careers: "/get-involved#careers",
-  Contact: "/get-involved#contact",
-  Newsletter: "/media#newsletter",
-};
-
 const approachOffsets = [
   "lg:ml-[5%]",
   "lg:mr-[10%] lg:justify-self-end",
@@ -160,8 +141,6 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <SiteHeader />
-
       <section
         id="home"
         className="relative grid min-h-screen items-center overflow-hidden pt-10 lg:grid-cols-[0.92fr_1.08fr]"
@@ -703,60 +682,6 @@ export default async function Home() {
           </div>
         </div>
       </section>
-
-      <footer id="footer" className="bg-(--charcoal) text-white">
-        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 py-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <Image
-              src="/images/iahl-logo.jpeg"
-              alt="Innovate AI HealthLab logo"
-              width={128}
-              height={94}
-              className="h-16 w-auto rounded-sm bg-white object-contain"
-            />
-            <p className="mt-5 max-w-md leading-7 text-white/70">
-              Advancing health research through AI, innovation, and strategic
-              partnerships for equitable health outcomes.
-            </p>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-3">
-            {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
-                <h3 className="font-bold">{title}</h3>
-                <div className="mt-4 grid gap-2">
-                  {links.map((link) => (
-                    <a
-                      className="text-sm text-white/70 transition hover:text-primary"
-                      href={footerLinkHrefs[link]}
-                      key={link}
-                    >
-                      {link}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            <ClientForm>
-              <h3 className="font-bold">Stay updated</h3>
-              <p className="mt-3 text-sm leading-6 text-white/70">
-                Receive IAHL news and research updates.
-              </p>
-              <div className="mt-4 grid gap-2">
-                <Input
-                  type="email"
-                  placeholder="you@example.com"
-                  className="h-11 border-white/20 bg-white text-foreground"
-                />
-                <Button type="submit" className="h-11">
-                  Sign up <CheckCircle2 className="size-4" />
-                </Button>
-              </div>
-            </ClientForm>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }

@@ -20,6 +20,10 @@ export const homePage = defineType({
       name: 'visionMission',
       title: 'Vision and mission',
     },
+    {
+      name: 'featuredProjects',
+      title: 'Featured projects',
+    },
   ],
   fields: [
     defineField({
@@ -108,6 +112,28 @@ export const homePage = defineType({
       group: 'visionMission',
       description: 'The organisation’s mission displayed on the home page.',
       validation: (rule) => rule.required().max(240),
+    }),
+    defineField({
+      name: 'featuredProjectsHeading',
+      title: 'Section heading',
+      type: 'string',
+      group: 'featuredProjects',
+      validation: (rule) => rule.required().max(100),
+    }),
+    defineField({
+      name: 'featuredProjects',
+      title: 'Featured projects',
+      type: 'array',
+      group: 'featuredProjects',
+      description: 'Select and order exactly three projects for the homepage.',
+      of: [
+        defineArrayMember({
+          type: 'reference',
+          to: [{type: 'project'}],
+        }),
+      ],
+      validation: (rule) =>
+        rule.required().length(3).unique().error('Select exactly three different projects.'),
     }),
   ],
   preview: {

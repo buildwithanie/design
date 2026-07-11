@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
 import { SanityLive } from "@/sanity/lib/live";
 
 import "./globals.css";
@@ -16,9 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="font-sans">
+    <html lang="en" className="font-sans" data-scroll-behavior="smooth">
       <body>
+        <SiteHeader />
         {children}
+        <SiteFooter />
         <SanityLive />
       </body>
     </html>

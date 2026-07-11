@@ -8,17 +8,9 @@ import {
 } from "lucide-react";
 
 import { ClientForm } from "@/components/client-form";
-import { SiteHeader } from "@/components/site-header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-const navItems = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Our Work", href: "/work" },
-  { label: "Media Center", href: "/media" },
-  { label: "Get Involved", href: "/get-involved" },
-];
 
 const photoGallery = [
   {
@@ -77,8 +69,6 @@ const videos = [
 export default function MediaPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <SiteHeader />
-
       <section className="overflow-hidden pt-24">
         <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-162.5 lg:grid-cols-[0.45fr_0.55fr]">
           <div className="relative isolate flex min-h-140 items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-150 lg:min-h-162.5 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
@@ -178,7 +168,7 @@ export default function MediaPage() {
             </p>
           </div>
 
-          <div className="mt-12 grid auto-rows-[220px] gap-4 sm:grid-cols-4">
+          <div className="mt-12 grid auto-rows-55 gap-4 sm:grid-cols-4">
             {photoGallery.map((photo) => (
               <figure
                 className={`group relative overflow-hidden rounded-[1.5rem_4rem_1.5rem_1.5rem] bg-white ${photo.className}`}
@@ -329,81 +319,6 @@ export default function MediaPage() {
           </div>
         </div>
       </section>
-
-      <footer
-        id="footer"
-        className="border-t-4 border-primary bg-[linear-gradient(135deg,#303136_0%,#35363a_48%,#26282d_100%)] text-white"
-      >
-        <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 py-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <Image
-              src="/images/iahl-logo.jpeg"
-              alt="Innovate AI HealthLab logo"
-              width={176}
-              height={129}
-              className="h-24 w-auto rounded-md bg-white object-contain shadow-sm md:h-28"
-            />
-            <p className="mt-6 max-w-md leading-7 text-white/70">
-              Advancing health research through AI, innovation, and strategic
-              partnerships for equitable health outcomes.
-            </p>
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-3">
-            <div>
-              <h3 className="font-bold">Explore</h3>
-              <div className="mt-4 grid gap-2">
-                {navItems.slice(0, 4).map((item) => (
-                  <Link
-                    className="text-sm text-white/70 transition hover:text-primary"
-                    href={item.href}
-                    key={item.label}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <h3 className="font-bold">Media</h3>
-              <div className="mt-4 grid gap-2">
-                {[
-                  ["Photos", "#photos"],
-                  ["Videos", "#videos"],
-                  ["Coverage", "#coverage"],
-                  ["Newsletter", "#newsletter"],
-                ].map(([label, href]) => (
-                  <Link
-                    className="text-sm text-white/70 transition hover:text-primary"
-                    href={href}
-                    key={label}
-                  >
-                    {label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-<ClientForm>
-              <h3 className="font-bold">Stay updated</h3>
-              <p className="mt-3 text-sm leading-6 text-white/70">
-                Receive IAHL news and research updates.
-              </p>
-              <div className="mt-4 grid gap-2">
-                <Input
-                  type="email"
-                  placeholder="you@example.com"
-                  className="h-11 border-white/20 bg-white text-foreground"
-                />
-                <Button type="submit" className="h-11">
-                  Sign up <CheckCircle2 className="size-4" />
-                </Button>
-              </div>
-            </ClientForm>
-          </div>
-        </div>
-      </footer>
     </main>
   );
 }

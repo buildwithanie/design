@@ -15,26 +15,18 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type HomePage = {
-  _id: string;
-  _type: "homePage";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  heroHeadline: string;
-  heroHighlightedText: string;
-  heroDescription: string;
-  heroImage: AccessibleImage;
-  researchHeading: string;
-  researchDescription: string;
-  researchMapImage: AccessibleImage;
-  researchParticipants: Array<
-    {
-      _key: string;
-    } & NetworkParticipant
-  >;
-  visionStatement: string;
-  missionStatement: string;
+export type AreaOfWorkReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "areaOfWork";
+};
+
+export type ProjectTypeReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "projectType";
 };
 
 export type SanityImageAssetReference = {
@@ -44,21 +36,48 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
-export type AccessibleImage = {
-  _type: "accessibleImage";
-  asset?: SanityImageAssetReference;
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  decorative?: boolean;
-  alt?: string;
-};
-
-export type NetworkParticipant = {
-  _type: "networkParticipant";
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
   title: string;
-  description: string;
-  image: AccessibleImage;
+  slug: Slug;
+  areaOfWork: AreaOfWorkReference;
+  projectType?: ProjectTypeReference;
+  status: "planned" | "active" | "completed";
+  summary: string;
+  coverImage: AccessibleImage;
+  body: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href: string;
+      openInNewTab?: boolean;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    credit?: string;
+    _type: "projectImage";
+    _key: string;
+  }>;
 };
 
 export type SanityImageCrop = {
@@ -75,6 +94,82 @@ export type SanityImageHotspot = {
   y: number;
   height: number;
   width: number;
+};
+
+export type AccessibleImage = {
+  _type: "accessibleImage";
+  asset?: SanityImageAssetReference;
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  decorative?: boolean;
+  alt?: string;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
+export type ProjectType = {
+  _id: string;
+  _type: "projectType";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  description?: string;
+};
+
+export type AreaOfWork = {
+  _id: string;
+  _type: "areaOfWork";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  description?: string;
+};
+
+export type ProjectReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "project";
+};
+
+export type HomePage = {
+  _id: string;
+  _type: "homePage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  heroHeadline: string;
+  heroHighlightedText: string;
+  heroDescription: string;
+  heroImage: AccessibleImage;
+  researchHeading: string;
+  researchDescription: string;
+  researchMapImage: AccessibleImage;
+  researchParticipants: Array<{
+    _key: string;
+  } & NetworkParticipant>;
+  visionStatement: string;
+  missionStatement: string;
+  featuredProjectsHeading: string;
+  featuredProjects: Array<{
+    _key: string;
+  } & ProjectReference>;
+};
+
+export type NetworkParticipant = {
+  _type: "networkParticipant";
+  title: string;
+  description: string;
+  image: AccessibleImage;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -174,28 +269,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
-export type AllSanitySchemaTypes =
-  | HomePage
-  | SanityImageAssetReference
-  | AccessibleImage
-  | NetworkParticipant
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityImageMetadata
-  | SanityFileAsset
-  | SanityAssetSourceData
-  | SanityImageAsset
-  | Geopoint
-  | Slug;
+export type AllSanitySchemaTypes = AreaOfWorkReference | ProjectTypeReference | SanityImageAssetReference | Project | SanityImageCrop | SanityImageHotspot | AccessibleImage | Slug | ProjectType | AreaOfWork | ProjectReference | HomePage | NetworkParticipant | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -241,6 +315,7 @@ export type HOME_PAGE_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "homePage" && _id == "homePage"][0] {\n    _id,\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n    visionStatement,\n    missionStatement\n  }\n': HOME_PAGE_QUERY_RESULT;
+    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n    visionStatement,\n    missionStatement\n  }\n": HOME_PAGE_QUERY_RESULT;
   }
 }
+
