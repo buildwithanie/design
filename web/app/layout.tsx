@@ -1,4 +1,7 @@
 import type { Metadata } from "next";
+
+import { SanityLive } from "@/sanity/lib/live";
+
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +17,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="font-sans">
-      <body>{children}</body>
+      <body>
+        {children}
+        <SanityLive />
+      </body>
     </html>
   );
 }

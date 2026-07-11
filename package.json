@@ -9,6 +9,7 @@
     "studio:build": "pnpm --dir studio build",
     "studio:deploy": "pnpm --dir studio deploy",
     "deps:outdated": "pnpm -r outdated",
-    "deps:update": "pnpm -r up -i"
+    "deps:update": "pnpm -r up -i",
+    "typegen": "pnpm --dir studio exec sanity schema extract && pnpm --dir studio exec sanity typegen generate"
   }
 }

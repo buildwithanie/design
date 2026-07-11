@@ -1,14 +1,15 @@
 import Image from "next/image";
-import {
-  ArrowRight,
-  CheckCircle2,
-} from "lucide-react";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 import { SiteHeader } from "@/components/site-header";
 import { ClientForm } from "@/components/client-form";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
+import { sanityFetch } from "@/sanity/lib/live";
+import { urlForImage } from "@/sanity/lib/image";
+import { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
 
 const projects = [
   {
@@ -72,29 +73,6 @@ const values = [
   },
 ];
 
-const researchNodes = [
-  {
-    title: "Ministries",
-    image: "/images/project-training.png",
-    text: "Align research with public health systems.",
-  },
-  {
-    title: "Universities",
-    image: "/images/project-ai-lab.png",
-    text: "Strengthen research methods, ethics, and learning.",
-  },
-  {
-    title: "Communities",
-    image: "/images/project-community-equity.png",
-    text: "Shape the questions, data, and action from the ground.",
-  },
-  {
-    title: "Health teams",
-    image: "/images/project-community-equity.png",
-    text: "Bring local realities into the evidence we build.",
-  },
-];
-
 const stories = [
   {
     title: "Responsible AI for public health decision-making",
@@ -134,7 +112,52 @@ const approachOffsets = [
   "lg:ml-[18%]",
 ];
 
-export default function Home() {
+export default async function Home() {
+  const { data } = await sanityFetch({
+    query: HOME_PAGE_QUERY,
+  });
+
+  const homePage = data as HOME_PAGE_QUERY_RESULT;
+
+  if (!homePage) {
+    throw new Error(
+      "The published Sanity homePage document could not be found.",
+    );
+  }
+
+  const heroImageUrl = urlForImage(homePage.heroImage)
+    .width(1619)
+    .height(972)
+    .fit("crop")
+    .auto("format")
+    .url();
+
+  const heroImageAlt = homePage.heroImage.decorative
+    ? ""
+    : (homePage.heroImage.alt ?? "");
+
+  const researchMapImageUrl = urlForImage(
+    homePage.researchMapImage ?? homePage.heroImage,
+  )
+    .width(900)
+    .height(1050)
+    .fit("crop")
+    .auto("format")
+    .url();
+
+  const researchNodes = homePage.researchParticipants.map((participant) => ({
+    key: participant._key,
+    title: participant.title,
+    text: participant.description,
+    image: urlForImage(participant.image)
+      .width(288)
+      .height(288)
+      .fit("crop")
+      .auto("format")
+      .url(),
+    alt: participant.image.decorative ? "" : (participant.image.alt ?? ""),
+  }));
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <SiteHeader />
@@ -150,13 +173,14 @@ export default function Home() {
             Innovate AI HealthLab
           </p>
           <div className="max-w-2xl">
-            <h1 className="text-balance text-5xl font-bold leading-[0.98] text-foreground sm:text-6xl lg:text-7xl xl:text-8xl">
-              AI-powered health research,{" "}
-              <span className="text-(--purple)">shaped by community.</span>
+            <h1 className="text-balance text-4xl font-bold leading-[1.02] text-foreground sm:text-5xl lg:text-6xl xl:text-7xl">
+              {homePage.heroHeadline}{" "}
+              <span className="text-(--purple)">
+                {homePage.heroHighlightedText}
+              </span>
             </h1>
             <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-              We bring communities, researchers, and strategic partners together
-              to design trustworthy AI solutions for equitable health outcomes.
+              {homePage.heroDescription}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 rounded-md px-6">
@@ -175,15 +199,15 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="mt-12 lg:-mr-14 lg:mt-0 xl:-mr-24">
+          <div className="mt-12 lg:-mr-4 lg:mt-0 xl:-mr-8">
             <div className="relative overflow-visible rounded-lg">
-              <div className="relative aspect-1619/972 w-full overflow-hidden rounded-lg bg-transparent shadow-2xl lg:w-[112%] xl:w-[120%]">
+              <div className="relative aspect-1619/972 w-full overflow-hidden rounded-lg bg-transparent shadow-2xl lg:w-[104%] xl:w-[108%]">
+              
                 <Image
-                  src="/images/hero-community-ai-health.png"
-                  alt="Community members and a health research facilitator discussing data on a tablet"
+                  src={heroImageUrl}
+                  alt={heroImageAlt}
                   fill
                   priority
-                  unoptimized
                   sizes="(max-width: 1024px) 92vw, 66vw"
                   className="object-cover"
                 />
@@ -200,11 +224,10 @@ export default function Home() {
               Where we begin
             </p>
             <h2 className="text-balance text-5xl font-bold leading-[1.05] sm:text-6xl">
-              Africa-led health research.
+              {homePage.researchHeading}
             </h2>
             <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-              People, evidence, and responsible AI working together for fairer
-              health outcomes.
+              {homePage.researchDescription}
             </p>
           </div>
 
@@ -220,8 +243,9 @@ export default function Home() {
 
               <div className="relative mx-auto mt-8 aspect-[0.86] w-[min(430px,82vw)]">
                 <div
-                  className="absolute inset-0 bg-[linear-gradient(rgba(125,42,145,0.08),rgba(242,102,34,0.08)),url('/images/hero-community-ai-health.png')] bg-cover bg-center drop-shadow-2xl"
+                  className="absolute inset-0 bg-cover bg-center drop-shadow-2xl"
                   style={{
+                    backgroundImage: `linear-gradient(rgba(125,42,145,0.08), rgba(242,102,34,0.08)), url("${researchMapImageUrl}")`,
                     WebkitMask:
                       'url("/images/africa-map-mask.svg") center / contain no-repeat',
                     mask: 'url("/images/africa-map-mask.svg") center / contain no-repeat',
@@ -231,12 +255,12 @@ export default function Home() {
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2">
                 {researchNodes.map((node) => (
-                  <Card key={node.title} className="rounded-lg shadow-sm">
+                  <Card key={node.key} className="rounded-lg shadow-sm">
                     <CardContent className="flex items-center gap-4 p-4">
                       <div className="relative size-20 shrink-0 overflow-hidden rounded-full border-4 border-background bg-secondary shadow-md">
                         <Image
                           src={node.image}
-                          alt=""
+                          alt={node.alt}
                           fill
                           sizes="80px"
                           className="object-cover"
@@ -265,8 +289,9 @@ export default function Home() {
 
               <div className="absolute left-1/2 top-24 aspect-[0.86] w-[min(390px,34vw)] -translate-x-1/2 xl:w-[min(450px,42vw)]">
                 <div
-                  className="absolute inset-0 bg-[linear-gradient(rgba(125,42,145,0.08),rgba(242,102,34,0.08)),url('/images/hero-community-ai-health.png')] bg-cover bg-center drop-shadow-2xl"
+                  className="absolute inset-0 bg-cover bg-center drop-shadow-2xl"
                   style={{
+                    backgroundImage: `linear-gradient(rgba(125,42,145,0.08), rgba(242,102,34,0.08)), url("${researchMapImageUrl}")`,
                     WebkitMask:
                       'url("/images/africa-map-mask.svg") center / contain no-repeat',
                     mask: 'url("/images/africa-map-mask.svg") center / contain no-repeat',
@@ -277,7 +302,9 @@ export default function Home() {
               <div className="absolute left-0 top-28 flex items-center gap-3 xl:gap-4">
                 <Card className="max-w-40 rounded-lg bg-background/95 text-right shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
-                    <h3 className="text-base font-bold">{researchNodes[0].title}</h3>
+                    <h3 className="text-base font-bold">
+                      {researchNodes[0].title}
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
                       {researchNodes[0].text}
                     </p>
@@ -286,7 +313,7 @@ export default function Home() {
                 <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
                   <Image
                     src={researchNodes[0].image}
-                    alt=""
+                    alt={researchNodes[0].alt}
                     fill
                     sizes="144px"
                     className="object-cover"
@@ -298,7 +325,7 @@ export default function Home() {
                 <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
                   <Image
                     src={researchNodes[1].image}
-                    alt=""
+                    alt={researchNodes[1].alt}
                     fill
                     sizes="144px"
                     className="object-cover"
@@ -306,7 +333,9 @@ export default function Home() {
                 </div>
                 <Card className="max-w-40 rounded-lg bg-background/95 shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
-                    <h3 className="text-base font-bold">{researchNodes[1].title}</h3>
+                    <h3 className="text-base font-bold">
+                      {researchNodes[1].title}
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
                       {researchNodes[1].text}
                     </p>
@@ -317,7 +346,9 @@ export default function Home() {
               <div className="absolute bottom-8 left-0 flex items-center gap-3 xl:gap-4">
                 <Card className="max-w-40 rounded-lg bg-background/95 text-right shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
-                    <h3 className="text-base font-bold">{researchNodes[3].title}</h3>
+                    <h3 className="text-base font-bold">
+                      {researchNodes[3].title}
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
                       {researchNodes[3].text}
                     </p>
@@ -326,7 +357,7 @@ export default function Home() {
                 <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
                   <Image
                     src={researchNodes[3].image}
-                    alt=""
+                    alt={researchNodes[3].alt}
                     fill
                     sizes="144px"
                     className="object-cover"
@@ -340,7 +371,7 @@ export default function Home() {
                   <div className="relative size-32 overflow-hidden rounded-full border-8 border-background bg-secondary shadow-xl xl:size-36">
                     <Image
                       src={researchNodes[2].image}
-                      alt=""
+                      alt={researchNodes[2].alt}
                       fill
                       sizes="144px"
                       className="object-cover"
@@ -349,7 +380,9 @@ export default function Home() {
                 </div>
                 <Card className="max-w-40 rounded-lg bg-background/95 shadow-lg xl:max-w-45">
                   <CardContent className="p-4">
-                    <h3 className="text-base font-bold">{researchNodes[2].title}</h3>
+                    <h3 className="text-base font-bold">
+                      {researchNodes[2].title}
+                    </h3>
                     <p className="mt-2 text-sm leading-6 text-muted-foreground">
                       {researchNodes[2].text}
                     </p>
@@ -563,7 +596,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="involved" className="relative overflow-hidden py-10 sm:py-10">
+      <section
+        id="involved"
+        className="relative overflow-hidden py-10 sm:py-10"
+      >
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
           <div className="relative">
             <Image
@@ -577,8 +613,6 @@ export default function Home() {
           </div>
 
           <div className="relative">
-          
-
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-primary">
               Get involved
             </p>
@@ -591,8 +625,6 @@ export default function Home() {
               innovation, growth, and community impact. Together, we can create
               sustainable solutions that make a real difference.
             </p>
-
-          
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Button asChild size="lg" className="h-12 rounded-md px-6">
@@ -709,7 +741,7 @@ export default function Home() {
               </div>
             ))}
 
-<ClientForm>
+            <ClientForm>
               <h3 className="font-bold">Stay updated</h3>
               <p className="mt-3 text-sm leading-6 text-white/70">
                 Receive IAHL news and research updates.
