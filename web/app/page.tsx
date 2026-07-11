@@ -202,7 +202,6 @@ export default async function Home() {
           <div className="mt-12 lg:-mr-4 lg:mt-0 xl:-mr-8">
             <div className="relative overflow-visible rounded-lg">
               <div className="relative aspect-1619/972 w-full overflow-hidden rounded-lg bg-transparent shadow-2xl lg:w-[104%] xl:w-[108%]">
-              
                 <Image
                   src={heroImageUrl}
                   alt={heroImageAlt}
@@ -402,8 +401,7 @@ export default async function Home() {
                 Our Vision
               </p>
               <h2 className="mt-4 text-balance text-2xl font-bold leading-tight sm:text-3xl">
-                A future where health research promotes equity and equality at
-                the community level.
+                {homePage.visionStatement}
               </h2>
             </CardContent>
           </Card>
@@ -413,8 +411,7 @@ export default async function Home() {
                 Our Mission
               </p>
               <h2 className="mt-4 text-balance text-2xl font-bold leading-tight sm:text-3xl">
-                To advance health research through AI, innovation, and strategic
-                partnerships for equitable health outcomes.
+                {homePage.missionStatement}
               </h2>
             </CardContent>
           </Card>

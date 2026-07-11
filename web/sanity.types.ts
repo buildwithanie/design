@@ -28,9 +28,13 @@ export type HomePage = {
   researchHeading: string;
   researchDescription: string;
   researchMapImage: AccessibleImage;
-  researchParticipants: Array<{
-    _key: string;
-  } & NetworkParticipant>;
+  researchParticipants: Array<
+    {
+      _key: string;
+    } & NetworkParticipant
+  >;
+  visionStatement: string;
+  missionStatement: string;
 };
 
 export type SanityImageAssetReference = {
@@ -176,11 +180,26 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = HomePage | SanityImageAssetReference | AccessibleImage | NetworkParticipant | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint | Slug;
+export type AllSanitySchemaTypes =
+  | HomePage
+  | SanityImageAssetReference
+  | AccessibleImage
+  | NetworkParticipant
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint
+  | Slug;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    }  }
+// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    visionStatement,    missionStatement  }
 export type HOME_PAGE_QUERY_RESULT = {
   _id: "homePage";
   heroHeadline: string;
@@ -214,13 +233,14 @@ export type HOME_PAGE_QUERY_RESULT = {
       alt: string | null;
     };
   }>;
+  visionStatement: string;
+  missionStatement: string;
 } | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    }\n  }\n": HOME_PAGE_QUERY_RESULT;
+    '\n  *[_type == "homePage" && _id == "homePage"][0] {\n    _id,\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n    visionStatement,\n    missionStatement\n  }\n': HOME_PAGE_QUERY_RESULT;
   }
 }
-

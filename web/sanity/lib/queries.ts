@@ -33,6 +33,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
         decorative,
         alt
       }
-    }
+    },
+    visionStatement,
+    missionStatement
   }
 `);
