@@ -1,41 +1,14 @@
 import Image from "next/image";
 
-const values = [
-  {
-    title: "Innovation",
-    marker: "AI",
-    color: "bg-[var(--cyan)]",
-    image: "/images/project-ai-lab.png",
-    text: "Practical AI, technology, and forward-thinking research methods for evolving health needs.",
-  },
-  {
-    title: "Impact",
-    marker: "IM",
-    color: "bg-[var(--green)]",
-    image: "/images/hero-health-research.png",
-    text: "Measurable change for communities facing immediate and long-term health challenges.",
-  },
-  {
-    title: "Sustainability",
-    marker: "SU",
-    color: "bg-[var(--orange)]",
-    image: "/images/project-training.png",
-    text: "Research initiatives built for resource efficiency, responsibility, and continuity.",
-  },
-  {
-    title: "Responsibility",
-    marker: "RE",
-    color: "bg-[var(--purple)]",
-    image: "/images/project-community-equity.png",
-    text: "Accountability, ethics, transparency, trust, and respect for every community involved.",
-  },
-  {
-    title: "Empowerment",
-    marker: "EM",
-    color: "bg-foreground",
-    image: "/images/project-training.png",
-    text: "Tools and opportunities that help communities shape better health outcomes.",
-  },
+import type { HomeSectionProps } from "@/components/home/types";
+import { urlForImage } from "@/sanity/lib/image";
+
+const approachColors = [
+  "bg-[var(--green)]",
+  "bg-[var(--orange)]",
+  "bg-[var(--purple)]",
+  "bg-foreground",
+  "bg-[var(--cyan)]",
 ];
 
 const approachOffsets = [
@@ -46,17 +19,61 @@ const approachOffsets = [
   "lg:ml-[18%]",
 ];
 
-export function ResearchApproach() {
+function getApproachMarker(title: string) {
+  const words = title.trim().split(/\s+/);
+
+  if (words.length > 1) {
+    return words
+      .map((word) => word[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+  }
+
+  return title.trim().slice(0, 2).toUpperCase();
+}
+
+export function ResearchApproach({ homePage }: HomeSectionProps) {
+  const values = (homePage.approachValues ?? []).flatMap((value, index) => {
+    if (!value.title || !value.description || !value.image?.asset) {
+      return [];
+    }
+
+    return [
+      {
+        ...value,
+        marker: getApproachMarker(value.title),
+        color: approachColors[index] ?? "bg-foreground",
+        offset: approachOffsets[index] ?? "",
+        imageUrl: urlForImage(value.image)
+          .width(600)
+          .height(600)
+          .fit("crop")
+          .auto("format")
+          .url(),
+        imageAlt: value.image.decorative ? "" : (value.image.alt ?? ""),
+      },
+    ];
+  });
+
+  if (
+    !homePage.approachLabel ||
+    !homePage.approachHeading ||
+    values.length !== 5
+  ) {
+    return null;
+  }
+
   return (
     <section className="overflow-hidden py-16 sm:py-20">
       <div className="mx-auto w-[min(1180px,92vw)]">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
-            Our Approach
+            {homePage.approachLabel}
           </p>
 
           <h2 className="text-balance text-4xl leading-tight font-bold sm:text-5xl">
-            Five values that shape every research partnership
+            {homePage.approachHeading}
           </h2>
         </div>
 
@@ -66,10 +83,10 @@ export function ResearchApproach() {
 
             return (
               <article
-                key={value.title}
+                key={value._key}
                 className={`relative grid min-w-0 grid-cols-[92px_minmax(0,1fr)] items-center gap-4 sm:grid-cols-[132px_minmax(0,1fr)] sm:gap-6 lg:w-155 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-7 ${
                   isReverse ? "lg:grid-cols-[minmax(0,1fr)_200px]" : ""
-                } ${approachOffsets[index]}`}
+                } ${value.offset}`}
               >
                 <div
                   className={`relative z-10 col-start-1 row-start-1 size-23 overflow-hidden rounded-full border-[7px] border-background bg-secondary shadow-xl sm:size-33 lg:size-50 lg:border-10 ${
@@ -77,11 +94,13 @@ export function ResearchApproach() {
                   }`}
                 >
                   <Image
-                    src={value.image}
-                    alt=""
+                    src={value.imageUrl}
+                    alt={value.imageAlt}
                     fill
                     sizes="(max-width: 640px) 92px, (max-width: 1024px) 132px, 200px"
                     className="object-cover"
+                    placeholder={value.image.lqip ? "blur" : "empty"}
+                    blurDataURL={value.image.lqip ?? undefined}
                   />
                 </div>
 
@@ -110,7 +129,7 @@ export function ResearchApproach() {
                   </h3>
 
                   <p className="mt-2 max-w-90 wrap-break-word text-sm leading-7 text-muted-foreground">
-                    {value.text}
+                    {value.description}
                   </p>
                 </div>
               </article>

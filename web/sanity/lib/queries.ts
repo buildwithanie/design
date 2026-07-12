@@ -100,7 +100,23 @@ export const HOME_PAGE_QUERY = defineQuery(`
           alt,
           "lqip": asset->metadata.lqip
         }
+      },
+
+    approachLabel,
+    approachHeading,
+    approachValues[] {
+      _key,
+      title,
+      description,
+      image {
+        asset,
+        crop,
+        hotspot,
+        decorative,
+        alt,
+        "lqip": asset->metadata.lqip
       }
+    }
   }
 `);
 

@@ -12,8 +12,9 @@ import {portableContent} from './objects/portableContent'
 import {publication} from './documents/publication'
 import {publicationType} from './documents/publicationType'
 import {multimediaItem} from './documents/multimediaItem'
-import { mediaPage } from './documents/mediaPage';
-import { newsType } from './documents/newsType';
+import {mediaPage} from './documents/mediaPage'
+import {newsType} from './documents/newsType'
+import {approachValue} from './objects/approachValue'
 
 export const schemaTypes = [
   accessibleImage,
@@ -21,6 +22,7 @@ export const schemaTypes = [
   contentImageGallery,
   portableContent,
   networkParticipant,
+  approachValue,
   homePage,
   projectsPage,
   mediaPage,

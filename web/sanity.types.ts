@@ -290,6 +290,18 @@ export type HomePage = {
   } & ProjectReference>;
   mediaLabel: string;
   mediaHeading: string;
+  approachLabel: string;
+  approachHeading: string;
+  approachValues: Array<{
+    _key: string;
+  } & ApproachValue>;
+};
+
+export type ApproachValue = {
+  _type: "approachValue";
+  title: string;
+  description: string;
+  image: AccessibleImage;
 };
 
 export type NetworkParticipant = {
@@ -430,11 +442,11 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | PublicationTypeReference | SanityFileAssetReference | Publication | PublicationType | AreaOfWorkReference | ProjectTypeReference | Project | PortableContent | ProjectType | AreaOfWork | NewsItemReference | MediaPage | NewsTypeReference | NewsItem | NewsType | ProjectsPage | ProjectReference | HomePage | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | PublicationTypeReference | SanityFileAssetReference | Publication | PublicationType | AreaOfWorkReference | ProjectTypeReference | Project | PortableContent | ProjectType | AreaOfWork | NewsItemReference | MediaPage | NewsTypeReference | NewsItem | NewsType | ProjectsPage | ProjectReference | HomePage | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    visionStatement,    missionStatement,    featuredProjectsHeading,    featuredProjects[]-> {      _id,      title,      "slug": slug.current,      status,      summary,      coverImage {        asset,        crop,        hotspot,        decorative,        alt      },      areaOfWork-> {        title,        "slug": slug.current      },      projectType-> {        title,        "slug": slug.current      }    },    mediaLabel,    mediaHeading,    "latestNews": *[      _type == "newsItem" &&      defined(publishedAt) &&      defined(coverImage.asset) &&      defined(newsType._ref) &&      (        destination == "internal" && defined(slug.current) ||        destination == "external" && defined(externalUrl)      )    ]      | order(publishedAt desc, _id asc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        newsType-> {          title,          "slug": slug.current        },        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      }  }
+// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    visionStatement,    missionStatement,    featuredProjectsHeading,    featuredProjects[]-> {      _id,      title,      "slug": slug.current,      status,      summary,      coverImage {        asset,        crop,        hotspot,        decorative,        alt      },      areaOfWork-> {        title,        "slug": slug.current      },      projectType-> {        title,        "slug": slug.current      }    },    mediaLabel,    mediaHeading,    "latestNews": *[      _type == "newsItem" &&      defined(publishedAt) &&      defined(coverImage.asset) &&      defined(newsType._ref) &&      (        destination == "internal" && defined(slug.current) ||        destination == "external" && defined(externalUrl)      )    ]      | order(publishedAt desc, _id asc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        newsType-> {          title,          "slug": slug.current        },        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      },    approachLabel,    approachHeading,    approachValues[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    }  }
 export type HOME_PAGE_QUERY_RESULT = {
   _id: "homePage";
   heroHeadline: string;
@@ -509,6 +521,21 @@ export type HOME_PAGE_QUERY_RESULT = {
       slug: string;
     };
     coverImage: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      decorative: boolean | null;
+      alt: string | null;
+      lqip: string | null;
+    };
+  }>;
+  approachLabel: string;
+  approachHeading: string;
+  approachValues: Array<{
+    _key: string;
+    title: string;
+    description: string;
+    image: {
       asset: SanityImageAssetReference | null;
       crop: SanityImageCrop | null;
       hotspot: SanityImageHotspot | null;
@@ -937,7 +964,7 @@ export type MULTIMEDIA_PAGE_QUERY_RESULT = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n\n    visionStatement,\n    missionStatement,\n\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    },\n\n    mediaLabel,\n    mediaHeading,\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      defined(publishedAt) &&\n      defined(coverImage.asset) &&\n      defined(newsType._ref) &&\n      (\n        destination == \"internal\" && defined(slug.current) ||\n        destination == \"external\" && defined(externalUrl)\n      )\n    ]\n      | order(publishedAt desc, _id asc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        newsType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n  }\n": HOME_PAGE_QUERY_RESULT;
+    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n\n    visionStatement,\n    missionStatement,\n\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    },\n\n    mediaLabel,\n    mediaHeading,\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      defined(publishedAt) &&\n      defined(coverImage.asset) &&\n      defined(newsType._ref) &&\n      (\n        destination == \"internal\" && defined(slug.current) ||\n        destination == \"external\" && defined(externalUrl)\n      )\n    ]\n      | order(publishedAt desc, _id asc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        newsType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    approachLabel,\n    approachHeading,\n    approachValues[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n  }\n": HOME_PAGE_QUERY_RESULT;
     "\n  *[_type == \"project\" && defined(slug.current)]\n    | order(_createdAt desc) {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    }\n": PROJECTS_QUERY_RESULT;
     "\n  *[\n    _type == \"project\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    status,\n    summary,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    areaOfWork-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    projectType-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": PROJECT_BY_SLUG_QUERY_RESULT;
     "\n  *[\n    _type == \"projectsPage\" &&\n    _id == \"projectsPage\"\n  ][0] {\n    _id,\n    introLabel,\n    introHeading,\n    introDescription,\n    ctaLabel,\n    ctaHeading,\n    ctaLinkLabel\n  }\n": PROJECTS_PAGE_QUERY_RESULT;

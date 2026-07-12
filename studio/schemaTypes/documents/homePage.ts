@@ -28,6 +28,10 @@ export const homePage = defineType({
       name: 'media',
       title: 'Latest news',
     },
+    {
+      name: 'approach',
+      title: 'Our approach',
+    },
   ],
   fields: [
     defineField({
@@ -155,6 +159,36 @@ export const homePage = defineType({
       group: 'media',
       initialValue: 'Stories, ideas, and updates from IAHL',
       validation: (rule) => rule.required().max(100),
+    }),
+    defineField({
+      name: 'approachLabel',
+      title: 'Section label',
+      type: 'string',
+      group: 'approach',
+      initialValue: 'Our Approach',
+      validation: (rule) => rule.required().max(40),
+    }),
+    defineField({
+      name: 'approachHeading',
+      title: 'Section heading',
+      type: 'string',
+      group: 'approach',
+      initialValue: 'Five values that shape every research partnership',
+      validation: (rule) => rule.required().max(100),
+    }),
+    defineField({
+      name: 'approachValues',
+      title: 'Approach values',
+      type: 'array',
+      group: 'approach',
+      description: 'Add and arrange the five values that guide IAHL’s research partnerships.',
+      of: [
+        defineArrayMember({
+          type: 'approachValue',
+        }),
+      ],
+      validation: (rule) =>
+        rule.required().length(5).error('Exactly five approach values are required.'),
     }),
   ],
   preview: {
