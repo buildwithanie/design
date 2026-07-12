@@ -5,7 +5,8 @@ import {structureTool} from 'sanity/structure'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 
-const singletonTypes = new Set(['homePage'])
+const singletonTypes = new Set(['homePage', 'projectsPage'])
+
 const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
 export default defineConfig({

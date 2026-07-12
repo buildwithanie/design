@@ -146,3 +146,18 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`
     }
   }
 `);
+
+export const PROJECTS_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "projectsPage" &&
+    _id == "projectsPage"
+  ][0] {
+    _id,
+    introLabel,
+    introHeading,
+    introDescription,
+    ctaLabel,
+    ctaHeading,
+    ctaLinkLabel
+  }
+`);

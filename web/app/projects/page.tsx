@@ -4,8 +4,11 @@ import Link from "next/link";
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { sanityFetch } from "@/sanity/lib/live";
-import { PROJECTS_QUERY } from "@/sanity/lib/queries";
-import { PROJECTS_QUERY_RESULT } from "@/sanity.types";
+import { PROJECTS_PAGE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
+import {
+  PROJECTS_PAGE_QUERY_RESULT,
+  PROJECTS_QUERY_RESULT,
+} from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/image";
 
 export const metadata: Metadata = {
@@ -33,64 +36,60 @@ const projectStyles = [
 ] as const;
 
 export default async function ProjectsPage() {
-  const { data } = await sanityFetch({
-    query: PROJECTS_QUERY,
-  });
+  const [{ data: projectsPageData }, { data: projectsData }] =
+    await Promise.all([
+      sanityFetch({
+        query: PROJECTS_PAGE_QUERY,
+      }),
 
-  const projects = data as PROJECTS_QUERY_RESULT;
+      sanityFetch({
+        query: PROJECTS_QUERY,
+      }),
+    ]);
+
+  const projectsPage = projectsPageData as PROJECTS_PAGE_QUERY_RESULT;
+
+  const projects = projectsData as PROJECTS_QUERY_RESULT;
+
+  if (!projectsPage) {
+    throw new Error(
+      "The Projects page document has not been published in Sanity.",
+    );
+  }
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <section className="overflow-hidden pt-24">
-        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:grid-cols-[0.45fr_0.55fr] lg:items-stretch">
-          <div className="relative isolate flex items-center overflow-hidden bg-secondary px-[6vw] py-14 lg:bg-transparent lg:px-[7vw] lg:py-20 lg:pr-[9vw]">
-            <div
-              className="pointer-events-none absolute inset-0 -z-20 bg-secondary lg:right-4 lg:rounded-r-[48%]"
-              aria-hidden="true"
-            />
+      <section className="relative isolate overflow-hidden bg-secondary pt-24">
+        <div
+          className="pointer-events-none absolute -right-16 top-32 -z-10 hidden size-52 rounded-full border-28 border-primary/10 lg:block"
+          aria-hidden="true"
+        />
 
-            <div
-              className="pointer-events-none absolute -right-12 top-12 -z-10 hidden size-28 rounded-full border-18 border-primary/20 bg-(--green)/15 lg:block"
-              aria-hidden="true"
-            />
-
-            <div className="max-w-xl">
-              <div className="flex items-center gap-3">
-                <span
-                  className="size-2.5 rounded-full bg-(--purple)"
-                  aria-hidden="true"
-                />
-
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-                  Research in action
-                </p>
-              </div>
-
+        <div className="mx-auto w-[min(1180px,92vw)] py-14 sm:py-16 lg:py-20">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3">
               <span
-                className="mt-7 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
+                className="size-2.5 rounded-full bg-(--purple)"
                 aria-hidden="true"
               />
 
-              <h1 className="mt-7 text-balance text-5xl font-bold leading-[1.02] sm:text-6xl lg:text-[4.2rem]">
-                Projects built to make evidence useful.
-              </h1>
-
-              <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
-                Explore IAHL projects across responsible AI, community evidence,
-                and institutional research capacity.
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
+                {projectsPage.introLabel}
               </p>
             </div>
-          </div>
 
-          <div className="flex items-center justify-center bg-white">
-            <Image
-              src="/images/work-knowledge-team.png"
-              alt="IAHL researchers reviewing evidence and project priorities together"
-              width={1717}
-              height={916}
-              preload
-              sizes="(max-width: 1024px) 100vw, 55vw"
-              className="h-auto w-full object-contain"
+            <span
+              className="mt-7 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
+              aria-hidden="true"
             />
+
+            <h1 className="mt-7 max-w-3xl text-balance text-5xl leading-[1.02] font-bold sm:text-6xl lg:text-[4.2rem]">
+              {projectsPage.introHeading}
+            </h1>
+
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+              {projectsPage.introDescription}
+            </p>
           </div>
         </div>
       </section>
@@ -165,7 +164,7 @@ export default async function ProjectsPage() {
                       className={`mt-7 inline-flex items-center gap-2 font-bold transition-transform duration-300 hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 ${style.accent}`}
                       href={`/projects/${project.slug}`}
                     >
-                      View project details
+                      View details
                       <HugeiconsIcon
                         icon={ArrowRight02Icon}
                         className="size-4"
@@ -183,20 +182,19 @@ export default async function ProjectsPage() {
       <section className="bg-[#f4eaf7] py-16 sm:py-20">
         <div className="mx-auto grid w-[min(1180px,92vw)] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
-            Shape the next project
+            {projectsPage.ctaLabel}
           </p>
 
           <div>
             <h2 className="text-balance text-3xl font-bold leading-tight sm:text-4xl">
-              Have a health question that needs research, technology, or
-              partnership?
+              {projectsPage.ctaHeading}
             </h2>
 
             <Link
               href="/get-involved#contact"
               className="mt-7 inline-flex items-center gap-2 font-bold text-(--purple) transition-transform duration-300 hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--purple)"
             >
-              Start a conversation
+              {projectsPage.ctaLinkLabel}
               <HugeiconsIcon
                 icon={ArrowRight02Icon}
                 className="size-4"
