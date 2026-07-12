@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-
-import { projects } from "@/data/projects";
+import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { sanityFetch } from "@/sanity/lib/live";
+import { PROJECTS_QUERY } from "@/sanity/lib/queries";
+import { PROJECTS_QUERY_RESULT } from "@/sanity.types";
+import { urlForImage } from "@/sanity/lib/image";
 
 export const metadata: Metadata = {
   title: "Projects | Innovate AI HealthLab",
@@ -29,7 +32,12 @@ const projectStyles = [
   },
 ] as const;
 
-export default function ProjectsPage() {
+export default async function ProjectsPage() {
+  const { data } = await sanityFetch({
+    query: PROJECTS_QUERY,
+  });
+
+  const projects = data as PROJECTS_QUERY_RESULT;
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <section className="overflow-hidden pt-24">
@@ -91,6 +99,17 @@ export default function ProjectsPage() {
         {projects.map((project, index) => {
           const style = projectStyles[index % projectStyles.length];
 
+          const coverImageUrl = urlForImage(project.coverImage)
+            .width(1536)
+            .height(1024)
+            .fit("crop")
+            .auto("format")
+            .url();
+
+          const coverImageAlt = project.coverImage.decorative
+            ? ""
+            : (project.coverImage.alt ?? "");
+
           return (
             <section
               id={project.slug}
@@ -104,8 +123,8 @@ export default function ProjectsPage() {
                   }`}
                 >
                   <Image
-                    src={project.coverImage}
-                    alt={project.coverImageAlt}
+                    src={coverImageUrl}
+                    alt={coverImageAlt}
                     width={1536}
                     height={1024}
                     sizes="(max-width: 1024px) 100vw, 50vw"
@@ -131,7 +150,7 @@ export default function ProjectsPage() {
                     <p
                       className={`text-sm font-bold uppercase tracking-[0.16em] ${style.accent}`}
                     >
-                      {project.category}
+                      {project.areaOfWork.title}
                     </p>
 
                     <h2 className="mt-5 text-balance text-4xl font-bold leading-tight sm:text-5xl">
@@ -147,7 +166,11 @@ export default function ProjectsPage() {
                       href={`/projects/${project.slug}`}
                     >
                       View project details
-                      <ArrowRight className="size-4" aria-hidden="true" />
+                      <HugeiconsIcon
+                        icon={ArrowRight02Icon}
+                        className="size-4"
+                        aria-hidden="true"
+                      />
                     </Link>
                   </div>
                 </div>
@@ -174,7 +197,11 @@ export default function ProjectsPage() {
               className="mt-7 inline-flex items-center gap-2 font-bold text-(--purple) transition-transform duration-300 hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--purple)"
             >
               Start a conversation
-              <ArrowRight className="size-4" aria-hidden="true" />
+              <HugeiconsIcon
+                icon={ArrowRight02Icon}
+                className="size-4"
+                aria-hidden="true"
+              />
             </Link>
           </div>
         </div>

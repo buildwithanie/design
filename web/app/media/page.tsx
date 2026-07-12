@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  Camera,
-  CheckCircle2,
-  Play,
-  Video,
-} from "lucide-react";
+  Camera01Icon,
+  CheckmarkCircle02Icon,
+  PlayIcon,
+  Video01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ClientForm } from "@/components/client-form";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 
 const photoGallery = [
   {
@@ -63,9 +63,6 @@ const videos = [
   },
 ];
 
-
-
-
 export default function MediaPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
@@ -111,15 +108,18 @@ export default function MediaPage() {
                   ["Videos", "#videos"],
                   ["Coverage", "#coverage"],
                 ].map(([label, href]) => (
-                  <Button
-                    asChild
-                    variant="outline"
-                    size="sm"
-                    className="rounded-full border-(--purple)/20 bg-white/65"
+                  <Link
+                    href={href}
                     key={label}
+                    className={buttonVariants({
+                      variant: "outline",
+                      size: "sm",
+                      className:
+                        "rounded-full border-(--purple)/20 bg-white/65",
+                    })}
                   >
-                    <Link href={href}>{label}</Link>
-                  </Button>
+                    {label}
+                  </Link>
                 ))}
               </div>
             </div>
@@ -139,8 +139,6 @@ export default function MediaPage() {
         </div>
       </section>
 
-     
-
       <section
         id="photos"
         className="relative scroll-mt-28 overflow-hidden border-y border-border bg-[#eff7f8] py-16 sm:py-24"
@@ -153,7 +151,11 @@ export default function MediaPage() {
           <div className="grid gap-8 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
             <div>
               <div className="flex items-center gap-3">
-                <Camera className="size-7 text-(--purple)" />
+                <HugeiconsIcon
+                  icon={Camera01Icon}
+                  className="size-7 text-(--purple)"
+                  aria-hidden="true"
+                />
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                   Photo archive
                 </p>
@@ -163,8 +165,8 @@ export default function MediaPage() {
               </h2>
             </div>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground lg:justify-self-end">
-              Moments from community inquiry, training, research governance,
-              and partnership in practice.
+              Moments from community inquiry, training, research governance, and
+              partnership in practice.
             </p>
           </div>
 
@@ -207,7 +209,11 @@ export default function MediaPage() {
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
               <div className="flex items-center gap-3">
-                <Video className="size-7 text-(--cyan)" />
+                <HugeiconsIcon
+                  icon={Video01Icon}
+                  className="size-7 text-(--cyan)"
+                  aria-hidden="true"
+                />
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--cyan)">
                   Video gallery
                 </p>
@@ -239,7 +245,12 @@ export default function MediaPage() {
                   type="button"
                   aria-label="Play Inside IAHL video"
                 >
-                  <Play className="ml-1 size-8 fill-white" />
+                  <HugeiconsIcon
+                    icon={PlayIcon}
+                    className="ml-1 size-8 text-white"
+                    strokeWidth={2.2}
+                    aria-hidden="true"
+                  />
                 </button>
               </div>
               <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9">
@@ -268,7 +279,12 @@ export default function MediaPage() {
                     />
                     <div className="absolute inset-0 grid place-items-center bg-black/25">
                       <span className="grid size-9 place-items-center rounded-full bg-primary">
-                        <Play className="ml-0.5 size-4 fill-white" />
+                        <HugeiconsIcon
+                          icon={PlayIcon}
+                          className="ml-0.5 size-4 text-white"
+                          strokeWidth={2.2}
+                          aria-hidden="true"
+                        />
                       </span>
                     </div>
                   </div>
@@ -276,7 +292,9 @@ export default function MediaPage() {
                     <p className="text-xs font-bold uppercase tracking-[0.14em] text-(--green)">
                       {video.label}
                     </p>
-                    <h3 className="mt-2 font-bold leading-snug">{video.title}</h3>
+                    <h3 className="mt-2 font-bold leading-snug">
+                      {video.title}
+                    </h3>
                   </div>
                 </article>
               ))}
@@ -284,7 +302,6 @@ export default function MediaPage() {
           </div>
         </div>
       </section>
-
 
       <section
         id="newsletter"
@@ -304,16 +321,23 @@ export default function MediaPage() {
             <h2 className="text-balance text-3xl font-bold leading-tight sm:text-4xl">
               Receive research updates, field stories, and new media from IAHL.
             </h2>
-<ClientForm
-              className="mt-7 flex max-w-2xl flex-col gap-3 sm:flex-row"
-            >
+            <ClientForm className="mt-7 flex max-w-2xl flex-col gap-3 sm:flex-row">
               <Input
                 type="email"
+                name="email"
+                autoComplete="email"
+                aria-label="Email address"
                 placeholder="you@example.com"
                 className="h-12 rounded-full border-(--purple)/20 bg-white px-5"
               />
               <Button type="submit" className="h-12 rounded-full px-7">
-                Sign up <CheckCircle2 className="size-4" />
+                Sign up
+                <HugeiconsIcon
+                  icon={CheckmarkCircle02Icon}
+                  data-icon="inline-end"
+                  className="size-4"
+                  aria-hidden="true"
+                />
               </Button>
             </ClientForm>
           </div>

@@ -1,6 +1,7 @@
+import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
-import { CheckCircle2 } from "lucide-react";
 
 import { ClientForm } from "@/components/client-form";
 import { Button } from "@/components/ui/button";
@@ -54,9 +55,9 @@ export function SiteFooter() {
               <div className="mt-4 grid gap-2">
                 {group.links.map((link) => (
                   <Link
-                    className="text-sm text-white/70 transition hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                     href={link.href}
                     key={link.href}
+                    className="text-sm text-white/70 transition hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                   >
                     {link.label}
                   </Link>
@@ -75,6 +76,8 @@ export function SiteFooter() {
             <div className="mt-4 grid gap-2">
               <Input
                 type="email"
+                name="email"
+                autoComplete="email"
                 placeholder="you@example.com"
                 aria-label="Email address"
                 className="h-11 border-white/20 bg-white text-foreground"
@@ -82,7 +85,11 @@ export function SiteFooter() {
 
               <Button type="submit" className="h-11">
                 Sign up
-                <CheckCircle2 className="size-4" />
+                <HugeiconsIcon
+                  icon={CheckmarkCircle02Icon}
+                  className="size-4"
+                  aria-hidden="true"
+                />
               </Button>
             </div>
           </ClientForm>

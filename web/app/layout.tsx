@@ -18,7 +18,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="font-sans" data-scroll-behavior="smooth">
+    <html
+      lang="en"
+      dir="ltr"
+      className="font-sans"
+      data-scroll-behavior="smooth"
+    >
       <body>
         <SiteHeader />
         {children}

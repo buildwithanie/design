@@ -1,20 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
-import {
-  Activity,
-  ArrowRight,
-  BrainCircuit,
-  CheckCircle2,
-  Database,
-  FlaskConical,
-  HeartPulse,
-  UsersRound,
-} from "lucide-react";
 
 import { HashScroll } from "@/components/hash-scroll";
 import { SmoothHashLink } from "@/components/smooth-hash-link";
-import { Button } from "@/components/ui/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import {
+  Activity01Icon,
+  AiBrain01Icon,
+  ArrowRight02Icon,
+  CheckmarkCircle02Icon,
+  DatabaseIcon,
+  HeartCheckIcon,
+  TestTube01Icon,
+  UserMultipleIcon,
+} from "@hugeicons/core-free-icons";
 
+import { buttonVariants } from "@/components/ui/button";
 const pathways = [
   {
     eyebrow: "Community intelligence",
@@ -46,7 +47,8 @@ const pathways = [
   },
   {
     eyebrow: "Capacity and partnership",
-    title: "Useful research lasts when people and institutions can carry it forward.",
+    title:
+      "Useful research lasts when people and institutions can carry it forward.",
     text: "IAHL strengthens research practice through training, shared methods, institutional collaboration, and partnership models designed for continuity beyond a single project.",
     image: "/images/project-training.png",
     alt: "Health professionals participating in a research learning session",
@@ -64,42 +66,40 @@ const focusAreas = [
   {
     title: "AI and data science",
     text: "Responsible analytical tools for complex health questions.",
-    icon: BrainCircuit,
+    icon: AiBrain01Icon,
     color: "text-[var(--purple)]",
   },
   {
     title: "Community health systems",
     text: "Evidence shaped around how people access and experience care.",
-    icon: UsersRound,
+    icon: UserMultipleIcon,
     color: "text-primary",
   },
   {
     title: "Disease surveillance",
     text: "Earlier insight into changing risks, patterns, and priorities.",
-    icon: Activity,
+    icon: Activity01Icon,
     color: "text-[var(--cyan)]",
   },
   {
     title: "Digital health innovation",
     text: "Practical technologies that strengthen research and delivery.",
-    icon: Database,
+    icon: DatabaseIcon,
     color: "text-[var(--green)]",
   },
   {
     title: "Research capacity",
     text: "Methods, skills, and confidence for locally led inquiry.",
-    icon: FlaskConical,
+    icon: TestTube01Icon,
     color: "text-primary",
   },
   {
     title: "Health equity",
     text: "Research choices that make exclusion and unequal outcomes visible.",
-    icon: HeartPulse,
+    icon: HeartCheckIcon,
     color: "text-[var(--purple)]",
   },
 ];
-
-
 
 const workStandards = [
   {
@@ -162,29 +162,36 @@ export default function WorkPage() {
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
                 From a question raised in a community to evidence used by a
-                health team, IAHL connects research, responsible technology,
-                and partnership around practical health priorities.
+                health team, IAHL connects research, responsible technology, and
+                partnership around practical health priorities.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                <Button
-                  asChild
-                  size="lg"
-                  className="h-12 rounded-full px-6"
+                <SmoothHashLink
+                  href="/work#pathways"
+                  className={buttonVariants({
+                    size: "lg",
+                    className: "h-12 rounded-full px-6",
+                  })}
                 >
-<SmoothHashLink href="/work#pathways">
-                    Explore our pathways <ArrowRight className="size-4" />
-                  </SmoothHashLink>
-                </Button>
-                <Button
-                  asChild
-                  variant="outline"
-                  size="lg"
-                  className="h-12 rounded-full border-(--purple)/20 bg-white/65 px-6 hover:bg-white"
+                  Explore our pathways
+                  <HugeiconsIcon
+                    icon={ArrowRight02Icon}
+                    data-icon="inline-end"
+                    className="size-4"
+                    aria-hidden="true"
+                  />
+                </SmoothHashLink>
+                <Link
+                  href="/get-involved#partner"
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "lg",
+                    className:
+                      "h-12 rounded-full border-(--purple)/20 bg-white/65 px-6 hover:bg-white",
+                  })}
                 >
-                  <Link href="/get-involved#partner">
-                    Discuss a partnership
-                  </Link>
-                </Button>
+                  Discuss a partnership
+                </Link>
               </div>
             </div>
           </div>
@@ -249,16 +256,12 @@ export default function WorkPage() {
               </h2>
 
               <p className="mt-6 max-w-lg text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
-                IAHL connects research, technology, training, and
-                implementation so evidence can become action without losing
-                context or trust.
+                IAHL connects research, technology, training, and implementation
+                so evidence can become action without losing context or trust.
               </p>
 
               <div className="mt-8 flex items-center gap-3 text-xs font-bold uppercase tracking-[0.14em] text-(--green)">
-                <span
-                  className="h-px w-8 bg-(--green)"
-                  aria-hidden="true"
-                />
+                <span className="h-px w-8 bg-(--green)" aria-hidden="true" />
                 Evidence made useful
               </div>
             </div>
@@ -334,7 +337,11 @@ export default function WorkPage() {
                       className="flex items-center gap-3 py-3.5 font-bold"
                       key={bullet}
                     >
-                      <CheckCircle2 className="size-5 shrink-0 text-(--green)" />
+                      <HugeiconsIcon
+                        icon={CheckmarkCircle02Icon}
+                        className="size-5 shrink-0 text-(--green)"
+                        aria-hidden="true"
+                      />
                       <span>{bullet}</span>
                     </div>
                   ))}
@@ -435,10 +442,9 @@ export default function WorkPage() {
               </h2>
 
               <p className="mt-6 max-w-2xl text-lg leading-8 text-white/65">
-                We explore how data systems and responsible AI can help
-                research teams identify patterns, ask better questions, and
-                act earlier while protecting transparency, privacy, and human
-                oversight.
+                We explore how data systems and responsible AI can help research
+                teams identify patterns, ask better questions, and act earlier
+                while protecting transparency, privacy, and human oversight.
               </p>
 
               <div className="mt-9 divide-y divide-white/15 border-t border-white/15">
@@ -447,7 +453,11 @@ export default function WorkPage() {
                     className="flex items-center gap-3 py-4 font-bold"
                     key={bullet}
                   >
-                    <CheckCircle2 className="size-5 shrink-0 text-(--cyan)" />
+                    <HugeiconsIcon
+                      icon={CheckmarkCircle02Icon}
+                      className="size-5 shrink-0 text-(--cyan)"
+                      aria-hidden="true"
+                    />
                     <span>{bullet}</span>
                   </div>
                 ))}
@@ -505,7 +515,11 @@ export default function WorkPage() {
                       className="flex items-center gap-3 py-3.5 font-bold"
                       key={bullet}
                     >
-                      <CheckCircle2 className="size-5 shrink-0 text-(--green)" />
+                      <HugeiconsIcon
+                        icon={CheckmarkCircle02Icon}
+                        className="size-5 shrink-0 text-(--cyan)"
+                        aria-hidden="true"
+                      />
                       <span>{bullet}</span>
                     </div>
                   ))}
@@ -549,15 +563,13 @@ export default function WorkPage() {
               </h2>
             </div>
             <p className="max-w-xl text-lg leading-8 text-muted-foreground lg:justify-self-end">
-              Each area can stand alone, but the strongest work usually draws
-              on several at once.
+              Each area can stand alone, but the strongest work usually draws on
+              several at once.
             </p>
           </div>
 
           <div className="mt-12 grid border-t border-border sm:grid-cols-2 lg:grid-cols-3">
             {focusAreas.map((area, index) => {
-              const Icon = area.icon;
-
               return (
                 <article
                   className={`border-b border-border px-6 py-8 ${
@@ -565,7 +577,12 @@ export default function WorkPage() {
                   } ${index % 2 === 0 ? "sm:border-r lg:border-r" : ""}`}
                   key={area.title}
                 >
-                  <Icon className={`size-8 ${area.color}`} strokeWidth={1.7} />
+                  <HugeiconsIcon
+                    icon={area.icon}
+                    className={`size-8 ${area.color}`}
+                    strokeWidth={1.7}
+                    aria-hidden="true"
+                  />
                   <h3 className="mt-5 text-2xl font-bold">{area.title}</h3>
                   <p className="mt-3 leading-7 text-muted-foreground">
                     {area.text}
@@ -596,8 +613,6 @@ export default function WorkPage() {
               sequence from definition to sustained use.
             </p>
           </div>
-
-          
         </div>
       </section>
 
@@ -663,10 +678,7 @@ export default function WorkPage() {
                 ))}
               </div>
 
-              <div
-                className="mt-7 flex items-center gap-2"
-                aria-hidden="true"
-              >
+              <div className="mt-7 flex items-center gap-2" aria-hidden="true">
                 <span className="h-1 w-8 bg-(--purple)" />
                 <span className="h-1 w-8 bg-(--green)" />
                 <span className="h-1 w-8 bg-primary" />
@@ -725,27 +737,32 @@ export default function WorkPage() {
                   </h2>
 
                   <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-                    <Button
-                      asChild
-                      size="lg"
-                      className="h-12 rounded-full px-6"
+                    <Link
+                      href="/get-involved#partner"
+                      className={buttonVariants({
+                        size: "lg",
+                        className: "h-12 rounded-full px-6",
+                      })}
                     >
-                      <Link href="/get-involved#partner">
-                        Partner with IAHL <ArrowRight className="size-4" />
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      variant="outline"
-                      size="lg"
-                      className="h-12 rounded-full border-(--purple)/20 bg-white/70 px-6 hover:bg-white"
+                      Partner with IAHL
+                      <HugeiconsIcon
+                        icon={ArrowRight02Icon}
+                        data-icon="inline-end"
+                        className="size-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                    <SmoothHashLink
+                      href="/work#pathways"
+                      className={buttonVariants({
+                        variant: "outline",
+                        size: "lg",
+                        className:
+                          "h-12 rounded-full border-(--purple)/20 bg-white/70 px-6 hover:bg-white",
+                      })}
                     >
-<SmoothHashLink
-                        href="/work#pathways"
-                      >
-                        Explore the work
-                      </SmoothHashLink>
-                    </Button>
+                      Explore the work
+                    </SmoothHashLink>
                   </div>
                 </div>
               </div>

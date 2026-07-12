@@ -1,23 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowRight,
-  CheckCircle2,
-  MapPin,
-  ShieldCheck,
-  UsersRound,
-} from "lucide-react";
-
+  ArrowRight02Icon,
+  CheckmarkCircle02Icon,
+  PinLocation01Icon,
+  SecurityCheckIcon,
+  UserMultipleIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { ClientForm } from "@/components/client-form";
 import { HashScroll } from "@/components/hash-scroll";
-import { SiteHeader } from "@/components/site-header";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 export default function GetInvolvedPage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <SiteHeader />
       <HashScroll />
 
       <section className="overflow-hidden pt-24">
@@ -53,7 +51,6 @@ export default function GetInvolvedPage() {
                 Work with IAHL through research partnerships, careers, public
                 events, and conversations grounded in shared health priorities.
               </p>
-              
             </div>
           </div>
 
@@ -69,11 +66,7 @@ export default function GetInvolvedPage() {
             />
           </div>
         </div>
-
-      
       </section>
-
-     
 
       <section
         id="partner"
@@ -98,7 +91,11 @@ export default function GetInvolvedPage() {
             />
             <div className="max-w-xl">
               <div className="flex items-center gap-3">
-                <UsersRound className="size-6 text-(--purple)" />
+                <HugeiconsIcon
+                  icon={UserMultipleIcon}
+                  className="size-6 text-(--purple)"
+                  aria-hidden="true"
+                />
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
                   Partnerships
                 </p>
@@ -126,18 +123,31 @@ export default function GetInvolvedPage() {
                     className="flex items-center gap-3 py-4 font-bold"
                     key={item}
                   >
-                    <CheckCircle2 className="size-5 shrink-0 text-(--green)" />
+                    <HugeiconsIcon
+                      icon={CheckmarkCircle02Icon}
+                      className="size-5 shrink-0 text-(--green)"
+                      aria-hidden="true"
+                    />
                     {item}
                   </div>
                 ))}
               </div>
 
-              <Button asChild size="lg" className="mt-8 rounded-full">
-                <Link href="#contact">
-                  Start a partnership conversation
-                  <ArrowRight className="size-4" />
-                </Link>
-              </Button>
+              <Link
+                href="#contact"
+                className={buttonVariants({
+                  size: "lg",
+                  className: "mt-8 rounded-full",
+                })}
+              >
+                Start a partnership conversation
+                <HugeiconsIcon
+                  icon={ArrowRight02Icon}
+                  data-icon="inline-end"
+                  className="size-4"
+                  aria-hidden="true"
+                />
+              </Link>
             </div>
           </div>
         </div>
@@ -154,8 +164,8 @@ export default function GetInvolvedPage() {
             </h2>
             <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
               IAHL values curious people who can work across disciplines,
-              communicate clearly, and remain accountable to the communities
-              and institutions the work is intended to serve.
+              communicate clearly, and remain accountable to the communities and
+              institutions the work is intended to serve.
             </p>
 
             <div className="mt-8 rounded-[1.5rem_5rem_1.5rem_1.5rem] bg-(--charcoal) p-7 text-white">
@@ -169,9 +179,14 @@ export default function GetInvolvedPage() {
                 No role is being advertised on this page right now. You can
                 still introduce your experience through the contact form.
               </p>
-              <Button asChild className="mt-6 rounded-full">
-                <Link href="#contact">Join the talent network</Link>
-              </Button>
+              <Link
+                href="#contact"
+                className={buttonVariants({
+                  className: "mt-6 rounded-full",
+                })}
+              >
+                Join the talent network
+              </Link>
             </div>
           </div>
 
@@ -184,8 +199,6 @@ export default function GetInvolvedPage() {
               sizes="(max-width: 1024px) 92vw, 52vw"
               className="h-auto w-full rounded-[2rem_7rem_2rem_2rem] object-contain"
             />
-
-           
           </div>
         </div>
       </section>
@@ -216,7 +229,11 @@ export default function GetInvolvedPage() {
               <div className="mt-9 grid gap-4">
                 <div className="flex items-center gap-4">
                   <span className="grid size-11 place-items-center rounded-full bg-white">
-                    <MapPin className="size-5 text-primary" />
+                    <HugeiconsIcon
+                      icon={PinLocation01Icon}
+                      className="size-5 text-primary"
+                      aria-hidden="true"
+                    />
                   </span>
                   <div>
                     <p className="font-bold">Location</p>
@@ -227,7 +244,11 @@ export default function GetInvolvedPage() {
                 </div>
                 <div className="flex items-center gap-4">
                   <span className="grid size-11 place-items-center rounded-full bg-white">
-                    <UsersRound className="size-5 text-(--green)" />
+                    <HugeiconsIcon
+                      icon={UserMultipleIcon}
+                      className="size-5 text-(--green)"
+                      aria-hidden="true"
+                    />
                   </span>
                   <div>
                     <p className="font-bold">Best first step</p>
@@ -239,7 +260,11 @@ export default function GetInvolvedPage() {
               </div>
 
               <div className="mt-9 rounded-[1.25rem_4rem_1.25rem_1.25rem] bg-white/70 p-6">
-                <ShieldCheck className="size-7 text-(--purple)" />
+                <HugeiconsIcon
+                  icon={SecurityCheckIcon}
+                  className="size-7 text-(--purple)"
+                  aria-hidden="true"
+                />
                 <h3 className="mt-4 font-bold">Respect and safeguarding</h3>
                 <p className="mt-2 text-sm leading-6 text-muted-foreground">
                   IAHL expects respectful, ethical engagement across research,
@@ -250,9 +275,7 @@ export default function GetInvolvedPage() {
           </div>
 
           <div className="grid content-center px-[6vw] py-14 sm:py-16 lg:px-[7vw]">
-<ClientForm
-              className="mx-auto w-full max-w-2xl rounded-[2rem_7rem_2rem_2rem] border border-border bg-card p-7 shadow-[0_24px_70px_rgba(53,54,58,0.08)] sm:p-10"
-            >
+            <ClientForm className="mx-auto w-full max-w-2xl rounded-[2rem_7rem_2rem_2rem] border border-border bg-card p-7 shadow-[0_24px_70px_rgba(53,54,58,0.08)] sm:p-10">
               <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
                 Start a conversation
               </p>
@@ -311,7 +334,13 @@ export default function GetInvolvedPage() {
               </div>
 
               <Button type="submit" size="lg" className="mt-6 rounded-full">
-                Send inquiry <ArrowRight className="size-4" />
+                Send inquiry
+                <HugeiconsIcon
+                  icon={ArrowRight02Icon}
+                  data-icon="inline-end"
+                  className="size-4"
+                  aria-hidden="true"
+                />
               </Button>
               <p className="mt-4 text-xs leading-5 text-muted-foreground">
                 This design currently presents the contact flow. Submission

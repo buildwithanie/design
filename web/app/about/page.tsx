@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
-  ArrowUpRight,
-  ChevronRight,
-} from "lucide-react";
-
+  ArrowRight01Icon,
+  ArrowUpRight01Icon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 const participants = [
   {
@@ -89,9 +89,8 @@ export default function AboutPage() {
                 A research lab with a public purpose.
               </h1>
               <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
-                IAHL exists to make health research more useful, more
-                inclusive, and closer to the communities it is intended to
-                serve.
+                IAHL exists to make health research more useful, more inclusive,
+                and closer to the communities it is intended to serve.
               </p>
             </div>
           </div>
@@ -174,7 +173,11 @@ export default function AboutPage() {
                 href="/get-involved#partner"
               >
                 Build a research connection
-                <ArrowUpRight className="size-4" />
+                <HugeiconsIcon
+                  icon={ArrowUpRight01Icon}
+                  className="size-4"
+                  aria-hidden="true"
+                />
               </Link>
             </div>
           </div>
@@ -231,8 +234,6 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-
-          
         </div>
       </section>
 
@@ -261,8 +262,6 @@ export default function AboutPage() {
             sizes="(max-width: 1320px) 94vw, 1320px"
             className="h-auto w-full object-contain"
           />
-
-         
         </div>
       </section>
 
@@ -340,7 +339,11 @@ export default function AboutPage() {
                       href={foundation.href}
                     >
                       {foundation.link}
-                      <ChevronRight className="size-4" />
+                      <HugeiconsIcon
+                        icon={ArrowRight01Icon}
+                        className="size-4"
+                        aria-hidden="true"
+                      />
                     </Link>
                   </article>
                 ))}
@@ -352,8 +355,8 @@ export default function AboutPage() {
                 Credibility is built into the way the work is organized.
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-                Strong health research depends on more than a promising idea.
-                It needs clear decisions, responsible methods, accountable
+                Strong health research depends on more than a promising idea. It
+                needs clear decisions, responsible methods, accountable
                 relationships, and a path back to public benefit.
               </p>
 
@@ -367,9 +370,7 @@ export default function AboutPage() {
                       }`}
                       key={foundation.title}
                     >
-                      <h3 className="text-xl font-bold">
-                        {foundation.title}
-                      </h3>
+                      <h3 className="text-xl font-bold">{foundation.title}</h3>
                       <p className="mt-3 text-sm leading-7 text-muted-foreground">
                         {foundation.text}
                       </p>
@@ -378,7 +379,11 @@ export default function AboutPage() {
                         href={foundation.href}
                       >
                         {foundation.link}
-                        <ChevronRight className="size-4" />
+                        <HugeiconsIcon
+                          icon={ArrowRight01Icon}
+                          className="size-4"
+                          aria-hidden="true"
+                        />
                       </Link>
                     </article>
                   ))}

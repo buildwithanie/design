@@ -1,36 +1,14 @@
+import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
-import { sanityFetch } from "@/sanity/lib/live";
 import { urlForImage } from "@/sanity/lib/image";
-import { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
-
-const projects = [
-  {
-    title: "AI Health Equity Lab",
-    tag: "Research",
-    image: "/images/project-ai-lab.png",
-    text: "Building responsible AI models that help researchers identify health gaps early and translate findings into local action.",
-    href: "/projects#ai-health-equity-lab",
-  },
-  {
-    title: "Community Evidence Hubs",
-    tag: "Field work",
-    image: "/images/project-community-equity.png",
-    text: "Working with communities to define research priorities, collect meaningful evidence, and return insights people can use.",
-    href: "/projects#community-evidence-hubs",
-  },
-  {
-    title: "Digital Research Partnerships",
-    tag: "Training",
-    image: "/images/project-training.png",
-    text: "Equipping health teams, researchers, and partners with practical tools for ethical, data-informed health programs.",
-    href: "/projects#digital-research-partnerships",
-  },
-];
+import { sanityFetch } from "@/sanity/lib/live";
+import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
+import type { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
 
 const values = [
   {
@@ -139,6 +117,26 @@ export default async function Home() {
     alt: participant.image.decorative ? "" : (participant.image.alt ?? ""),
   }));
 
+  const featuredProjects = homePage.featuredProjects.map((project) => ({
+    ...project,
+    imageUrl: urlForImage(project.coverImage)
+      .width(900)
+      .height(667)
+      .fit("crop")
+      .auto("format")
+      .url(),
+    imageAlt: project.coverImage.decorative
+      ? ""
+      : (project.coverImage.alt ?? ""),
+  }));
+
+  const featuredProjectsGridClass =
+    featuredProjects.length === 1
+      ? "mx-auto max-w-md"
+      : featuredProjects.length === 2
+        ? "mx-auto max-w-4xl md:grid-cols-2"
+        : "md:grid-cols-3";
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
       <section
@@ -162,19 +160,25 @@ export default async function Home() {
               {homePage.heroDescription}
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="h-12 rounded-md px-6">
-                <a href="/work">
-                  Explore Our Work <ArrowRight className="size-4" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 rounded-md px-6"
+              <Link
+                href="/work"
+                className={buttonVariants({
+                  size: "lg",
+                  className: "h-12 rounded-md px-6",
+                })}
               >
-                <a href="/get-involved#partner">Partner With Us</a>
-              </Button>
+                Explore our work
+              </Link>
+              <Link
+                href="/get-involved#partner"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className: "h-12 rounded-md px-6",
+                })}
+              >
+                Partner With Us
+              </Link>
             </div>
           </div>
 
@@ -404,28 +408,30 @@ export default async function Home() {
               Featured projects
             </p>
             <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
-              Focused work with measurable community value
+              {homePage.featuredProjectsHeading}
             </h2>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="mt-7 h-11 rounded-md"
+            <Link
+              href="/projects"
+              className={buttonVariants({
+                variant: "outline",
+                size: "lg",
+                className: "mt-7 h-11 rounded-md",
+              })}
             >
-              <a href="/projects">View all projects</a>
-            </Button>
+              View all projects
+            </Link>
           </div>
 
-          <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {projects.map((project) => (
+          <div className={`mt-10 grid gap-6 ${featuredProjectsGridClass}`}>
+            {featuredProjects.map((project) => (
               <Card
-                key={project.title}
+                key={project._id}
                 className="group overflow-hidden rounded-lg shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
               >
                 <div className="relative aspect-[1.35] bg-secondary">
                   <Image
-                    src={project.image}
-                    alt=""
+                    src={project.imageUrl}
+                    alt={project.imageAlt}
                     fill
                     sizes="(max-width: 900px) 92vw, 32vw"
                     className="object-cover transition duration-300 group-hover:scale-105"
@@ -433,23 +439,29 @@ export default async function Home() {
                 </div>
                 <CardContent className="p-6 text-center">
                   <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">
-                    {project.tag}
+                    {project.areaOfWork.title}
                   </p>
                   <h3 className="mt-3 text-xl font-bold leading-snug">
                     {project.title}
                   </h3>
                   <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                    {project.text}
+                    {project.summary}
                   </p>
-                  <Button
-                    asChild
-                    variant="link"
-                    className="mt-4 h-auto p-0 text-primary"
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className={buttonVariants({
+                      variant: "link",
+                      className: "mt-4 h-auto p-0 text-primary",
+                    })}
                   >
-                    <a href={project.href}>
-                      Read more <ArrowRight className="size-4" />
-                    </a>
-                  </Button>
+                    Read more
+                    <HugeiconsIcon
+                      icon={ArrowRight02Icon}
+                      data-icon="inline-end"
+                      className="size-4"
+                      aria-hidden="true"
+                    />
+                  </Link>
                 </CardContent>
               </Card>
             ))}
@@ -467,15 +479,22 @@ export default async function Home() {
               <h2 className="text-balance text-4xl font-bold leading-tight sm:text-5xl">
                 Latest thinking from IAHL
               </h2>
-              <Button
-                asChild
-                variant="outline"
-                className="mt-6 rounded-full border-white/20 bg-white/5 text-white hover:bg-white hover:text-foreground"
+              <Link
+                href="/media"
+                className={buttonVariants({
+                  variant: "outline",
+                  className:
+                    "mt-6 rounded-full border-white/20 bg-white/5 text-white hover:bg-white hover:text-foreground",
+                })}
               >
-                <a href="/media">
-                  Visit the Media Center <ArrowRight className="size-4" />
-                </a>
-              </Button>
+                Visit the Media Center
+                <HugeiconsIcon
+                  icon={ArrowRight02Icon}
+                  data-icon="inline-end"
+                  className="size-4"
+                  aria-hidden="true"
+                />
+              </Link>
             </div>
             <div className="grid gap-4 md:grid-cols-3">
               {stories.map((story) => (
@@ -487,15 +506,21 @@ export default async function Home() {
                     <h3 className="text-lg font-bold leading-snug">
                       {story.title}
                     </h3>
-                    <Button
-                      asChild
-                      variant="link"
-                      className="mt-5 h-auto p-0 text-primary"
+                    <Link
+                      href={story.href}
+                      className={buttonVariants({
+                        variant: "link",
+                        className: "mt-5 h-auto p-0 text-primary",
+                      })}
                     >
-                      <a href={story.href}>
-                        Explore topic <ArrowRight className="size-4" />
-                      </a>
-                    </Button>
+                      Explore topic
+                      <HugeiconsIcon
+                        icon={ArrowRight02Icon}
+                        data-icon="inline-end"
+                        className="size-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
                   </CardContent>
                 </Card>
               ))}
@@ -603,19 +628,31 @@ export default async function Home() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Button asChild size="lg" className="h-12 rounded-md px-6">
-                <a href="/get-involved#partner">
-                  Explore partnerships <ArrowRight className="size-4" />
-                </a>
-              </Button>
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="h-12 rounded-md bg-background/70 px-6"
+              <Link
+                href="/get-involved#partner"
+                className={buttonVariants({
+                  size: "lg",
+                  className: "h-12 rounded-md px-6",
+                })}
               >
-                <a href="/get-involved#contact">Contact IAHL</a>
-              </Button>
+                Explore partnerships
+                <HugeiconsIcon
+                  icon={ArrowRight02Icon}
+                  data-icon="inline-end"
+                  className="size-4"
+                  aria-hidden="true"
+                />
+              </Link>
+              <Link
+                href="/get-involved#contact"
+                className={buttonVariants({
+                  variant: "outline",
+                  size: "lg",
+                  className: "h-12 rounded-md bg-background/70 px-6",
+                })}
+              >
+                Contact IAHL
+              </Link>
             </div>
           </div>
         </div>
@@ -650,21 +687,25 @@ export default async function Home() {
                     <p className="mt-3 leading-7 text-muted-foreground">
                       {item.text}
                     </p>
-                    <Button
-                      asChild
-                      variant="link"
-                      className="mt-4 h-auto p-0 text-primary"
+                    <Link
+                      href={
+                        item.title === "Careers"
+                          ? "/get-involved#careers"
+                          : "/get-involved#partner"
+                      }
+                      className={buttonVariants({
+                        variant: "link",
+                        className: "mt-4 h-auto p-0 text-primary",
+                      })}
                     >
-                      <a
-                        href={
-                          item.title === "Careers"
-                            ? "/get-involved#careers"
-                            : "/get-involved#partner"
-                        }
-                      >
-                        {item.action} <ArrowRight className="size-4" />
-                      </a>
-                    </Button>
+                      {item.action}
+                      <HugeiconsIcon
+                        icon={ArrowRight02Icon}
+                        data-icon="inline-end"
+                        className="size-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
                   </CardContent>
                 </Card>
               ))}
