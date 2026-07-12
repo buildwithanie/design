@@ -117,18 +117,27 @@ export default async function Home() {
     alt: participant.image.decorative ? "" : (participant.image.alt ?? ""),
   }));
 
-  const featuredProjects = homePage.featuredProjects.map((project) => ({
-    ...project,
-    imageUrl: urlForImage(project.coverImage)
-      .width(900)
-      .height(667)
-      .fit("crop")
-      .auto("format")
-      .url(),
-    imageAlt: project.coverImage.decorative
-      ? ""
-      : (project.coverImage.alt ?? ""),
-  }));
+  const featuredProjects = (homePage.featuredProjects ?? [])
+    .filter(
+      (project) =>
+        project?.slug &&
+        project?.title &&
+        project?.summary &&
+        project?.coverImage?.asset &&
+        project?.areaOfWork?.title,
+    )
+    .map((project) => ({
+      ...project,
+      imageUrl: urlForImage(project.coverImage)
+        .width(900)
+        .height(667)
+        .fit("crop")
+        .auto("format")
+        .url(),
+      imageAlt: project.coverImage.decorative
+        ? ""
+        : (project.coverImage.alt ?? ""),
+    }));
 
   const featuredProjectsGridClass =
     featuredProjects.length === 1

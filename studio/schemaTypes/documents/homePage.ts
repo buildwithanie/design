@@ -125,7 +125,8 @@ export const homePage = defineType({
       title: 'Featured projects',
       type: 'array',
       group: 'featuredProjects',
-      description: 'Select and order up to three projects for the homepage.',
+      description:
+        'Optionally select and order up to three projects for the homepage. Leave empty to hide this section.',
       of: [
         defineArrayMember({
           type: 'reference',
@@ -133,12 +134,7 @@ export const homePage = defineType({
         }),
       ],
       validation: (rule) =>
-        rule
-          .required()
-          .min(1)
-          .max(3)
-          .unique()
-          .error('Select between one and three different projects.'),
+        rule.max(3).unique().error('Select no more than three different projects.'),
     }),
   ],
   preview: {
