@@ -10,6 +10,7 @@ import {
   PROJECTS_QUERY_RESULT,
 } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/image";
+import { notFound } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Projects | Innovate AI HealthLab",
@@ -52,9 +53,7 @@ export default async function ProjectsPage() {
   const projects = projectsData as PROJECTS_QUERY_RESULT;
 
   if (!projectsPage) {
-    throw new Error(
-      "The Projects page document has not been published in Sanity.",
-    );
+    notFound();
   }
 
   return (
