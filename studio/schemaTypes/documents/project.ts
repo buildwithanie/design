@@ -1,5 +1,5 @@
 import {DocumentTextIcon} from '@sanity/icons/DocumentText'
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 
 export const project = defineType({
   name: 'project',
@@ -83,100 +83,9 @@ export const project = defineType({
     defineField({
       name: 'body',
       title: 'Project content',
-      type: 'array',
-      description: 'Build the project story using headings, text, lists, links, quotes and images.',
-      of: [
-        defineArrayMember({
-          type: 'block',
-
-          styles: [
-            {title: 'Normal', value: 'normal'},
-            {title: 'Section heading', value: 'h2'},
-            {title: 'Subheading', value: 'h3'},
-            {title: 'Quote', value: 'blockquote'},
-          ],
-
-          lists: [
-            {title: 'Bullet list', value: 'bullet'},
-            {title: 'Numbered list', value: 'number'},
-          ],
-
-          marks: {
-            decorators: [
-              {title: 'Strong', value: 'strong'},
-              {title: 'Emphasis', value: 'em'},
-            ],
-
-            annotations: [
-              defineArrayMember({
-                name: 'link',
-                title: 'Link',
-                type: 'object',
-
-                fields: [
-                  defineField({
-                    name: 'href',
-                    title: 'URL',
-                    type: 'url',
-                    validation: (rule) =>
-                      rule.required().uri({
-                        allowRelative: true,
-                        scheme: ['http', 'https', 'mailto', 'tel'],
-                      }),
-                  }),
-
-                  defineField({
-                    name: 'openInNewTab',
-                    title: 'Open in a new tab',
-                    type: 'boolean',
-                    description: 'Use this for external websites and downloadable resources.',
-                    initialValue: false,
-                  }),
-                ],
-              }),
-            ],
-          },
-        }),
-
-        defineArrayMember({
-          name: 'projectImage',
-          title: 'Image',
-          type: 'image',
-
-          options: {
-            hotspot: true,
-          },
-
-          fields: [
-            defineField({
-              name: 'alt',
-              title: 'Alternative text',
-              type: 'string',
-              description: 'Describe the important information shown in the image.',
-              validation: (rule) => rule.required(),
-            }),
-
-            defineField({
-              name: 'caption',
-              title: 'Caption',
-              type: 'string',
-              description: 'Optional context displayed underneath the image.',
-              validation: (rule) => rule.max(180),
-            }),
-
-            defineField({
-              name: 'credit',
-              title: 'Image credit',
-              type: 'string',
-              description: 'Optional photographer, organization or image-source credit.',
-              validation: (rule) => rule.max(120),
-            }),
-          ],
-        }),
-        defineArrayMember({
-          type: 'projectImageGallery',
-        }),
-      ],
+      type: 'portableContent',
+      description:
+        'Build the project story using headings, text, lists, links, quotes, images, and galleries.',
 
       validation: (rule) => rule.required().min(1).error('Add some content for this project.'),
     }),

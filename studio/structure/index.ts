@@ -1,8 +1,8 @@
 import DocumentTextIcon from '@sanity/icons/DocumentText'
 import {HomeIcon} from '@sanity/icons/Home'
+import {ImagesIcon} from '@sanity/icons/Images'
+import {TagIcon} from '@sanity/icons/Tag'
 import type {StructureResolver} from 'sanity/structure'
-
-const singletonTypes = new Set(['homePage', 'projectsPage'])
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -20,9 +20,48 @@ export const structure: StructureResolver = (S) =>
           S.document().title('Projects page').schemaType('projectsPage').documentId('projectsPage'),
         ),
 
+      S.listItem()
+        .title('Media Center')
+        .icon(ImagesIcon)
+        .child(
+          S.list()
+            .title('Media Center')
+            .items([
+              S.listItem()
+                .title('Media Center page')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.document()
+                    .title('Media Center page')
+                    .schemaType('mediaPage')
+                    .documentId('mediaPage'),
+                ),
+
+              S.divider(),
+
+              S.documentTypeListItem('newsItem').title('News and insights').icon(DocumentTextIcon),
+
+              S.documentTypeListItem('newsType').title('News types').icon(TagIcon),
+
+              S.divider(),
+
+              S.documentTypeListItem('publication').title('Publications').icon(DocumentTextIcon),
+
+              S.documentTypeListItem('publicationType').title('Publication types').icon(TagIcon),
+
+              S.divider(),
+
+              S.documentTypeListItem('multimediaItem')
+                .title('Galleries and videos')
+                .icon(ImagesIcon),
+            ]),
+        ),
+
       S.divider(),
 
-      ...S.documentTypeListItems().filter(
-        (listItem) => !singletonTypes.has(listItem.getId() ?? ''),
-      ),
+      S.documentTypeListItem('project').title('Projects').icon(DocumentTextIcon),
+
+      S.documentTypeListItem('areaOfWork').title('Areas of work').icon(TagIcon),
+
+      S.documentTypeListItem('projectType').title('Project types').icon(TagIcon),
     ])

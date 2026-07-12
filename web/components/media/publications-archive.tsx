@@ -1,61 +1,27 @@
+import Link from "next/link";
 import {
   ArrowDown01Icon,
   ArrowUpRight01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-const publications = [
-  {
-    type: "Research brief",
-    title: "Community knowledge in responsible health research",
-    year: "2026",
-    format: "PDF",
-    action: "Download",
-    external: false,
-  },
-  {
-    type: "Practice note",
-    title: "Questions to ask before introducing AI into a health programme",
-    year: "2026",
-    format: "PDF",
-    action: "Download",
-    external: false,
-  },
-  {
-    type: "Learning resource",
-    title: "Building research partnerships that strengthen local capacity",
-    year: "2025",
-    format: "Online resource",
-    action: "View resource",
-    external: true,
-  },
-  {
-    type: "Research brief",
-    title: "Using community evidence to understand access to care",
-    year: "2025",
-    format: "PDF",
-    action: "Download",
-    external: false,
-  },
-  {
-    type: "Practice guide",
-    title: "Planning meaningful community involvement in health research",
-    year: "2025",
-    format: "PDF",
-    action: "Download",
-    external: false,
-  },
-  {
-    type: "Learning resource",
-    title: "A practical introduction to responsible data use",
-    year: "2024",
-    format: "Online resource",
-    action: "View resource",
-    external: true,
-  },
-];
+import {
+  getPublicationHref,
+  isExternalPublication,
+} from "@/lib/publication-link";
+import type { PUBLICATIONS_QUERY_RESULT } from "@/sanity.types";
 
-export function PublicationsArchive() {
+type PublicationsArchiveProps = {
+  items: PUBLICATIONS_QUERY_RESULT;
+};
+
+export function PublicationsArchive({ items }: PublicationsArchiveProps) {
+  const validItems = items.filter((item) => getPublicationHref(item));
+
+  if (validItems.length === 0) {
+    return null;
+  }
+
   return (
     <section className="py-12 sm:py-16">
       <div className="mx-auto w-[min(1180px,92vw)]">
@@ -63,47 +29,58 @@ export function PublicationsArchive() {
           <p className="font-bold">All publications</p>
 
           <p className="text-sm text-muted-foreground">
-            {publications.length} resources
+            {validItems.length}{" "}
+            {validItems.length === 1 ? "resource" : "resources"}
           </p>
         </div>
 
         <div>
-          {publications.map((publication) => (
-            <article
-              key={publication.title}
-              className="grid gap-5 border-b border-border py-7 sm:grid-cols-[10rem_1fr_auto] sm:items-center sm:gap-8"
-            >
-              <div>
-                <p className="text-xs font-bold uppercase tracking-[0.12em] text-primary">
-                  {publication.type}
-                </p>
+          {validItems.map((publication) => {
+            const href = getPublicationHref(publication);
 
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {publication.format} · {publication.year}
-                </p>
-              </div>
+            if (!href) {
+              return null;
+            }
 
-              <h2 className="max-w-3xl text-xl leading-snug font-bold sm:text-2xl">
-                {publication.title}
-              </h2>
+            const external = isExternalPublication(publication);
 
-              {/*
-                  This remains non-interactive while using mock data.
-                  Sanity will provide either a downloadable file or external URL.
-                */}
-              <span className="inline-flex w-fit items-center gap-2 font-bold text-(--purple)">
-                {publication.action}
+            return (
+              <article
+                key={publication._id}
+                className="grid gap-5 border-b border-border py-7 sm:grid-cols-[10rem_1fr_auto] sm:items-center sm:gap-8"
+              >
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-[0.12em] text-primary">
+                    {publication.publicationType.title}
+                  </p>
 
-                <HugeiconsIcon
-                  icon={
-                    publication.external ? ArrowUpRight01Icon : ArrowDown01Icon
-                  }
-                  className="size-4"
-                  aria-hidden="true"
-                />
-              </span>
-            </article>
-          ))}
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {external ? "Online resource" : "PDF"} ·{" "}
+                    {publication.publishedAt.slice(0, 4)}
+                  </p>
+                </div>
+
+                <h2 className="max-w-3xl text-xl leading-snug font-bold sm:text-2xl">
+                  {publication.title}
+                </h2>
+
+                <Link
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className="inline-flex w-fit items-center gap-2 font-bold text-(--purple) transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--purple)"
+                >
+                  {external ? "View resource" : "Download"}
+
+                  <HugeiconsIcon
+                    icon={external ? ArrowUpRight01Icon : ArrowDown01Icon}
+                    className="size-4"
+                    aria-hidden="true"
+                  />
+                </Link>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

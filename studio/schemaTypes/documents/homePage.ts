@@ -24,6 +24,10 @@ export const homePage = defineType({
       name: 'featuredProjects',
       title: 'Featured projects',
     },
+    {
+      name: 'media',
+      title: 'Latest news',
+    },
   ],
   fields: [
     defineField({
@@ -135,6 +139,22 @@ export const homePage = defineType({
       ],
       validation: (rule) =>
         rule.max(3).unique().error('Select no more than three different projects.'),
+    }),
+    defineField({
+      name: 'mediaLabel',
+      title: 'Section label',
+      type: 'string',
+      group: 'media',
+      initialValue: 'Media Center',
+      validation: (rule) => rule.required().max(40),
+    }),
+    defineField({
+      name: 'mediaHeading',
+      title: 'Section heading',
+      type: 'string',
+      group: 'media',
+      initialValue: 'Stories, ideas, and updates from IAHL',
+      validation: (rule) => rule.required().max(100),
     }),
   ],
   preview: {

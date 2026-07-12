@@ -1,4 +1,18 @@
-export function MediaIntro() {
+import Link from "next/link";
+import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+
+type MediaArchiveIntroProps = {
+  label: string;
+  heading: string;
+  description: string;
+};
+
+export function MediaArchiveIntro({
+  label,
+  heading,
+  description,
+}: MediaArchiveIntroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-secondary pt-24">
       <div
@@ -6,8 +20,20 @@ export function MediaIntro() {
         aria-hidden="true"
       />
 
-      <div className="mx-auto w-[min(1180px,92vw)] py-14 sm:py-16 lg:py-20">
-        <div className="max-w-4xl">
+      <div className="mx-auto w-[min(1180px,92vw)] py-12 sm:py-16 lg:py-18">
+        <Link
+          href="/media"
+          className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+        >
+          <HugeiconsIcon
+            icon={ArrowLeft02Icon}
+            className="size-4"
+            aria-hidden="true"
+          />
+          Media Center
+        </Link>
+
+        <div className="mt-9 max-w-4xl">
           <div className="flex items-center gap-3">
             <span
               className="size-2.5 rounded-full bg-(--purple)"
@@ -15,7 +41,7 @@ export function MediaIntro() {
             />
 
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-              Media Center
+              {label}
             </p>
           </div>
 
@@ -25,12 +51,11 @@ export function MediaIntro() {
           />
 
           <h1 className="mt-7 max-w-3xl text-balance text-5xl leading-[1.02] font-bold sm:text-6xl lg:text-[4.2rem]">
-            Research, field learning, and ideas worth sharing.
+            {heading}
           </h1>
 
           <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-            Follow IAHL&apos;s research, community conversations, partnerships, and
-            practical lessons from work across health and technology.
+            {description}
           </p>
         </div>
       </div>

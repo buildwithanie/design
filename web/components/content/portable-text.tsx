@@ -3,23 +3,32 @@ import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "next-sanity";
 
 import { urlForImage } from "@/sanity/lib/image";
-import type { PROJECT_BY_SLUG_QUERY_RESULT } from "@/sanity.types";
+import type {
+  NEWS_BY_SLUG_QUERY_RESULT,
+  PROJECT_BY_SLUG_QUERY_RESULT,
+} from "@/sanity.types";
 
-type Project = NonNullable<PROJECT_BY_SLUG_QUERY_RESULT>;
-type ProjectBody = NonNullable<Project["body"]>;
-type ProjectImage = Extract<ProjectBody[number], { _type: "projectImage" }>;
-type ProjectImageGallery = Extract<
-  ProjectBody[number],
-  { _type: "projectImageGallery" }
+type ProjectContent = NonNullable<PROJECT_BY_SLUG_QUERY_RESULT>;
+type NewsContent = NonNullable<NEWS_BY_SLUG_QUERY_RESULT>;
+
+type ProjectBody = NonNullable<ProjectContent["body"]>;
+type NewsBody = NonNullable<NewsContent["body"]>;
+
+type ContentBody = ProjectBody | NewsBody;
+
+type ContentImage = Extract<ContentBody[number], { _type: "contentImage" }>;
+type ContentImageGallery = Extract<
+  ContentBody[number],
+  { _type: "contentImageGallery" }
 >;
 
-type GalleryImage = ProjectImageGallery["images"][number];
+type GalleryImage = ContentImageGallery["images"][number];
 
-type ProjectLink = {
+type ContentLink = {
   href?: string;
   openInNewTab?: boolean;
 };
-function ProjectImageBlock({ value }: { value: ProjectImage }) {
+function ContentImageBlock({ value }: { value: ContentImage }) {
   const width = value.dimensions?.width;
   const height = value.dimensions?.height;
 
@@ -91,7 +100,7 @@ function GalleryImageItem({ image }: { image: GalleryImage }) {
   );
 }
 
-function ProjectImageGalleryBlock({ value }: { value: ProjectImageGallery }) {
+function ContentImageGalleryBlock({ value }: { value: ContentImageGallery }) {
   const images = value.images.filter((image) => image.asset);
 
   if (images.length === 0) {
@@ -118,18 +127,18 @@ function ProjectImageGalleryBlock({ value }: { value: ProjectImageGallery }) {
 
 const portableTextComponents: PortableTextComponents = {
   types: {
-    projectImage: ({ value }) => (
-      <ProjectImageBlock value={value as ProjectImage} />
+    contentImage: ({ value }) => (
+      <ContentImageBlock value={value as ContentImage} />
     ),
 
-    projectImageGallery: ({ value }) => (
-      <ProjectImageGalleryBlock value={value as ProjectImageGallery} />
+    contentImageGallery: ({ value }) => (
+      <ContentImageGalleryBlock value={value as ContentImageGallery} />
     ),
   },
 
   marks: {
     link: ({ children, value }) => {
-      const { href, openInNewTab } = (value ?? {}) as ProjectLink;
+      const { href, openInNewTab } = (value ?? {}) as ContentLink;
 
       if (!href) {
         return <>{children}</>;
@@ -162,17 +171,17 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-type ProjectPortableTextProps = {
-  value: ProjectBody;
+type ContentPortableTextProps = {
+  value: ContentBody;
 };
 
-export function ProjectPortableText({ value }: ProjectPortableTextProps) {
+export function ContentPortableText({ value }: ContentPortableTextProps) {
   if (value.length === 0) {
     return null;
   }
 
   return (
-    <article className="typeset typeset-project mx-auto max-w-[80ch]">
+    <article className="typeset typeset-content mx-auto max-w-[80ch]">
       <PortableText value={value} components={portableTextComponents} />
     </article>
   );

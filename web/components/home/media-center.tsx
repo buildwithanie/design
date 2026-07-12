@@ -3,47 +3,60 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
 
+import type { HomeSectionProps } from "@/components/home/types";
 import { buttonVariants } from "@/components/ui/button";
+import { getNewsHref, isExternalNews } from "@/lib/news-link";
+import { urlForImage } from "@/sanity/lib/image";
 
-const featuredStory = {
-  format: "Research insight",
-  title: "Responsible AI needs more than good technology",
-  description:
-    "A closer look at why governance, community knowledge, and human oversight must shape AI used in health research.",
-  image: "/images/iahl-media-meeting.png",
-  alt: "IAHL researchers and partners discussing health research during a meeting",
-  href: "/media",
-};
+export function MediaCenter({ homePage }: HomeSectionProps) {
+  const validStories = homePage.latestNews.filter(
+    (story) =>
+      getNewsHref(story) &&
+      story.coverImage?.asset &&
+      story.newsType?.title &&
+      story.summary,
+  );
 
-const supportingStories = [
-  {
-    format: "Field story",
-    title: "What community listening changes about research",
-    image: "/images/community-intelligence-feature.png",
-    alt: "A community-led conversation informing health research",
-    href: "/media",
-  },
-  {
-    format: "Partnership update",
-    title: "Building research capacity that continues beyond one project",
-    image: "/images/capacity-partnership-hands.png",
-    alt: "Research partners working together during a collaborative activity",
-    href: "/media",
-  },
-];
+  const featuredStory = validStories[0];
+  const supportingStories = validStories.slice(1);
 
-export function MediaCenter() {
+  if (
+    !homePage.mediaLabel ||
+    !homePage.mediaHeading ||
+    !featuredStory ||
+    !featuredStory.coverImage?.asset ||
+    !featuredStory.newsType?.title ||
+    !featuredStory.summary
+  ) {
+    return null;
+  }
+
+  const featuredHref = getNewsHref(featuredStory);
+
+  if (!featuredHref) {
+    return null;
+  }
+
+  const featuredExternal = isExternalNews(featuredStory);
+
+  const featuredImageUrl = urlForImage(featuredStory.coverImage)
+    .width(1400)
+    .height(560)
+    .fit("crop")
+    .auto("format")
+    .url();
+
   return (
     <section id="media" className="py-10 sm:py-14">
       <div className="mx-auto w-[min(1180px,92vw)] overflow-hidden rounded-lg bg-[#eff7f8] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
         <div className="flex flex-col gap-4 border-b border-(--cyan)/20 pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
           <div className="max-w-2xl">
             <p className="text-sm font-bold uppercase tracking-[0.16em] text-(--purple)">
-              Media Center
+              {homePage.mediaLabel}
             </p>
 
             <h2 className="mt-3 text-balance text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
-              Stories, ideas, and updates from IAHL
+              {homePage.mediaHeading}
             </h2>
           </div>
 
@@ -66,40 +79,61 @@ export function MediaCenter() {
         </div>
 
         <article className="mt-8 overflow-hidden rounded-lg bg-background">
-          <div className="relative aspect-5/2 overflow-hidden bg-muted">
+          <Link
+            href={featuredHref}
+            target={featuredExternal ? "_blank" : undefined}
+            rel={featuredExternal ? "noopener noreferrer" : undefined}
+            className="group relative block aspect-5/2 overflow-hidden bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+            aria-label={`Read ${featuredStory.title}`}
+          >
             <Image
-              src={featuredStory.image}
-              alt={featuredStory.alt}
+              src={featuredImageUrl}
+              alt={
+                featuredStory.coverImage.decorative
+                  ? ""
+                  : (featuredStory.coverImage.alt ?? "")
+              }
               fill
               sizes="(max-width: 1280px) 92vw, 1100px"
-              className="object-cover"
+              className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+              placeholder={featuredStory.coverImage.lqip ? "blur" : "empty"}
+              blurDataURL={featuredStory.coverImage.lqip ?? undefined}
             />
-          </div>
+          </Link>
 
           <div className="grid gap-5 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
             <div>
               <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
-                {featuredStory.format}
+                {featuredStory.newsType.title}
               </p>
 
               <h3 className="mt-3 max-w-2xl text-balance text-2xl leading-tight font-bold sm:text-3xl lg:text-4xl">
-                {featuredStory.title}
+                <Link
+                  href={featuredHref}
+                  target={featuredExternal ? "_blank" : undefined}
+                  rel={featuredExternal ? "noopener noreferrer" : undefined}
+                  className="transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                >
+                  {featuredStory.title}
+                </Link>
               </h3>
             </div>
 
             <div>
               <p className="leading-7 text-muted-foreground">
-                {featuredStory.description}
+                {featuredStory.summary}
               </p>
 
               <Link
-                href={featuredStory.href}
+                href={featuredHref}
+                target={featuredExternal ? "_blank" : undefined}
+                rel={featuredExternal ? "noopener noreferrer" : undefined}
                 className={buttonVariants({
                   variant: "link",
                   className: "mt-5 h-auto p-0 text-primary",
                 })}
               >
-                Read the story
+                {featuredExternal ? "Read coverage" : "Read the story"}
                 <HugeiconsIcon
                   icon={ArrowRight02Icon}
                   data-icon="inline-end"
@@ -111,50 +145,96 @@ export function MediaCenter() {
           </div>
         </article>
 
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
-          {supportingStories.map((story) => (
-            <article
-              key={story.title}
-              className="overflow-hidden rounded-lg bg-background"
-            >
-              <div className="relative aspect-video overflow-hidden bg-muted">
-                <Image
-                  src={story.image}
-                  alt={story.alt}
-                  fill
-                  sizes="(max-width: 768px) 92vw, 44vw"
-                  className="object-cover"
-                />
-              </div>
+        {supportingStories.length > 0 ? (
+          <div className="mt-5 grid gap-5">
+            {supportingStories.map((story) => {
+              const href = getNewsHref(story);
 
-              <div className="p-5 sm:p-6">
-                <p className="text-xs font-bold uppercase tracking-[0.14em] text-(--purple)">
-                  {story.format}
-                </p>
+              if (!href || !story.coverImage?.asset || !story.newsType?.title) {
+                return null;
+              }
 
-                <h3 className="mt-2 text-xl leading-snug font-bold sm:text-2xl">
-                  {story.title}
-                </h3>
+              const external = isExternalNews(story);
 
-                <Link
-                  href={story.href}
-                  className={buttonVariants({
-                    variant: "link",
-                    className: "mt-4 h-auto p-0 text-primary",
-                  })}
+              const imageUrl = urlForImage(story.coverImage)
+                .width(720)
+                .height(405)
+                .fit("crop")
+                .auto("format")
+                .url();
+
+              return (
+                <article
+                  key={story._id}
+                  className="grid overflow-hidden rounded-lg bg-background md:grid-cols-[280px_minmax(0,1fr)]"
                 >
-                  Read more
-                  <HugeiconsIcon
-                    icon={ArrowRight02Icon}
-                    data-icon="inline-end"
-                    className="size-4"
-                    aria-hidden="true"
-                  />
-                </Link>
-              </div>
-            </article>
-          ))}
-        </div>
+                  <Link
+                    href={href}
+                    target={external ? "_blank" : undefined}
+                    rel={external ? "noopener noreferrer" : undefined}
+                    className="group relative block aspect-video overflow-hidden bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary md:aspect-auto md:min-h-52"
+                    aria-label={`Read ${story.title}`}
+                  >
+                    <Image
+                      src={imageUrl}
+                      alt={
+                        story.coverImage.decorative
+                          ? ""
+                          : (story.coverImage.alt ?? "")
+                      }
+                      fill
+                      sizes="(max-width: 768px) 92vw, 280px"
+                      className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
+                      placeholder={story.coverImage.lqip ? "blur" : "empty"}
+                      blurDataURL={story.coverImage.lqip ?? undefined}
+                    />
+                  </Link>
+
+                  <div className="flex flex-col justify-center p-5 sm:p-6 md:px-8">
+                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-(--purple)">
+                      {story.newsType.title}
+                    </p>
+
+                    <h3 className="mt-2 max-w-2xl text-xl leading-snug font-bold sm:text-2xl">
+                      <Link
+                        href={href}
+                        target={external ? "_blank" : undefined}
+                        rel={external ? "noopener noreferrer" : undefined}
+                        className="transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                      >
+                        {story.title}
+                      </Link>
+                    </h3>
+
+                    {story.summary ? (
+                      <p className="mt-3 max-w-2xl leading-7 text-muted-foreground">
+                        {story.summary}
+                      </p>
+                    ) : null}
+
+                    <Link
+                      href={href}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className={buttonVariants({
+                        variant: "link",
+                        className: "mt-4 h-auto w-fit p-0 text-primary",
+                      })}
+                    >
+                      {external ? "Read coverage" : "Read more"}
+                      <HugeiconsIcon
+                        icon={ArrowRight02Icon}
+                        data-icon="inline-end"
+                        className="size-4"
+                        aria-hidden="true"
+                      />
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
     </section>
   );

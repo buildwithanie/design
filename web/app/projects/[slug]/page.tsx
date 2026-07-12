@@ -5,12 +5,12 @@ import { notFound } from "next/navigation";
 import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
-import { ProjectPortableText } from "@/components/project-portable-text";
 import { buttonVariants } from "@/components/ui/button";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECT_BY_SLUG_QUERY } from "@/sanity/lib/queries";
 import type { PROJECT_BY_SLUG_QUERY_RESULT } from "@/sanity.types";
+import { ContentPortableText } from "@/components/content/portable-text";
 
 type ProjectPageProps = {
   params: Promise<{
@@ -194,7 +194,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       {project.body?.length ? (
         <section className="bg-background pt-10 pb-6 md:pt-14 md:pb-8">
           <div className="mx-auto w-[min(1180px,92vw)]">
-            <ProjectPortableText value={project.body} />
+            <ContentPortableText value={project.body} />
           </div>
         </section>
       ) : null}

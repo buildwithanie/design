@@ -8,97 +8,110 @@ import { HugeiconsIcon } from "@hugeicons/react";
 import { GalleryDetail } from "@/components/media/gallery-detail";
 import { VideoDetail } from "@/components/media/video-detail";
 import { buttonVariants } from "@/components/ui/button";
+import { formatMonthYear } from "@/lib/format-date";
+import { getYouTubeVideoId } from "@/lib/youtube";
+import { urlForImage } from "@/sanity/lib/image";
+import { sanityFetch } from "@/sanity/lib/live";
+import { MULTIMEDIA_BY_SLUG_QUERY } from "@/sanity/lib/queries";
+import type { MULTIMEDIA_BY_SLUG_QUERY_RESULT } from "@/sanity.types";
 
-type MultimediaPageProps = {
+type MultimediaDetailPageProps = {
   params: Promise<{
     slug: string;
   }>;
 };
 
-const multimediaItems = {
-  "community-listening-in-practice": {
-    type: "gallery",
-    title: "Community listening in practice",
-    summary:
-      "A closer look at how conversations with communities shape research questions and priorities.",
-    publishedAt: "June 2026",
-    coverImage: "/images/work-hero-community-listening.png",
-    coverImageAlt:
-      "An IAHL field researcher leading a community listening session",
-  },
-  "why-community-intelligence-matters": {
-    type: "video",
-    title: "Why community intelligence matters",
-    summary:
-      "A conversation about how community knowledge changes the questions researchers ask and how findings are understood.",
-    publishedAt: "March 2026",
-    coverImage: "/images/community-intelligence-feature.png",
-    coverImageAlt:
-      "Visual representing community intelligence and locally informed research",
-    youtubeId: "ScMzIvxBSi4",
-  },
-} as const;
-
-type MultimediaSlug = keyof typeof multimediaItems;
-
-function isMultimediaSlug(slug: string): slug is MultimediaSlug {
-  return slug in multimediaItems;
-}
-
 export async function generateMetadata({
   params,
-}: MultimediaPageProps): Promise<Metadata> {
+}: MultimediaDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  if (!isMultimediaSlug(slug)) {
-    return {
-      title: "Media item not found | IAHL",
-      robots: {
-        index: false,
-        follow: false,
-      },
-    };
+  const { data } = await sanityFetch({
+    query: MULTIMEDIA_BY_SLUG_QUERY,
+    params: { slug },
+    stega: false,
+  });
+
+  const item = data as MULTIMEDIA_BY_SLUG_QUERY_RESULT;
+
+  if (!item || !item.coverImage.asset) {
+    notFound();
   }
 
-  const item = multimediaItems[slug];
-  const title = `${item.title} | IAHL`;
+  const title = `${item.title} | Innovate AI HealthLab`;
+  const description = item.summary;
+
+  const openGraphImage = {
+    url: urlForImage(item.coverImage)
+      .width(1200)
+      .height(630)
+      .fit("crop")
+      .auto("format")
+      .url(),
+    width: 1200,
+    height: 630,
+    alt: item.coverImage.alt ?? item.title,
+  };
 
   return {
     title,
-    description: item.summary,
+    description,
+
     openGraph: {
       title,
-      description: item.summary,
-      type: item.type === "video" ? "video.other" : "article",
+      description,
+      type: item.mediaType === "video" ? "video.other" : "article",
       siteName: "Innovate AI HealthLab",
-      images: [
-        {
-          url: item.coverImage,
-          width: 1200,
-          height: 630,
-          alt: item.coverImageAlt,
-        },
-      ],
+      publishedTime: item.publishedAt,
+      images: [openGraphImage],
     },
+
     twitter: {
       card: "summary_large_image",
       title,
-      description: item.summary,
-      images: [item.coverImage],
+      description,
+      images: [openGraphImage.url],
     },
   };
 }
 
 export default async function MultimediaDetailPage({
   params,
-}: MultimediaPageProps) {
+}: MultimediaDetailPageProps) {
   const { slug } = await params;
 
-  if (!isMultimediaSlug(slug)) {
+  const { data } = await sanityFetch({
+    query: MULTIMEDIA_BY_SLUG_QUERY,
+    params: { slug },
+  });
+
+  const item = data as MULTIMEDIA_BY_SLUG_QUERY_RESULT;
+
+  if (!item || !item.coverImage.asset) {
     notFound();
   }
 
-  const item = multimediaItems[slug];
+  const youtubeId =
+    item.mediaType === "video" ? getYouTubeVideoId(item.youtubeUrl) : null;
+
+  if (
+    (item.mediaType === "video" && !youtubeId) ||
+    (item.mediaType === "gallery" &&
+      (!item.galleryImages || item.galleryImages.length < 2))
+  ) {
+    notFound();
+  }
+
+  const coverImageUrl = urlForImage(item.coverImage)
+    .width(1800)
+    .height(900)
+    .fit("crop")
+    .auto("format")
+    .url();
+
+  const coverImageAlt = item.coverImage.decorative
+    ? ""
+    : (item.coverImage.alt ?? "");
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -124,14 +137,19 @@ export default async function MultimediaDetailPage({
           <div className="mx-auto mt-10 max-w-4xl">
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold">
               <span className="text-primary">
-                {item.type === "gallery" ? "Gallery" : "Video"}
+                {item.mediaType === "video" ? "Video" : "Gallery"}
               </span>
 
               <span className="text-muted-foreground/60" aria-hidden="true">
                 /
               </span>
 
-              <time className="text-muted-foreground">{item.publishedAt}</time>
+              <time
+                dateTime={item.publishedAt}
+                className="text-muted-foreground"
+              >
+                {formatMonthYear(item.publishedAt)}
+              </time>
             </div>
 
             <h1 className="mt-5 max-w-4xl text-balance text-4xl leading-[1.02] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-6xl">
@@ -145,32 +163,36 @@ export default async function MultimediaDetailPage({
         </div>
       </header>
 
-      {item.type === "gallery" ? (
+      {item.mediaType === "gallery" && item.galleryImages ? (
         <>
           <section className="pt-8 sm:pt-10">
             <div className="mx-auto w-[min(1180px,92vw)]">
               <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-muted sm:aspect-2/1 lg:aspect-5/2">
                 <Image
-                  src={item.coverImage}
-                  alt={item.coverImageAlt}
+                  src={coverImageUrl}
+                  alt={coverImageAlt}
                   fill
                   priority
                   sizes="92vw"
                   className="object-cover"
+                  placeholder={item.coverImage.lqip ? "blur" : "empty"}
+                  blurDataURL={item.coverImage.lqip ?? undefined}
                 />
               </div>
             </div>
           </section>
 
-          <GalleryDetail />
+          <GalleryDetail images={item.galleryImages} />
         </>
-      ) : (
+      ) : null}
+
+      {item.mediaType === "video" && youtubeId ? (
         <VideoDetail
-          youtubeId={item.youtubeId}
+          youtubeId={youtubeId}
           title={item.title}
-          description="Community knowledge can reveal priorities, risks, and practical realities that are not always visible in research datasets. This conversation examines how that knowledge can become part of responsible health research."
+          description={item.summary}
         />
-      )}
+      ) : null}
     </main>
   );
 }

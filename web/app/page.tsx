@@ -35,7 +35,7 @@ export default async function Home() {
       <ResearchNetwork homePage={homePage} />
       <VisionMission homePage={homePage} />
       <FeaturedProjects homePage={homePage} />
-      <MediaCenter />
+      <MediaCenter homePage={homePage} />
       <ResearchApproach />
       <GetInvolved />
       <WorkWithUs />

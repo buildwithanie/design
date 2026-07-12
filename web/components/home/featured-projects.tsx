@@ -35,10 +35,10 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
   if (featuredProjects.length === 0) {
     return null;
   }
-
+  const isSingleProject = featuredProjects.length === 1;
   const gridClass =
     featuredProjects.length === 1
-      ? "mx-auto max-w-md"
+      ? "mx-auto max-w-5xl"
       : featuredProjects.length === 2
         ? "mx-auto max-w-4xl md:grid-cols-2"
         : "md:grid-cols-3";
@@ -71,31 +71,48 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
           {featuredProjects.map((project) => (
             <Card
               key={project._id}
-              className="group overflow-hidden rounded-lg shadow-sm transition hover:-translate-y-1 hover:shadow-xl pt-0"
+              className={`group overflow-hidden rounded-lg pt-0 shadow-sm transition hover:-translate-y-1 hover:shadow-xl ${
+                isSingleProject
+                  ? "gap-0 md:grid md:grid-cols-[minmax(280px,0.85fr)_minmax(0,1.15fr)]"
+                  : ""
+              }`}
             >
-              <div className="relative aspect-[1.35] bg-secondary">
+              <div
+                className={`relative bg-secondary ${
+                  isSingleProject
+                    ? "aspect-[1.5] md:aspect-auto md:min-h-80"
+                    : "aspect-[1.35]"
+                }`}
+              >
                 <Image
                   src={project.imageUrl}
                   alt={project.imageAlt}
                   fill
-                  sizes="(max-width: 900px) 92vw, 32vw"
+                  sizes={
+                    isSingleProject
+                      ? "(max-width: 768px) 92vw, 430px"
+                      : "(max-width: 900px) 92vw, 32vw"
+                  }
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
               </div>
 
-              <CardContent className="p-6 text-center">
+              <CardContent
+                className={`p-6 ${
+                  isSingleProject
+                    ? "flex flex-col justify-center text-left sm:p-8 md:p-10"
+                    : "text-center"
+                }`}
+              >
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">
                   {project.areaOfWork.title}
                 </p>
-
                 <h3 className="mt-3 text-xl leading-snug font-bold">
                   {project.title}
                 </h3>
-
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
                   {project.summary}
                 </p>
-
                 <Link
                   href={`/projects/${project.slug}`}
                   className={buttonVariants({
