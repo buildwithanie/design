@@ -71,7 +71,7 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
           {featuredProjects.map((project) => (
             <Card
               key={project._id}
-              className="group overflow-hidden rounded-lg shadow-sm transition hover:-translate-y-1 hover:shadow-xl"
+              className="group overflow-hidden rounded-lg shadow-sm transition hover:-translate-y-1 hover:shadow-xl pt-0"
             >
               <div className="relative aspect-[1.35] bg-secondary">
                 <Image
