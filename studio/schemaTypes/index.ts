@@ -4,10 +4,12 @@ import {project} from './documents/project'
 import {projectType} from './documents/projectType'
 import {accessibleImage} from './objects/accessibleImage'
 import {networkParticipant} from './objects/networkParticipant'
+import { projectImageGallery } from './objects/projectImageGallery';
 
 export const schemaTypes = [
   accessibleImage,
   networkParticipant,
+  projectImageGallery,
   homePage,
   areaOfWork,
   projectType,

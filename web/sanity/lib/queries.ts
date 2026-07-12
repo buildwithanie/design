@@ -119,6 +119,7 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`
 
     body[] {
       ...,
+
       _type == "projectImage" => {
         ...,
         asset,
@@ -127,6 +128,20 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`
         credit,
         "dimensions": asset->metadata.dimensions,
         "lqip": asset->metadata.lqip
+      },
+
+      _type == "projectImageGallery" => {
+        ...,
+
+        images[] {
+          ...,
+          asset,
+          alt,
+          caption,
+          credit,
+          "dimensions": asset->metadata.dimensions,
+          "lqip": asset->metadata.lqip
+        }
       }
     }
   }

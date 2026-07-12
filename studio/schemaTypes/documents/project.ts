@@ -1,4 +1,4 @@
-import { DocumentTextIcon } from '@sanity/icons/DocumentText';
+import {DocumentTextIcon} from '@sanity/icons/DocumentText'
 import {defineArrayMember, defineField, defineType} from 'sanity'
 
 export const project = defineType({
@@ -172,6 +172,9 @@ export const project = defineType({
               validation: (rule) => rule.max(120),
             }),
           ],
+        }),
+        defineArrayMember({
+          type: 'projectImageGallery',
         }),
       ],
 

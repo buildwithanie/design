@@ -8,12 +8,17 @@ import type { PROJECT_BY_SLUG_QUERY_RESULT } from "@/sanity.types";
 type Project = NonNullable<PROJECT_BY_SLUG_QUERY_RESULT>;
 type ProjectBody = NonNullable<Project["body"]>;
 type ProjectImage = Extract<ProjectBody[number], { _type: "projectImage" }>;
+type ProjectImageGallery = Extract<
+  ProjectBody[number],
+  { _type: "projectImageGallery" }
+>;
+
+type GalleryImage = ProjectImageGallery["images"][number];
 
 type ProjectLink = {
   href?: string;
   openInNewTab?: boolean;
 };
-
 function ProjectImageBlock({ value }: { value: ProjectImage }) {
   const width = value.dimensions?.width;
   const height = value.dimensions?.height;
@@ -23,22 +28,22 @@ function ProjectImageBlock({ value }: { value: ProjectImage }) {
   }
 
   return (
-    <figure className="not-typeset my-10">
-      <div className="overflow-hidden rounded-2xl bg-muted">
+    <figure className="not-typeset mx-auto my-9 max-w-[68ch]">
+      <div className="overflow-hidden rounded-xl bg-muted">
         <Image
-          src={urlForImage(value).width(1400).fit("max").auto("format").url()}
-          alt={value.alt ?? ""}
+          src={urlForImage(value).width(1100).fit("max").auto("format").url()}
+          alt={value.alt}
           width={width}
           height={height}
           sizes="(min-width: 768px) 68ch, 92vw"
-          className="h-auto w-full object-cover"
+          className="h-auto w-full"
           placeholder={value.lqip ? "blur" : "empty"}
           blurDataURL={value.lqip ?? undefined}
         />
       </div>
 
       {value.caption || value.credit ? (
-        <figcaption className="mt-3 flex flex-col gap-1 text-sm text-muted-foreground sm:flex-row sm:justify-between">
+        <figcaption className="mt-3 flex flex-col gap-1 text-sm leading-6 text-muted-foreground sm:flex-row sm:justify-between">
           {value.caption ? <span>{value.caption}</span> : null}
           {value.credit ? <span>Credit: {value.credit}</span> : null}
         </figcaption>
@@ -47,10 +52,78 @@ function ProjectImageBlock({ value }: { value: ProjectImage }) {
   );
 }
 
+function GalleryImageItem({ image }: { image: GalleryImage }) {
+  if (!image.asset) {
+    return null;
+  }
+
+  return (
+    <figure>
+      <div className="relative aspect-4/3 overflow-hidden rounded-lg bg-muted">
+        <Image
+          src={urlForImage(image)
+            .width(900)
+            .height(675)
+            .fit("crop")
+            .auto("format")
+            .url()}
+          alt={image.alt}
+          fill
+          sizes="(min-width: 1024px) 28vw, (min-width: 640px) 44vw, 92vw"
+          className="object-cover"
+          placeholder={image.lqip ? "blur" : "empty"}
+          blurDataURL={image.lqip ?? undefined}
+        />
+      </div>
+
+      {image.caption || image.credit ? (
+        <figcaption className="mt-2 text-sm leading-6 text-muted-foreground">
+          {image.caption ? <span>{image.caption}</span> : null}
+
+          {image.caption && image.credit ? (
+            <span aria-hidden="true"> · </span>
+          ) : null}
+
+          {image.credit ? <span>Credit: {image.credit}</span> : null}
+        </figcaption>
+      ) : null}
+    </figure>
+  );
+}
+
+function ProjectImageGalleryBlock({ value }: { value: ProjectImageGallery }) {
+  const images = value.images.filter((image) => image.asset);
+
+  if (images.length === 0) {
+    return null;
+  }
+
+  const gridClass =
+    images.length === 2
+      ? "sm:grid-cols-2"
+      : images.length === 3
+        ? "sm:grid-cols-2 lg:grid-cols-3"
+        : "sm:grid-cols-2";
+
+  return (
+    <div
+      className={`not-typeset mx-auto my-10 grid max-w-[76ch] gap-5 ${gridClass}`}
+    >
+      {images.map((image) => (
+        <GalleryImageItem key={image._key} image={image} />
+      ))}
+    </div>
+  );
+}
+
 const portableTextComponents: PortableTextComponents = {
   types: {
     projectImage: ({ value }) => (
       <ProjectImageBlock value={value as ProjectImage} />
+    ),
+
+    projectImageGallery: ({ value }) => (
+      <ProjectImageGalleryBlock value={value as ProjectImageGallery} />
     ),
   },
 
@@ -99,7 +172,7 @@ export function ProjectPortableText({ value }: ProjectPortableTextProps) {
   }
 
   return (
-    <article className="typeset typeset-project mx-auto max-w-[68ch]">
+    <article className="typeset typeset-project mx-auto max-w-[80ch]">
       <PortableText value={value} components={portableTextComponents} />
     </article>
   );

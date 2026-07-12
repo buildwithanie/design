@@ -80,6 +80,9 @@ export type Project = {
         _type: "projectImage";
         _key: string;
       }
+    | ({
+        _key: string;
+      } & ProjectImageGallery)
   >;
 };
 
@@ -170,6 +173,21 @@ export type HomePage = {
       _key: string;
     } & ProjectReference
   >;
+};
+
+export type ProjectImageGallery = {
+  _type: "projectImageGallery";
+  images: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    caption?: string;
+    credit?: string;
+    _type: "galleryImage";
+    _key: string;
+  }>;
 };
 
 export type NetworkParticipant = {
@@ -289,6 +307,7 @@ export type AllSanitySchemaTypes =
   | AreaOfWork
   | ProjectReference
   | HomePage
+  | ProjectImageGallery
   | NetworkParticipant
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -390,7 +409,7 @@ export type PROJECTS_QUERY_RESULT = Array<{
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: PROJECT_BY_SLUG_QUERY
-// Query: *[    _type == "project" &&    slug.current == $slug  ][0] {    _id,    title,    "slug": slug.current,    status,    summary,    coverImage {      asset,      crop,      hotspot,      decorative,      alt    },    areaOfWork-> {      title,      "slug": slug.current    },    projectType-> {      title,      "slug": slug.current    },    body[] {      ...,      _type == "projectImage" => {        ...,        asset,        alt,        caption,        credit,        "dimensions": asset->metadata.dimensions,        "lqip": asset->metadata.lqip      }    }  }
+// Query: *[    _type == "project" &&    slug.current == $slug  ][0] {    _id,    title,    "slug": slug.current,    status,    summary,    coverImage {      asset,      crop,      hotspot,      decorative,      alt    },    areaOfWork-> {      title,      "slug": slug.current    },    projectType-> {      title,      "slug": slug.current    },    body[] {      ...,      _type == "projectImage" => {        ...,        asset,        alt,        caption,        credit,        "dimensions": asset->metadata.dimensions,        "lqip": asset->metadata.lqip      },      _type == "projectImageGallery" => {        ...,        images[] {          ...,          asset,          alt,          caption,          credit,          "dimensions": asset->metadata.dimensions,          "lqip": asset->metadata.lqip        }      }    }  }
 export type PROJECT_BY_SLUG_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -445,6 +464,23 @@ export type PROJECT_BY_SLUG_QUERY_RESULT = {
         dimensions: SanityImageDimensions | null;
         lqip: string | null;
       }
+    | {
+        _key: string;
+        _type: "projectImageGallery";
+        images: Array<{
+          asset: SanityImageAssetReference | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          alt: string;
+          caption: string | null;
+          credit: string | null;
+          _type: "galleryImage";
+          _key: string;
+          dimensions: SanityImageDimensions | null;
+          lqip: string | null;
+        }>;
+      }
   >;
 } | null;
 
@@ -454,6 +490,6 @@ declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "homePage" && _id == "homePage"][0] {\n    _id,\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n    visionStatement,\n    missionStatement,\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      "slug": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        "slug": slug.current\n      },\n      projectType-> {\n        title,\n        "slug": slug.current\n      }\n    }\n  }\n': HOME_PAGE_QUERY_RESULT;
     '\n  *[_type == "project" && defined(slug.current)]\n    | order(_createdAt desc) {\n      _id,\n      title,\n      "slug": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        "slug": slug.current\n      },\n      projectType-> {\n        title,\n        "slug": slug.current\n      }\n    }\n': PROJECTS_QUERY_RESULT;
-    '\n  *[\n    _type == "project" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    status,\n    summary,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    areaOfWork-> {\n      title,\n      "slug": slug.current\n    },\n\n    projectType-> {\n      title,\n      "slug": slug.current\n    },\n\n    body[] {\n      ...,\n      _type == "projectImage" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        "dimensions": asset->metadata.dimensions,\n        "lqip": asset->metadata.lqip\n      }\n    }\n  }\n': PROJECT_BY_SLUG_QUERY_RESULT;
+    '\n  *[\n    _type == "project" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    "slug": slug.current,\n    status,\n    summary,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    areaOfWork-> {\n      title,\n      "slug": slug.current\n    },\n\n    projectType-> {\n      title,\n      "slug": slug.current\n    },\n\n    body[] {\n      ...,\n\n      _type == "projectImage" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        "dimensions": asset->metadata.dimensions,\n        "lqip": asset->metadata.lqip\n      },\n\n      _type == "projectImageGallery" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          "dimensions": asset->metadata.dimensions,\n          "lqip": asset->metadata.lqip\n        }\n      }\n    }\n  }\n': PROJECT_BY_SLUG_QUERY_RESULT;
   }
 }

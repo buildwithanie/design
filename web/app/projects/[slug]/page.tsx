@@ -101,21 +101,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   }
 
   const coverImageUrl = project.coverImage
-    ? urlForImage(project.coverImage).width(1800).height(1100).fit("crop").url()
+    ? urlForImage(project.coverImage).width(1800).height(900).fit("crop").url()
     : null;
 
   const statusLabel = project.status ? statusLabels[project.status] : null;
 
   return (
-    <main>
-      <section className="border-b border-border bg-muted/30 pt-28 pb-14 md:pt-32 md:pb-20">
+    <main className="bg-background">
+      <section className="border-b border-border bg-muted/30 pt-28 pb-10 md:pt-32 md:pb-14">
         <div className="mx-auto w-[min(1180px,92vw)]">
           <Link
             href="/projects"
             className={buttonVariants({
               variant: "ghost",
               size: "sm",
-              className: "mb-8 -ml-3 text-muted-foreground",
+              className: "-ml-3 text-muted-foreground",
             })}
           >
             <HugeiconsIcon
@@ -127,67 +127,72 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             All projects
           </Link>
 
-          <div className="grid items-start gap-12 lg:grid-cols-[minmax(0,0.9fr)_minmax(420px,1.1fr)]">
-            <div>
-              <div className="mb-6 flex flex-wrap items-center gap-3 text-sm font-semibold">
+          {coverImageUrl ? (
+            <div className="relative mt-6 aspect-4/3 overflow-hidden rounded-xl bg-muted sm:aspect-2/1 lg:aspect-5/2">
+              <Image
+                src={coverImageUrl}
+                alt={project.coverImage?.alt ?? ""}
+                fill
+                priority
+                sizes="92vw"
+                className="object-cover"
+              />
+            </div>
+          ) : null}
+
+          <div
+            className={
+              coverImageUrl
+                ? "relative z-10 mx-auto -mt-8 w-full bg-background px-4 pt-6 sm:-mt-14 sm:w-[90%] sm:px-10 sm:pt-9 lg:-mt-16 lg:max-w-225 lg:px-14 lg:pt-11"
+                : "mx-auto mt-10 w-[min(900px,100%)]"
+            }
+          >
+            <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-6">
+              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold">
                 {project.areaOfWork?.title ? (
                   <span className="text-primary">
                     {project.areaOfWork.title}
                   </span>
                 ) : null}
 
-                {project.projectType?.title ? (
-                  <>
-                    <span
-                      className="size-1 rounded-full bg-border"
-                      aria-hidden="true"
-                    />
-                    <span className="text-muted-foreground">
-                      {project.projectType.title}
-                    </span>
-                  </>
+                {project.areaOfWork?.title && project.projectType?.title ? (
+                  <span className="text-muted-foreground/70" aria-hidden="true">
+                    /
+                  </span>
                 ) : null}
 
-                {statusLabel ? (
-                  <>
-                    <span
-                      className="size-1 rounded-full bg-border"
-                      aria-hidden="true"
-                    />
-                    <span className="text-muted-foreground">{statusLabel}</span>
-                  </>
+                {project.projectType?.title ? (
+                  <span className="text-muted-foreground">
+                    {project.projectType.title}
+                  </span>
                 ) : null}
               </div>
 
-              <h1 className="max-w-3xl text-4xl leading-[1.05] font-semibold tracking-tight text-balance sm:text-5xl lg:text-6xl">
-                {project.title}
-              </h1>
-
-              {project.summary ? (
-                <p className="mt-7 max-w-2xl text-lg leading-8 text-muted-foreground sm:text-xl">
-                  {project.summary}
-                </p>
+              {statusLabel ? (
+                <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                  <span
+                    className="size-2 rounded-full bg-(--green)"
+                    aria-hidden="true"
+                  />
+                  {statusLabel}
+                </div>
               ) : null}
             </div>
 
-            {coverImageUrl ? (
-              <div className="relative aspect-4/3 overflow-hidden rounded-[2rem] bg-muted shadow-sm">
-                <Image
-                  src={coverImageUrl}
-                  alt={project.coverImage?.alt ?? ""}
-                  fill
-                  priority
-                  sizes="(min-width: 1024px) 52vw, 92vw"
-                  className="object-cover"
-                />
-              </div>
+            <h1 className="mt-5 text-4xl leading-[1.02] font-semibold tracking-[-0.035em] text-balance sm:text-5xl lg:text-6xl">
+              {project.title}
+            </h1>
+
+            {project.summary ? (
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
+                {project.summary}
+              </p>
             ) : null}
           </div>
         </div>
       </section>
-
       {project.body?.length ? (
-        <section className="py-16 md:py-24">
+        <section className="bg-background pt-10 pb-6 md:pt-14 md:pb-8">
           <div className="mx-auto w-[min(1180px,92vw)]">
             <ProjectPortableText value={project.body} />
           </div>
