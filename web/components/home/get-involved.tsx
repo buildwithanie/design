@@ -1,67 +1,50 @@
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import Image from "next/image";
 import Link from "next/link";
 
+import type { HomeSectionProps } from "@/components/home/types";
 import { buttonVariants } from "@/components/ui/button";
 
-export function GetInvolved() {
-  return (
-    <section id="involved" className="relative overflow-hidden py-10">
-      <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-14">
-        <div className="relative">
-          <Image
-            src="/images/iahl-media-meeting.png"
-            alt="IAHL partners in a meeting discussing AI health research"
-            width={2048}
-            height={1024}
-            sizes="(max-width: 1024px) 92vw, 54vw"
-            className="h-auto w-full rounded-lg object-contain"
-          />
-        </div>
+export function GetInvolved({ homePage }: HomeSectionProps) {
+  if (
+    !homePage.getInvolvedLabel ||
+    !homePage.getInvolvedHeading ||
+    !homePage.getInvolvedDescription
+  ) {
+    return null;
+  }
 
-        <div className="relative">
-          <p className="mb-3 text-sm font-bold uppercase tracking-[0.18em] text-primary">
-            Get involved
+  return (
+    <section id="involved" className="py-10 sm:py-14">
+      <div className="mx-auto w-[min(1080px,92vw)] rounded-lg bg-[#f8f1e8] px-6 py-10 text-center sm:px-10 sm:py-12 lg:px-14 lg:py-14">
+        <div className="mx-auto max-w-4xl">
+          <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
+            {homePage.getInvolvedLabel}
           </p>
 
-          <h2 className="max-w-none whitespace-nowrap text-[clamp(2.35rem,5vw,4rem)] leading-[1.02] font-bold">
-            Partner with us
+          <h2 className="mx-auto mt-3 max-w-2xl text-balance text-3xl leading-tight font-bold sm:text-4xl lg:text-5xl">
+            {homePage.getInvolvedHeading}
           </h2>
 
-          <p className="mt-6 max-w-xl text-lg leading-8 text-muted-foreground">
-            We believe meaningful change happens through collaboration. By
-            partnering with us, you become part of a network dedicated to
-            innovation, growth, and community impact. Together, we can create
-            sustainable solutions that make a real difference.
+          <p className="mx-auto mt-4 max-w-xl leading-7 text-muted-foreground sm:text-lg">
+            {homePage.getInvolvedDescription}
           </p>
 
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-6 flex justify-center">
             <Link
-              href="/get-involved#partner"
+              href="/contact"
               className={buttonVariants({
                 size: "lg",
                 className: "h-12 rounded-md px-6",
               })}
             >
-              Explore partnerships
+              Start a conversation
               <HugeiconsIcon
                 icon={ArrowRight02Icon}
                 data-icon="inline-end"
                 className="size-4"
                 aria-hidden="true"
               />
-            </Link>
-
-            <Link
-              href="/get-involved#contact"
-              className={buttonVariants({
-                variant: "outline",
-                size: "lg",
-                className: "h-12 rounded-md bg-background/70 px-6",
-              })}
-            >
-              Contact IAHL
             </Link>
           </div>
         </div>

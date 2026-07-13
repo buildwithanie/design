@@ -7,7 +7,6 @@ import { MediaCenter } from "@/components/home/media-center";
 import { ResearchApproach } from "@/components/home/research-approach";
 import { ResearchNetwork } from "@/components/home/research-network";
 import { VisionMission } from "@/components/home/vision-mission";
-import { WorkWithUs } from "@/components/home/work-with-us";
 import { sanityFetch } from "@/sanity/lib/live";
 import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
@@ -37,8 +36,7 @@ export default async function Home() {
       <FeaturedProjects homePage={homePage} />
       <MediaCenter homePage={homePage} />
       <ResearchApproach homePage={homePage} />
-      <GetInvolved />
-      <WorkWithUs />
+      <GetInvolved homePage={homePage} />
     </main>
   );
 }

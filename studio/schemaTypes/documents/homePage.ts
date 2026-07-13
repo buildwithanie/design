@@ -32,6 +32,10 @@ export const homePage = defineType({
       name: 'approach',
       title: 'Our approach',
     },
+    {
+      name: 'getInvolved',
+      title: 'Get involved',
+    },
   ],
   fields: [
     defineField({
@@ -189,6 +193,32 @@ export const homePage = defineType({
       ],
       validation: (rule) =>
         rule.required().length(5).error('Exactly five approach values are required.'),
+    }),
+    defineField({
+      name: 'getInvolvedLabel',
+      title: 'Section label',
+      type: 'string',
+      group: 'getInvolved',
+      initialValue: 'Get involved',
+      validation: (rule) => rule.required().max(40),
+    }),
+    defineField({
+      name: 'getInvolvedHeading',
+      title: 'Section heading',
+      type: 'string',
+      group: 'getInvolved',
+      initialValue: 'Better health research is built together',
+      validation: (rule) => rule.required().max(100),
+    }),
+    defineField({
+      name: 'getInvolvedDescription',
+      title: 'Description',
+      type: 'text',
+      rows: 3,
+      group: 'getInvolved',
+      initialValue:
+        'Work with IAHL to develop responsible, locally relevant research that responds to real health priorities and the people they affect.',
+      validation: (rule) => rule.required().max(240),
     }),
   ],
   preview: {

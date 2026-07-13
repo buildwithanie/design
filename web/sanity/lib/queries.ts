@@ -116,7 +116,11 @@ export const HOME_PAGE_QUERY = defineQuery(`
         alt,
         "lqip": asset->metadata.lqip
       }
-    }
+    },
+
+    getInvolvedLabel,
+    getInvolvedHeading,
+    getInvolvedDescription
   }
 `);
 
