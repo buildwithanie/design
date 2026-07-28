@@ -8,6 +8,7 @@
     "studio:dev": "pnpm --dir studio dev",
     "studio:build": "pnpm --dir studio build",
     "studio:deploy": "pnpm --dir studio deploy",
+    "newsletter:template": "pnpm --dir web newsletter:template",
     "deps:outdated": "pnpm -r outdated",
     "deps:update": "pnpm -r up -i",
     "typegen": "pnpm --dir studio exec sanity schema extract && pnpm --dir studio exec sanity typegen generate"

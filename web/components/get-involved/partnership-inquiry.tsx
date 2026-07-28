@@ -1,7 +1,6 @@
 import {
   Location01Icon,
   Mail01Icon,
-  TelephoneIcon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -10,19 +9,13 @@ import { ContactForm } from "@/components/get-involved/contact-form";
 const contactDetails = [
   {
     label: "Email",
-    value: "hello@iahl.org",
-    href: "mailto:hello@iahl.org",
+    value: "info@innovateaihealthlab.co.ke",
+    href: "mailto:info@innovateaihealthlab.co.ke",
     icon: Mail01Icon,
   },
   {
-    label: "Telephone",
-    value: "+254 XXX XXX XXX",
-    href: "tel:+254XXXXXXXXX",
-    icon: TelephoneIcon,
-  },
-  {
-    label: "Office",
-    value: "Nairobi, Kenya",
+    label: "Postal address",
+    value: "P.O. Box 408 – 10200, Murang’a, Kenya",
     icon: Location01Icon,
   },
 ];
