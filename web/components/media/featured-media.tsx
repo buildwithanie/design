@@ -36,7 +36,7 @@ export function FeaturedMedia({ story }: FeaturedMediaProps) {
 const isExternal = isExternalNews(story);
 
   return (
-    <section className="pb-14 sm:pb-18">
+    <section className="pb-14 sm:pb-18 pt-2 sm:pt-6" >
       <div className="mx-auto w-[min(1180px,92vw)]">
         <article className="overflow-hidden rounded-lg bg-[#eff7f8]">
           <Link

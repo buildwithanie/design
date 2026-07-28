@@ -6,12 +6,16 @@ type MediaArchiveIntroProps = {
   label: string;
   heading: string;
   description: string;
+  backHref?: string;
+  backLabel?: string;
 };
 
 export function MediaArchiveIntro({
   label,
   heading,
   description,
+  backHref,
+  backLabel,
 }: MediaArchiveIntroProps) {
   return (
     <section className="relative isolate overflow-hidden bg-secondary pt-24">
@@ -21,19 +25,21 @@ export function MediaArchiveIntro({
       />
 
       <div className="mx-auto w-[min(1180px,92vw)] py-12 sm:py-16 lg:py-18">
-        <Link
-          href="/media"
-          className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-        >
-          <HugeiconsIcon
-            icon={ArrowLeft02Icon}
-            className="size-4"
-            aria-hidden="true"
-          />
-          Media Center
-        </Link>
+        {backHref && backLabel ? (
+          <Link
+            href={backHref}
+            className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          >
+            <HugeiconsIcon
+              icon={ArrowLeft02Icon}
+              className="size-4"
+              aria-hidden="true"
+            />
+            {backLabel}
+          </Link>
+        ) : null}
 
-        <div className="mt-9 max-w-4xl">
+        <div className={`${backHref && backLabel ? "mt-9" : ""} max-w-4xl`}>
           <div className="flex items-center gap-3">
             <span
               className="size-2.5 rounded-full bg-(--purple)"

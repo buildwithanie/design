@@ -64,6 +64,8 @@ export default async function NewsPage() {
         label={newsPage.newsArchiveLabel}
         heading={newsPage.newsArchiveHeading}
         description={newsPage.newsArchiveDescription}
+        backHref="/media"
+        backLabel="Media Center"
       />
 
       <NewsArchive items={newsItems} />

@@ -1,11 +1,7 @@
-import { CheckmarkCircle02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { ClientForm } from "@/components/client-form";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { NewsletterForm } from "./newsletter/newsletter-form";
 
 const footerGroups = [
   {
@@ -66,33 +62,7 @@ export function SiteFooter() {
             </nav>
           ))}
 
-          <ClientForm>
-            <h2 className="font-bold">Stay updated</h2>
-
-            <p className="mt-3 text-sm leading-6 text-white/70">
-              Receive IAHL news and research updates.
-            </p>
-
-            <div className="mt-4 grid gap-2">
-              <Input
-                type="email"
-                name="email"
-                autoComplete="email"
-                placeholder="you@example.com"
-                aria-label="Email address"
-                className="h-11 border-white/20 bg-white text-foreground"
-              />
-
-              <Button type="submit" className="h-11">
-                Sign up
-                <HugeiconsIcon
-                  icon={CheckmarkCircle02Icon}
-                  className="size-4"
-                  aria-hidden="true"
-                />
-              </Button>
-            </div>
-          </ClientForm>
+          <NewsletterForm />
         </div>
       </div>
     </footer>

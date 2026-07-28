@@ -74,6 +74,8 @@ export default async function PublicationsPage() {
         label={publicationsPage.publicationsArchiveLabel}
         heading={publicationsPage.publicationsArchiveHeading}
         description={publicationsPage.publicationsArchiveDescription}
+        backHref="/media"
+        backLabel="Media Center"
       />
 
       <PublicationsArchive items={publications} />
