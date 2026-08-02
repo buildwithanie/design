@@ -52,7 +52,7 @@ export function PartnershipInquiry({
   ];
 
   return (
-    <section className="bg-secondary py-14 sm:py-18 lg:py-20">
+    <section className="bg-secondary pt-8 pb-10 sm:pt-10 sm:pb-12">
       <div className="mx-auto w-[min(1100px,92vw)]">
         <div className="overflow-hidden rounded-xl border border-border bg-[#fffdf8] shadow-[0_24px_70px_rgba(53,54,58,0.08)]">
           <div className="grid lg:grid-cols-[0.76fr_1.24fr]">
@@ -63,11 +63,7 @@ export function PartnershipInquiry({
               />
 
               <div className="relative">
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-                  {content.inquiryLabel}
-                </p>
-
-                <h2 className="mt-3 max-w-md text-balance text-4xl leading-tight font-bold sm:text-5xl">
+                <h2 className="max-w-md text-balance text-4xl leading-tight font-bold sm:text-5xl">
                   {content.inquiryHeading}
                 </h2>
 

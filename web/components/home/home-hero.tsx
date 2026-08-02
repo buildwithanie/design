@@ -50,7 +50,7 @@ export function HomeHero({ homePage }: HomeSectionProps) {
             </Link>
 
             <Link
-              href="/get-involved#partner"
+              href="/get-involved"
               className={buttonVariants({
                 variant: "outline",
                 size: "lg",

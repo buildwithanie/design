@@ -1008,13 +1008,6 @@
         },
         "optional": false
       },
-      "partnershipsLabel": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
       "partnershipsHeading": {
         "type": "objectAttribute",
         "value": {
@@ -1041,13 +1034,6 @@
               "name": "partnershipPath"
             }
           }
-        },
-        "optional": false
-      },
-      "inquiryLabel": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
         },
         "optional": false
       },

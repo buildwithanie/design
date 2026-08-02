@@ -39,14 +39,6 @@ export const getInvolvedPage = defineType({
       validation: (rule) => rule.required().max(240),
     }),
     defineField({
-      name: 'partnershipsLabel',
-      title: 'Section label',
-      type: 'string',
-      group: 'partnerships',
-      initialValue: 'Ways to work together',
-      validation: (rule) => rule.required().max(50),
-    }),
-    defineField({
       name: 'partnershipsHeading',
       title: 'Section heading',
       type: 'string',
@@ -82,14 +74,6 @@ export const getInvolvedPage = defineType({
         },
       ],
       validation: (rule) => rule.required().min(1).max(6),
-    }),
-    defineField({
-      name: 'inquiryLabel',
-      title: 'Contact label',
-      type: 'string',
-      group: 'inquiry',
-      initialValue: 'Contact IAHL',
-      validation: (rule) => rule.required().max(50),
     }),
     defineField({
       name: 'inquiryHeading',

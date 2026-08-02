@@ -24,6 +24,12 @@ export function NewsletterForm() {
 
   return (
     <form action={formAction}>
+      <h2 className="font-bold text-white">Get IAHL updates</h2>
+      <p className="mt-2 mb-4 max-w-sm text-sm leading-6 text-white/70">
+        Research news, publications, and project updates delivered
+        occasionally.
+      </p>
+
       <div className="hidden" aria-hidden="true">
         <label htmlFor="newsletter-website">Website</label>
         <input

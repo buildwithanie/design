@@ -220,14 +220,12 @@ export const GET_INVOLVED_PAGE_QUERY = defineQuery(`
       introLabel,
       introHeading,
       introDescription,
-      partnershipsLabel,
       partnershipsHeading,
       partnershipPaths[] {
         _key,
         title,
         description
       },
-      inquiryLabel,
       inquiryHeading,
       inquiryDescription
     },

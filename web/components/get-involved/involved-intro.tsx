@@ -10,7 +10,7 @@ export function InvolvedIntro({ content }: { content: GetInvolvedContent }) {
         aria-hidden="true"
       />
 
-      <div className="mx-auto w-[min(1180px,92vw)] py-12 sm:py-14 lg:py-16">
+      <div className="mx-auto w-[min(1180px,92vw)] pt-12 pb-8 sm:pt-14 sm:pb-10 lg:pt-16 lg:pb-10">
         <div className="max-w-4xl">
           <div className="flex items-center gap-3">
             <span

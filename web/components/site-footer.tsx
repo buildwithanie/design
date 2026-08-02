@@ -3,31 +3,18 @@ import Link from "next/link";
 
 import { NewsletterForm } from "./newsletter/newsletter-form";
 
-const footerGroups = [
-  {
-    title: "Explore",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Our work", href: "/work" },
-      { label: "Projects", href: "/projects" },
-      { label: "Media center", href: "/media" },
-    ],
-  },
-  {
-    title: "Connect",
-    links: [
-      { label: "Partnerships", href: "/get-involved#partner" },
-      { label: "Careers", href: "/get-involved#careers" },
-      { label: "Contact", href: "/get-involved#contact" },
-      { label: "Newsletter", href: "/media#newsletter" },
-    ],
-  },
+const footerLinks = [
+  { label: "About", href: "/about" },
+  { label: "Our work", href: "/work" },
+  { label: "Projects", href: "/projects" },
+  { label: "Media Center", href: "/media" },
+  { label: "Get involved", href: "/get-involved" },
 ] as const;
 
 export function SiteFooter() {
   return (
     <footer id="footer" className="bg-(--charcoal) text-white">
-      <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 py-12 lg:grid-cols-[0.9fr_1.1fr]">
+      <div className="mx-auto grid w-[min(1180px,92vw)] gap-10 py-12 md:grid-cols-2 lg:grid-cols-[1.1fr_0.65fr_1fr] lg:gap-14">
         <div>
           <Image
             src="/images/iahl-logo.jpeg"
@@ -43,27 +30,30 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-3">
-          {footerGroups.map((group) => (
-            <nav aria-label={`${group.title} links`} key={group.title}>
-              <h2 className="font-bold">{group.title}</h2>
+        <nav aria-label="Footer navigation">
+          <h2 className="font-bold">Explore</h2>
 
-              <div className="mt-4 grid gap-2">
-                {group.links.map((link) => (
-                  <Link
-                    href={link.href}
-                    key={link.href}
-                    className="text-sm text-white/70 transition hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </nav>
-          ))}
+          <div className="mt-4 grid gap-2">
+            {footerLinks.map((link) => (
+              <Link
+                href={link.href}
+                key={link.href}
+                className="text-sm text-white/70 transition hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+              >
+                {link.label}
+              </Link>
+            ))}
+          </div>
+        </nav>
 
-          <NewsletterForm />
-        </div>
+        <NewsletterForm />
+      </div>
+
+      <div className="border-t border-white/10">
+        <p className="mx-auto w-[min(1180px,92vw)] py-5 text-sm text-white/60">
+          © {new Date().getFullYear()} Innovate AI HealthLab. All rights
+          reserved.
+        </p>
       </div>
     </footer>
   );
