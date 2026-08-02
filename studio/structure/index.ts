@@ -79,6 +79,4 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem('project').title('Projects').icon(DocumentTextIcon),
 
       S.documentTypeListItem('areaOfWork').title('Areas of work').icon(TagIcon),
-
-      S.documentTypeListItem('projectType').title('Project types').icon(TagIcon),
     ])

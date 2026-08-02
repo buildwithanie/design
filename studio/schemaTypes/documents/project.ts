@@ -37,14 +37,6 @@ export const project = defineType({
     }),
 
     defineField({
-      name: 'projectType',
-      title: 'Project type',
-      type: 'reference',
-      description: 'Optionally describe what kind of initiative this is.',
-      to: [{type: 'projectType'}],
-    }),
-
-    defineField({
       name: 'status',
       title: 'Project status',
       type: 'string',

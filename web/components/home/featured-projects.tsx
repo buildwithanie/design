@@ -1,5 +1,3 @@
-import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,6 +14,7 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
         project?.slug &&
         project?.title &&
         project?.summary &&
+        project?.hasContent &&
         project?.coverImage?.asset &&
         project?.areaOfWork?.title,
     )
@@ -44,7 +43,7 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
         : "md:grid-cols-3";
 
   return (
-    <section id="work" className="py-10">
+    <section id="work" className="pb-10 sm:pb-14">
       <div className="mx-auto w-[min(1180px,92vw)]">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
@@ -77,12 +76,14 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
                   : ""
               }`}
             >
-              <div
+              <Link
+                href={`/projects/${project.slug}`}
+                aria-label={`View ${project.title}`}
                 className={`relative bg-secondary ${
                   isSingleProject
                     ? "aspect-[1.5] md:aspect-auto md:min-h-80"
                     : "aspect-[1.35]"
-                }`}
+                } block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary`}
               >
                 <Image
                   src={project.imageUrl}
@@ -95,7 +96,7 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
                   }
                   className="object-cover transition duration-300 group-hover:scale-105"
                 />
-              </div>
+              </Link>
 
               <CardContent
                 className={`p-6 ${
@@ -104,30 +105,20 @@ export function FeaturedProjects({ homePage }: HomeSectionProps) {
                     : "text-center"
                 }`}
               >
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">
+                <p className="text-sm font-semibold text-primary">
                   {project.areaOfWork.title}
                 </p>
                 <h3 className="mt-3 text-xl leading-snug font-bold">
-                  {project.title}
+                  <Link
+                    href={`/projects/${project.slug}`}
+                    className="transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                  >
+                    {project.title}
+                  </Link>
                 </h3>
                 <p className="mt-3 text-sm leading-7 text-muted-foreground">
                   {project.summary}
                 </p>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className={buttonVariants({
-                    variant: "link",
-                    className: "mt-4 h-auto p-0 text-primary",
-                  })}
-                >
-                  Read more
-                  <HugeiconsIcon
-                    icon={ArrowRight02Icon}
-                    data-icon="inline-end"
-                    className="size-4"
-                    aria-hidden="true"
-                  />
-                </Link>
               </CardContent>
             </Card>
           ))}

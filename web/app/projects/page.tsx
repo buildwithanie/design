@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECTS_PAGE_QUERY, PROJECTS_QUERY } from "@/sanity/lib/queries";
 import {
@@ -17,24 +15,6 @@ export const metadata: Metadata = {
   description:
     "Explore IAHL projects connecting responsible AI, community knowledge, and research partnerships with real health priorities.",
 };
-
-const projectStyles = [
-  {
-    accent: "text-(--cyan)",
-    surface: "bg-(--charcoal) text-white",
-    imageFirst: true,
-  },
-  {
-    accent: "text-primary",
-    surface: "bg-[#f4eaf7]",
-    imageFirst: false,
-  },
-  {
-    accent: "text-(--green)",
-    surface: "bg-[#eef7f2]",
-    imageFirst: true,
-  },
-] as const;
 
 export default async function ProjectsPage() {
   const [{ data: projectsPageData }, { data: projectsData }] =
@@ -52,7 +32,7 @@ export default async function ProjectsPage() {
 
   const projects = projectsData as PROJECTS_QUERY_RESULT;
 
-  if (!projectsPage) {
+  if (!projectsPage || projects.length === 0) {
     notFound();
   }
 
@@ -64,7 +44,7 @@ export default async function ProjectsPage() {
           aria-hidden="true"
         />
 
-        <div className="mx-auto w-[min(1180px,92vw)] py-14 sm:py-16 lg:py-20">
+        <div className="mx-auto w-[min(1180px,92vw)] pt-10 pb-10 sm:pt-12 sm:pb-12 lg:pt-14 lg:pb-14">
           <div className="max-w-4xl">
             <div className="flex items-center gap-3">
               <span
@@ -82,125 +62,78 @@ export default async function ProjectsPage() {
               aria-hidden="true"
             />
 
-            <h1 className="mt-7 max-w-3xl text-balance text-5xl leading-[1.02] font-bold sm:text-6xl lg:text-[4.2rem]">
+            <h1 className="mt-7 max-w-3xl text-balance text-4xl leading-[1.04] font-bold sm:text-5xl lg:text-[3.6rem]">
               {projectsPage.introHeading}
             </h1>
-
-            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-              {projectsPage.introDescription}
-            </p>
           </div>
         </div>
       </section>
 
-      <div>
-        {projects.map((project, index) => {
-          const style = projectStyles[index % projectStyles.length];
+      <section className="bg-background pt-8 pb-14 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
+        <div
+          className={`mx-auto grid w-[min(1040px,92vw)] gap-x-8 gap-y-10 sm:gap-y-12 lg:gap-x-9 lg:gap-y-14 ${
+            projects.length === 1
+              ? "max-w-2xl"
+              : "md:grid-cols-2"
+          }`}
+        >
+          {projects.map((project) => {
+            const coverImageUrl = urlForImage(project.coverImage)
+              .width(960)
+              .height(720)
+              .fit("crop")
+              .auto("format")
+              .url();
 
-          const coverImageUrl = urlForImage(project.coverImage)
-            .width(1536)
-            .height(1024)
-            .fit("crop")
-            .auto("format")
-            .url();
+            const coverImageAlt = project.coverImage.decorative
+              ? ""
+              : (project.coverImage.alt ?? "");
 
-          const coverImageAlt = project.coverImage.decorative
-            ? ""
-            : (project.coverImage.alt ?? "");
-
-          return (
-            <section
-              id={project.slug}
-              className={`scroll-mt-28 overflow-hidden border-b border-border ${style.surface}`}
-              key={project.slug}
-            >
-              <div className="mx-auto grid w-[min(1600px,100%)] lg:grid-cols-2 lg:items-stretch">
-                <div
-                  className={`flex items-center justify-center bg-white ${
-                    style.imageFirst ? "" : "lg:order-2"
-                  }`}
+            return (
+              <article
+                id={project.slug}
+                className="scroll-mt-28"
+                key={project.slug}
+              >
+                <Link
+                  href={`/projects/${project.slug}`}
+                  aria-label={`View ${project.title}`}
+                  className="group relative block aspect-16/9 overflow-hidden rounded-lg bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                 >
                   <Image
                     src={coverImageUrl}
                     alt={coverImageAlt}
-                    width={1536}
-                    height={1024}
-                    sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="h-auto w-full object-contain"
+                    fill
+                    sizes={
+                      projects.length === 1
+                        ? "(max-width: 768px) 92vw, 672px"
+                        : "(max-width: 768px) 92vw, (max-width: 1280px) 46vw, 502px"
+                    }
+                    className="object-cover transition-transform duration-500 group-hover:scale-[1.025]"
                   />
-                </div>
+                </Link>
 
-                <div
-                  className={`relative isolate flex items-center overflow-hidden px-[6vw] py-12 lg:px-[8vw] lg:py-14 ${
-                    style.imageFirst ? "" : "lg:order-1"
-                  }`}
-                >
-                  <div
-                    className={`pointer-events-none absolute inset-0 -z-10 ${
-                      style.imageFirst
-                        ? "lg:left-8 lg:rounded-l-[46%]"
-                        : "lg:right-8 lg:rounded-r-[46%]"
-                    } ${style.surface}`}
-                    aria-hidden="true"
-                  />
+                <div className="pt-4 sm:pt-5">
+                  <p className="text-sm font-semibold text-primary">
+                    {project.areaOfWork.title}
+                  </p>
 
-                  <div className="max-w-xl">
-                    <p
-                      className={`text-sm font-bold uppercase tracking-[0.16em] ${style.accent}`}
-                    >
-                      {project.areaOfWork.title}
-                    </p>
-
-                    <h2 className="mt-5 text-balance text-4xl font-bold leading-tight sm:text-5xl">
-                      {project.title}
-                    </h2>
-
-                    <p className="mt-5 text-pretty text-xl font-medium leading-8 opacity-80 sm:text-2xl">
-                      {project.summary}
-                    </p>
-
+                  <h2 className="mt-2.5 text-balance text-2xl leading-[1.12] font-bold sm:text-3xl">
                     <Link
-                      className={`mt-7 inline-flex items-center gap-2 font-bold transition-transform duration-300 hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 ${style.accent}`}
                       href={`/projects/${project.slug}`}
+                      className="transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                     >
-                      View details
-                      <HugeiconsIcon
-                        icon={ArrowRight02Icon}
-                        className="size-4"
-                        aria-hidden="true"
-                      />
+                      {project.title}
                     </Link>
-                  </div>
+                  </h2>
+
+                  <p className="mt-3 max-w-[58ch] text-pretty text-base leading-7 text-muted-foreground">
+                    {project.summary}
+                  </p>
                 </div>
-              </div>
-            </section>
-          );
-        })}
-      </div>
-
-      <section className="bg-[#f4eaf7] py-16 sm:py-20">
-        <div className="mx-auto grid w-[min(1180px,92vw)] gap-8 lg:grid-cols-[0.72fr_1.28fr] lg:items-center">
-          <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
-            {projectsPage.ctaLabel}
-          </p>
-
-          <div>
-            <h2 className="text-balance text-3xl font-bold leading-tight sm:text-4xl">
-              {projectsPage.ctaHeading}
-            </h2>
-
-            <Link
-              href="/get-involved#contact"
-              className="mt-7 inline-flex items-center gap-2 font-bold text-(--purple) transition-transform duration-300 hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--purple)"
-            >
-              {projectsPage.ctaLinkLabel}
-              <HugeiconsIcon
-                icon={ArrowRight02Icon}
-                className="size-4"
-                aria-hidden="true"
-              />
-            </Link>
-          </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </main>

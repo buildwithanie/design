@@ -45,8 +45,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
       _id,
       title,
       "slug": slug.current,
-      status,
       summary,
+      "hasContent": defined(body[0]),
       coverImage {
         asset,
         crop,
@@ -55,10 +55,6 @@ export const HOME_PAGE_QUERY = defineQuery(`
         alt
       },
       areaOfWork-> {
-        title,
-        "slug": slug.current
-      },
-      projectType-> {
         title,
         "slug": slug.current
       }
@@ -119,12 +115,19 @@ export const HOME_PAGE_QUERY = defineQuery(`
 `);
 
 export const PROJECTS_QUERY = defineQuery(`
-  *[_type == "project" && defined(slug.current)]
+  *[
+    _type == "project" &&
+    defined(title) &&
+    defined(slug.current) &&
+    defined(summary) &&
+    defined(coverImage.asset) &&
+    defined(areaOfWork) &&
+    defined(body[0])
+  ]
     | order(_createdAt desc) {
       _id,
       title,
       "slug": slug.current,
-      status,
       summary,
       coverImage {
         asset,
@@ -136,10 +139,6 @@ export const PROJECTS_QUERY = defineQuery(`
       areaOfWork-> {
         title,
         "slug": slug.current
-      },
-      projectType-> {
-        title,
-        "slug": slug.current
       }
     }
 `);
@@ -147,7 +146,12 @@ export const PROJECTS_QUERY = defineQuery(`
 export const PROJECT_BY_SLUG_QUERY = defineQuery(`
   *[
     _type == "project" &&
-    slug.current == $slug
+    slug.current == $slug &&
+    defined(title) &&
+    defined(summary) &&
+    defined(coverImage.asset) &&
+    defined(areaOfWork) &&
+    defined(body[0])
   ][0] {
     _id,
     title,
@@ -161,16 +165,6 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`
       hotspot,
       decorative,
       alt
-    },
-
-    areaOfWork-> {
-      title,
-      "slug": slug.current
-    },
-
-    projectType-> {
-      title,
-      "slug": slug.current
     },
 
     body[] {
@@ -206,15 +200,13 @@ export const PROJECT_BY_SLUG_QUERY = defineQuery(`
 export const PROJECTS_PAGE_QUERY = defineQuery(`
   *[
     _type == "projectsPage" &&
-    _id == "projectsPage"
+    _id == "projectsPage" &&
+    defined(introLabel) &&
+    defined(introHeading)
   ][0] {
     _id,
     introLabel,
-    introHeading,
-    introDescription,
-    ctaLabel,
-    ctaHeading,
-    ctaLinkLabel
+    introHeading
   }
 `);
 

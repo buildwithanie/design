@@ -81,9 +81,15 @@ export async function generateMetadata({
 }
 
 const statusLabels = {
-  planned: "Planned",
-  active: "Active",
-  completed: "Completed",
+  planned: "Planned project",
+  active: "Active project",
+  completed: "Completed project",
+} as const;
+
+const statusColors = {
+  planned: "text-primary",
+  active: "text-(--green)",
+  completed: "text-(--purple)",
 } as const;
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
@@ -128,7 +134,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </Link>
 
           {coverImageUrl ? (
-            <div className="relative mt-6 aspect-4/3 overflow-hidden rounded-xl bg-muted sm:aspect-2/1 lg:aspect-5/2">
+            <div className="relative mt-6 aspect-4/3 overflow-hidden bg-muted sm:aspect-2/1 lg:aspect-5/2">
               <Image
                 src={coverImageUrl}
                 alt={project.coverImage?.alt ?? ""}
@@ -147,45 +153,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 : "mx-auto mt-10 w-[min(900px,100%)]"
             }
           >
-            <div className="grid gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-start sm:gap-6">
-              <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-semibold">
-                {project.areaOfWork?.title ? (
-                  <span className="text-primary">
-                    {project.areaOfWork.title}
-                  </span>
-                ) : null}
-
-                {project.areaOfWork?.title && project.projectType?.title ? (
-                  <span className="text-muted-foreground/70" aria-hidden="true">
-                    /
-                  </span>
-                ) : null}
-
-                {project.projectType?.title ? (
-                  <span className="text-muted-foreground">
-                    {project.projectType.title}
-                  </span>
-                ) : null}
-              </div>
-
-              {statusLabel ? (
-                <div className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
-                  <span
-                    className="size-2 rounded-full bg-(--green)"
-                    aria-hidden="true"
-                  />
-                  {statusLabel}
-                </div>
-              ) : null}
-            </div>
-
-            <h1 className="mt-5 text-4xl leading-[1.02] font-semibold tracking-[-0.035em] text-balance sm:text-5xl lg:text-6xl">
+            <h1 className="text-4xl leading-[1.02] font-semibold tracking-[-0.035em] text-balance sm:text-5xl lg:text-6xl">
               {project.title}
             </h1>
 
             {project.summary ? (
               <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
                 {project.summary}
+              </p>
+            ) : null}
+
+            {statusLabel ? (
+              <p
+                className={`mt-5 text-sm font-semibold ${statusColors[project.status]}`}
+              >
+                {statusLabel}
               </p>
             ) : null}
           </div>

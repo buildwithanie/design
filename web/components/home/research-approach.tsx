@@ -65,7 +65,7 @@ export function ResearchApproach({ homePage }: HomeSectionProps) {
   }
 
   return (
-    <section className="overflow-hidden py-16 sm:py-20">
+    <section className="overflow-hidden pb-12 sm:pb-16">
       <div className="mx-auto w-[min(1180px,92vw)]">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">

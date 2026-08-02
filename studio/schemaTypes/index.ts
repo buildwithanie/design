@@ -2,7 +2,6 @@ import {areaOfWork} from './documents/areaOfWork'
 import {homePage} from './documents/homePage'
 import {project} from './documents/project'
 import {projectsPage} from './documents/projectsPage'
-import {projectType} from './documents/projectType'
 import {accessibleImage} from './objects/accessibleImage'
 import {networkParticipant} from './objects/networkParticipant'
 import {newsItem} from './documents/newsItem'
@@ -31,7 +30,6 @@ export const schemaTypes = [
   getInvolvedPage,
   organizationDetails,
   areaOfWork,
-  projectType,
   project,
   newsItem,
   publication,

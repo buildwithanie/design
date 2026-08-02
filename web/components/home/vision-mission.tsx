@@ -7,7 +7,7 @@ export function VisionMission({ homePage }: HomeSectionProps) {
     return null;
   }
   return (
-    <section className="py-10">
+    <section className="pb-10 sm:pb-12">
       <div className="mx-auto grid w-[min(1180px,92vw)] gap-5 lg:grid-cols-2">
         <Card className="rounded-lg border-0 bg-primary text-primary-foreground shadow-lg">
           <CardContent className="p-7 sm:p-9">

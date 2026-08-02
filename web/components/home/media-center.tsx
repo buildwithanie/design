@@ -46,7 +46,7 @@ export function MediaCenter({ homePage }: HomeSectionProps) {
     .url();
 
   return (
-    <section id="media" className="py-10 sm:py-14">
+    <section id="media" className="pb-10 sm:pb-14">
       <div className="mx-auto w-[min(1180px,92vw)] overflow-hidden rounded-lg bg-[#eff7f8] px-5 py-8 sm:px-8 sm:py-10 lg:px-10 lg:py-12">
         <div className="flex flex-col gap-4 border-b border-(--cyan)/20 pb-6 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
           <div className="max-w-2xl">

@@ -15,7 +15,7 @@ export function GetInvolved({ homePage }: HomeSectionProps) {
   }
 
   return (
-    <section id="involved" className="py-10 sm:py-14">
+    <section id="involved" className="pb-10 sm:pb-14">
       <div className="mx-auto w-[min(1080px,92vw)] rounded-lg bg-[#f8f1e8] px-6 py-10 text-center sm:px-10 sm:py-12 lg:px-14 lg:py-14">
         <div className="mx-auto max-w-4xl">
           <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">

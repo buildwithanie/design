@@ -44,7 +44,10 @@ export function ResearchNetwork({ homePage }: HomeSectionProps) {
   }));
 
   return (
-    <section id="about" className="overflow-hidden py-5 sm:py-10 lg:py-5">
+    <section
+      id="about"
+      className="overflow-hidden pt-5 pb-10 sm:pt-8 sm:pb-12 lg:pt-5 lg:pb-12"
+    >
       <div className="mx-auto w-[min(1180px,94vw)]">
         <div className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-bold uppercase tracking-[0.16em] text-primary">
