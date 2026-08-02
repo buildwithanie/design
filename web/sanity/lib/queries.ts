@@ -224,6 +224,40 @@ export const PROJECTS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const GET_INVOLVED_PAGE_QUERY = defineQuery(`
+  {
+    "page": *[
+      _type == "getInvolvedPage" &&
+      _id == "getInvolvedPage"
+    ][0] {
+      _id,
+      introLabel,
+      introHeading,
+      introDescription,
+      partnershipsLabel,
+      partnershipsHeading,
+      partnershipPaths[] {
+        _key,
+        title,
+        description
+      },
+      inquiryLabel,
+      inquiryHeading,
+      inquiryDescription
+    },
+
+    "organization": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0] {
+      _id,
+      publicEmail,
+      postalAddress,
+      phone
+    }
+  }
+`);
+
 export const MEDIA_PAGE_QUERY = defineQuery(`
   *[
     _type == "mediaPage" &&

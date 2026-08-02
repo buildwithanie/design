@@ -82,7 +82,7 @@ export function ContactInquiryEmail({
               </Text>
 
               <Text style={detail}>
-                <strong>Organisation:</strong>{" "}
+                <strong>Organization:</strong>{" "}
                 {inquiry.organization || "Not provided"}
               </Text>
 

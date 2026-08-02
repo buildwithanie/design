@@ -31,6 +31,17 @@ export function ContactForm() {
 
   return (
     <form action={formAction}>
+      <div className="hidden" aria-hidden="true">
+        <label htmlFor="contact-website">Website</label>
+        <input
+          id="contact-website"
+          name="website"
+          type="text"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
+
       <FieldGroup className="grid gap-5 sm:grid-cols-2">
         <Field
           data-invalid={Boolean(state.errors?.name?.length)}
@@ -81,10 +92,11 @@ export function ContactForm() {
           data-invalid={Boolean(state.errors?.organization?.length)}
           className="sm:col-span-2"
         >
-          <FieldLabel htmlFor="contact-organization">Organisation</FieldLabel>
+          <FieldLabel htmlFor="contact-organization">Organization</FieldLabel>
 
           <Input
-            key={`organization-${state.values?.organization ?? ""}`}            id="contact-organization"
+            key={`organization-${state.values?.organization ?? ""}`}
+            id="contact-organization"
             name="organization"
             autoComplete="organization"
             placeholder="Optional"

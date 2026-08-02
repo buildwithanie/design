@@ -32,7 +32,7 @@ export const contentImage = defineType({
       name: 'credit',
       title: 'Image credit',
       type: 'string',
-      description: 'Optional photographer, organisation, or image-source credit.',
+      description: 'Optional photographer, organization, or image-source credit.',
       validation: (rule) => rule.max(120),
     }),
   ],

@@ -9,7 +9,7 @@ export const contactInquirySchema = z.object({
 
   email: z.email("Enter a valid email address."),
 
-  organization: z.string().trim().max(120, "Organisation name is too long."),
+  organization: z.string().trim().max(120, "Organization name is too long."),
 
   interest: z.enum(
     ["research", "community", "institutional", "general"],

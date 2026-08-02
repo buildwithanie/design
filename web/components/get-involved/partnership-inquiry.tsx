@@ -1,26 +1,56 @@
+import { stegaClean } from "@sanity/client/stega";
 import {
+  Call02Icon,
   Location01Icon,
   Mail01Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ContactForm } from "@/components/get-involved/contact-form";
+import type { GET_INVOLVED_PAGE_QUERY_RESULT } from "@/sanity.types";
 
-const contactDetails = [
-  {
-    label: "Email",
-    value: "info@innovateaihealthlab.co.ke",
-    href: "mailto:info@innovateaihealthlab.co.ke",
-    icon: Mail01Icon,
-  },
-  {
-    label: "Postal address",
-    value: "P.O. Box 408 – 10200, Murang’a, Kenya",
-    icon: Location01Icon,
-  },
-];
+type GetInvolvedContent = NonNullable<GET_INVOLVED_PAGE_QUERY_RESULT["page"]>;
+type OrganizationDetails = NonNullable<
+  GET_INVOLVED_PAGE_QUERY_RESULT["organization"]
+>;
 
-export function PartnershipInquiry() {
+type PartnershipInquiryProps = {
+  content: GetInvolvedContent;
+  organization: OrganizationDetails;
+};
+
+export function PartnershipInquiry({
+  content,
+  organization,
+}: PartnershipInquiryProps) {
+  const email = stegaClean(organization.publicEmail);
+  const phone = organization.phone ? stegaClean(organization.phone) : undefined;
+
+  const contactDetails = [
+    {
+      label: "Email",
+      value: organization.publicEmail,
+      href: `mailto:${email}`,
+      icon: Mail01Icon,
+    },
+    {
+      label: "Postal address",
+      value: organization.postalAddress,
+      href: undefined,
+      icon: Location01Icon,
+    },
+    ...(phone
+      ? [
+          {
+            label: "Telephone",
+            value: organization.phone,
+            href: `tel:${phone.replace(/[^+\d]/g, "")}`,
+            icon: Call02Icon,
+          },
+        ]
+      : []),
+  ];
+
   return (
     <section className="bg-secondary py-14 sm:py-18 lg:py-20">
       <div className="mx-auto w-[min(1100px,92vw)]">
@@ -34,21 +64,20 @@ export function PartnershipInquiry() {
 
               <div className="relative">
                 <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-                  Contact IAHL
+                  {content.inquiryLabel}
                 </p>
 
                 <h2 className="mt-3 max-w-md text-balance text-4xl leading-tight font-bold sm:text-5xl">
-                  Start a conversation.
+                  {content.inquiryHeading}
                 </h2>
 
                 <p className="mt-4 max-w-md leading-7 text-muted-foreground">
-                  Contact us about a research question, partnership or
-                  opportunity to work together.
+                  {content.inquiryDescription}
                 </p>
 
                 <address className="mt-9 grid gap-6 not-italic">
                   {contactDetails.map((detail) => {
-                    const content = (
+                    const detailContent = (
                       <>
                         <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-(--purple)/8 text-(--purple)">
                           <HugeiconsIcon
@@ -76,14 +105,14 @@ export function PartnershipInquiry() {
                         href={detail.href}
                         className="flex items-center gap-4 rounded-md outline-none transition hover:text-primary focus-visible:ring-2 focus-visible:ring-primary"
                       >
-                        {content}
+                        {detailContent}
                       </a>
                     ) : (
                       <div
                         key={detail.label}
                         className="flex items-center gap-4"
                       >
-                        {content}
+                        {detailContent}
                       </div>
                     );
                   })}

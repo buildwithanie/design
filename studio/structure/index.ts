@@ -1,4 +1,5 @@
 import DocumentTextIcon from '@sanity/icons/DocumentText'
+import CogIcon from '@sanity/icons/Cog'
 import {HomeIcon} from '@sanity/icons/Home'
 import {ImagesIcon} from '@sanity/icons/Images'
 import {TagIcon} from '@sanity/icons/Tag'
@@ -18,6 +19,16 @@ export const structure: StructureResolver = (S) =>
         .icon(DocumentTextIcon)
         .child(
           S.document().title('Projects page').schemaType('projectsPage').documentId('projectsPage'),
+        ),
+
+      S.listItem()
+        .title('Get involved page')
+        .icon(DocumentTextIcon)
+        .child(
+          S.document()
+            .title('Get involved page')
+            .schemaType('getInvolvedPage')
+            .documentId('getInvolvedPage'),
         ),
 
       S.listItem()
@@ -55,6 +66,18 @@ export const structure: StructureResolver = (S) =>
                 .title('Galleries and videos')
                 .icon(ImagesIcon),
             ]),
+        ),
+
+      S.divider(),
+
+      S.listItem()
+        .title('Organization details')
+        .icon(CogIcon)
+        .child(
+          S.document()
+            .title('Organization details')
+            .schemaType('organizationDetails')
+            .documentId('organizationDetails'),
         ),
 
       S.divider(),

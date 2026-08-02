@@ -13,7 +13,7 @@ export const newsType = defineType({
       title: 'Title',
       type: 'string',
       description:
-        'For example, Research insight, Field story, Partnership update, or Organisation update.',
+        'For example, Research insight, Field story, Partnership update, or Organization update.',
       validation: (rule) => rule.required().max(80),
     }),
 

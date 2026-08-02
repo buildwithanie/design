@@ -129,7 +129,7 @@ export const publication = defineType({
       name: 'externalSource',
       title: 'External publisher or source',
       type: 'string',
-      description: 'For example, WHO, a research journal, or a partner organisation.',
+      description: 'For example, WHO, a research journal, or a partner organization.',
 
       hidden: ({parent}) => parent?.deliveryType !== 'external',
 

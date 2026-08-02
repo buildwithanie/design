@@ -113,7 +113,7 @@ export const homePage = defineType({
       type: 'text',
       rows: 3,
       group: 'visionMission',
-      description: 'The organisation’s long-term vision displayed on the home page.',
+      description: 'The organization’s long-term vision displayed on the home page.',
       validation: (rule) => rule.required().max(240),
     }),
     defineField({
@@ -122,7 +122,7 @@ export const homePage = defineType({
       type: 'text',
       rows: 3,
       group: 'visionMission',
-      description: 'The organisation’s mission displayed on the home page.',
+      description: 'The organization’s mission displayed on the home page.',
       validation: (rule) => rule.required().max(240),
     }),
     defineField({

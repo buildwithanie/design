@@ -1,4 +1,8 @@
-export function InvolvedIntro() {
+import type { GET_INVOLVED_PAGE_QUERY_RESULT } from "@/sanity.types";
+
+type GetInvolvedContent = NonNullable<GET_INVOLVED_PAGE_QUERY_RESULT["page"]>;
+
+export function InvolvedIntro({ content }: { content: GetInvolvedContent }) {
   return (
     <section className="relative isolate overflow-hidden bg-secondary pt-24">
       <div
@@ -15,7 +19,7 @@ export function InvolvedIntro() {
             />
 
             <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
-              Get involved
+              {content.introLabel}
             </p>
           </div>
 
@@ -25,12 +29,11 @@ export function InvolvedIntro() {
           />
 
           <h1 className="mt-6 max-w-3xl text-balance text-5xl leading-[1.03] font-bold sm:text-6xl lg:text-[4rem]">
-            Work with IAHL.
+            {content.introHeading}
           </h1>
 
           <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-            We collaborate with communities, researchers, institutions and
-            funders to develop responsible health research.
+            {content.introDescription}
           </p>
         </div>
       </div>

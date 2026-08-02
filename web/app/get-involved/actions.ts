@@ -19,6 +19,15 @@ export async function submitContactInquiry(
   _previousState: ContactFormState,
   formData: FormData,
 ): Promise<ContactFormState> {
+  const website = getFormValue(formData, "website").trim();
+
+  if (website) {
+    return {
+      status: "success",
+      message: "Thank you. Your inquiry has been sent to IAHL.",
+    };
+  }
+
   const values: ContactFormValues = {
     name: getFormValue(formData, "name"),
     email: getFormValue(formData, "email"),

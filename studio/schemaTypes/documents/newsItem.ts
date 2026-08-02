@@ -119,7 +119,7 @@ export const newsItem = defineType({
       name: 'externalSource',
       title: 'Publisher or source',
       type: 'string',
-      description: 'For example, WHO, a newspaper, or a partner organisation.',
+      description: 'For example, WHO, a newspaper, or a partner organization.',
       hidden: ({parent}) => parent?.destination !== 'external',
 
       validation: (rule) =>

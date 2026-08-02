@@ -175,6 +175,36 @@ export type AreaOfWork = {
   description?: string;
 };
 
+export type OrganizationDetails = {
+  _id: string;
+  _type: "organizationDetails";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  publicEmail: string;
+  postalAddress: string;
+  phone?: string;
+};
+
+export type GetInvolvedPage = {
+  _id: string;
+  _type: "getInvolvedPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  introLabel: string;
+  introHeading: string;
+  introDescription: string;
+  partnershipsLabel: string;
+  partnershipsHeading: string;
+  partnershipPaths: Array<{
+    _key: string;
+  } & PartnershipPath>;
+  inquiryLabel: string;
+  inquiryHeading: string;
+  inquiryDescription: string;
+};
+
 export type NewsItemReference = {
   _ref: string;
   _type: "reference";
@@ -298,6 +328,12 @@ export type HomePage = {
   getInvolvedLabel: string;
   getInvolvedHeading: string;
   getInvolvedDescription: string;
+};
+
+export type PartnershipPath = {
+  _type: "partnershipPath";
+  title: string;
+  description: string;
 };
 
 export type ApproachValue = {
@@ -445,7 +481,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | PublicationTypeReference | SanityFileAssetReference | Publication | PublicationType | AreaOfWorkReference | ProjectTypeReference | Project | PortableContent | ProjectType | AreaOfWork | NewsItemReference | MediaPage | NewsTypeReference | NewsItem | NewsType | ProjectsPage | ProjectReference | HomePage | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | PublicationTypeReference | SanityFileAssetReference | Publication | PublicationType | AreaOfWorkReference | ProjectTypeReference | Project | PortableContent | ProjectType | AreaOfWork | OrganizationDetails | GetInvolvedPage | NewsItemReference | MediaPage | NewsTypeReference | NewsItem | NewsType | ProjectsPage | ProjectReference | HomePage | PartnershipPath | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
@@ -663,6 +699,34 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
   ctaHeading: string;
   ctaLinkLabel: string;
 } | null;
+
+// Source: ../web/sanity/lib/queries.ts
+// Variable: GET_INVOLVED_PAGE_QUERY
+// Query: {    "page": *[      _type == "getInvolvedPage" &&      _id == "getInvolvedPage"    ][0] {      _id,      introLabel,      introHeading,      introDescription,      partnershipsLabel,      partnershipsHeading,      partnershipPaths[] {        _key,        title,        description      },      inquiryLabel,      inquiryHeading,      inquiryDescription    },    "organization": *[      _type == "organizationDetails" &&      _id == "organizationDetails"    ][0] {      _id,      publicEmail,      postalAddress,      phone    }  }
+export type GET_INVOLVED_PAGE_QUERY_RESULT = {
+  page: {
+    _id: "getInvolvedPage";
+    introLabel: string;
+    introHeading: string;
+    introDescription: string;
+    partnershipsLabel: string;
+    partnershipsHeading: string;
+    partnershipPaths: Array<{
+      _key: string;
+      title: string;
+      description: string;
+    }>;
+    inquiryLabel: string;
+    inquiryHeading: string;
+    inquiryDescription: string;
+  } | null;
+  organization: {
+    _id: "organizationDetails";
+    publicEmail: string;
+    postalAddress: string;
+    phone: string | null;
+  } | null;
+};
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: MEDIA_PAGE_QUERY
@@ -974,6 +1038,7 @@ declare module "@sanity/client" {
     "\n  *[_type == \"project\" && defined(slug.current)]\n    | order(_createdAt desc) {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    }\n": PROJECTS_QUERY_RESULT;
     "\n  *[\n    _type == \"project\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    status,\n    summary,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    areaOfWork-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    projectType-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": PROJECT_BY_SLUG_QUERY_RESULT;
     "\n  *[\n    _type == \"projectsPage\" &&\n    _id == \"projectsPage\"\n  ][0] {\n    _id,\n    introLabel,\n    introHeading,\n    introDescription,\n    ctaLabel,\n    ctaHeading,\n    ctaLinkLabel\n  }\n": PROJECTS_PAGE_QUERY_RESULT;
+    "\n  {\n    \"page\": *[\n      _type == \"getInvolvedPage\" &&\n      _id == \"getInvolvedPage\"\n    ][0] {\n      _id,\n      introLabel,\n      introHeading,\n      introDescription,\n      partnershipsLabel,\n      partnershipsHeading,\n      partnershipPaths[] {\n        _key,\n        title,\n        description\n      },\n      inquiryLabel,\n      inquiryHeading,\n      inquiryDescription\n    },\n\n    \"organization\": *[\n      _type == \"organizationDetails\" &&\n      _id == \"organizationDetails\"\n    ][0] {\n      _id,\n      publicEmail,\n      postalAddress,\n      phone\n    }\n  }\n": GET_INVOLVED_PAGE_QUERY_RESULT;
     "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    _id,\n    introLabel,\n    introHeading,\n    introDescription,\n    newsSectionLabel,\n    newsSectionHeading,\n    publicationsSectionLabel,\n    publicationsSectionHeading,\n    multimediaSectionLabel,\n    multimediaSectionHeading,\n    multimediaSectionDescription,\n\n    featuredNews-> {\n      _id,\n      destination,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      externalSource,\n      externalUrl,\n\n      newsType-> {\n        title,\n        \"slug\": slug.current\n      },\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      _id != ^.featuredNews._ref\n    ]\n      | order(publishedAt desc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        newsType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    \"latestPublications\": *[\n      _type == \"publication\"\n    ]\n      | order(publishedAt desc)[0...3] {\n        _id,\n        title,\n        publishedAt,\n        deliveryType,\n        externalUrl,\n        externalSource,\n\n        publicationType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        file {\n          asset-> {\n            _id,\n            url,\n            originalFilename,\n            mimeType,\n            size\n          }\n        }\n      },\n\n    \"latestMultimedia\": *[\n      _type == \"multimediaItem\"\n    ]\n      | order(publishedAt desc)[0...4] {\n        _id,\n        mediaType,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        youtubeUrl,\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n  }\n": MEDIA_PAGE_QUERY_RESULT;
     "\n  *[\n    _type == \"newsItem\"\n  ]\n    | order(publishedAt desc) {\n      _id,\n      destination,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      externalSource,\n      externalUrl,\n\n      newsType-> {\n        title,\n        \"slug\": slug.current\n      },\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n": NEWS_QUERY_RESULT;
     "\n  *[\n    _type == \"newsItem\" &&\n    destination == \"internal\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    summary,\n    publishedAt,\n\n    newsType-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt,\n      \"dimensions\": asset->metadata.dimensions,\n      \"lqip\": asset->metadata.lqip\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": NEWS_BY_SLUG_QUERY_RESULT;

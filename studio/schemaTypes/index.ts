@@ -15,6 +15,9 @@ import {multimediaItem} from './documents/multimediaItem'
 import {mediaPage} from './documents/mediaPage'
 import {newsType} from './documents/newsType'
 import {approachValue} from './objects/approachValue'
+import {getInvolvedPage} from './documents/getInvolvedPage'
+import {organizationDetails} from './documents/organizationDetails'
+import {partnershipPath} from './objects/partnershipPath'
 
 export const schemaTypes = [
   accessibleImage,
@@ -23,9 +26,12 @@ export const schemaTypes = [
   portableContent,
   networkParticipant,
   approachValue,
+  partnershipPath,
   homePage,
   projectsPage,
   mediaPage,
+  getInvolvedPage,
+  organizationDetails,
   areaOfWork,
   projectType,
   project,
