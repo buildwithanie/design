@@ -181,8 +181,8 @@ export function ContentPortableText({ value }: ContentPortableTextProps) {
   }
 
   return (
-    <article className="typeset typeset-content mx-auto max-w-[80ch]">
+    <div className="typeset typeset-content mx-auto max-w-[80ch]">
       <PortableText value={value} components={portableTextComponents} />
-    </article>
+    </div>
   );
 }

@@ -91,7 +91,7 @@ export const multimediaItem = defineType({
       title: 'Cover image',
       type: 'accessibleImage',
       description:
-        'Used on the Media Center, multimedia archive, detail page, and social previews.',
+        'Used in Media Center previews, on the detail page, and in social previews.',
 
       validation: (rule) => rule.required(),
     }),

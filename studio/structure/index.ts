@@ -52,13 +52,7 @@ export const structure: StructureResolver = (S) =>
 
               S.documentTypeListItem('newsItem').title('News and insights').icon(DocumentTextIcon),
 
-              S.documentTypeListItem('newsType').title('News types').icon(TagIcon),
-
-              S.divider(),
-
               S.documentTypeListItem('publication').title('Publications').icon(DocumentTextIcon),
-
-              S.documentTypeListItem('publicationType').title('Publication types').icon(TagIcon),
 
               S.divider(),
 

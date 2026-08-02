@@ -1,9 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 
-import { formatMonthYear } from "@/lib/format-date";
+import { formatFullDate } from "@/lib/format-date";
 import { getNewsHref, isExternalNews } from "@/lib/news-link";
 import { urlForImage } from "@/sanity/lib/image";
 import type { NEWS_QUERY_RESULT } from "@/sanity.types";
@@ -22,9 +20,9 @@ export function NewsArchive({ items }: NewsArchiveProps) {
   }
 
   return (
-    <section className="py-12 sm:py-16">
+    <section className="pb-10 sm:pb-14">
       <div className="mx-auto w-[min(1180px,92vw)]">
-        <div className="border-y border-border">
+        <div className="border-b border-border">
           {validItems.map((item) => {
             const href = getNewsHref(item);
 
@@ -48,7 +46,7 @@ export function NewsArchive({ items }: NewsArchiveProps) {
             return (
               <article
                 key={item._id}
-                className="grid gap-6 border-b border-border py-7 last:border-b-0 md:grid-cols-[15rem_1fr_auto] md:items-center md:gap-9"
+                className="grid gap-6 border-b border-border py-7 last:border-b-0 md:grid-cols-[15rem_minmax(0,1fr)] md:items-center md:gap-9"
               >
                 <Link
                   href={href}
@@ -69,24 +67,18 @@ export function NewsArchive({ items }: NewsArchiveProps) {
                 </Link>
 
                 <div>
-                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-bold uppercase tracking-[0.12em]">
-                    <span className="text-primary">{item.newsType.title}</span>
-
-                    <span className="text-border" aria-hidden="true">
-                      /
-                    </span>
-
-                    <time
-                      dateTime={item.publishedAt}
-                      className="text-muted-foreground"
-                    >
-                      {formatMonthYear(item.publishedAt)}
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground">
+                    <time dateTime={item.publishedAt}>
+                      {formatFullDate(item.publishedAt)}
                     </time>
 
                     {external && item.externalSource ? (
                       <>
-                        <span className="text-border" aria-hidden="true">
-                          /
+                        <span
+                          className="font-bold text-muted-foreground"
+                          aria-hidden="true"
+                        >
+                          ·
                         </span>
 
                         <span className="text-muted-foreground">
@@ -112,20 +104,6 @@ export function NewsArchive({ items }: NewsArchiveProps) {
                   </p>
                 </div>
 
-                <Link
-                  href={href}
-                  target={external ? "_blank" : undefined}
-                  rel={external ? "noopener noreferrer" : undefined}
-                  className="inline-flex w-fit items-center gap-2 font-bold text-(--purple) transition-transform duration-300 hover:translate-x-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-(--purple)"
-                >
-                  {external ? "Read coverage" : "Read story"}
-
-                  <HugeiconsIcon
-                    icon={ArrowRight02Icon}
-                    className="size-4"
-                    aria-hidden="true"
-                  />
-                </Link>
               </article>
             );
           })}

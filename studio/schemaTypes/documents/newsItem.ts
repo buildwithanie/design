@@ -33,15 +33,6 @@ export const newsItem = defineType({
     }),
 
     defineField({
-      name: 'newsType',
-      title: 'News type',
-      type: 'reference',
-      description: 'Select the editorial category that best describes this item.',
-      to: [{type: 'newsType'}],
-      validation: (rule) => rule.required(),
-    }),
-
-    defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
@@ -82,7 +73,7 @@ export const newsItem = defineType({
       title: 'Summary',
       type: 'text',
       rows: 3,
-      description: 'A concise introduction used on the Media Center and news archive.',
+      description: 'A concise introduction used in Media Center story previews.',
 
       validation: (rule) => [
         rule.required(),
@@ -111,7 +102,7 @@ export const newsItem = defineType({
       name: 'coverImage',
       title: 'Cover image',
       type: 'accessibleImage',
-      description: 'Used on the Media Center, news archive, article page, and social previews.',
+      description: 'Used in Media Center previews, on the article page, and in social previews.',
       validation: (rule) => rule.required(),
     }),
 
@@ -194,15 +185,13 @@ export const newsItem = defineType({
   preview: {
     select: {
       title: 'title',
-      newsType: 'newsType.title',
       destination: 'destination',
       publishedAt: 'publishedAt',
       media: 'coverImage',
     },
 
-    prepare({title, newsType, destination, publishedAt, media}) {
+    prepare({title, destination, publishedAt, media}) {
       const details = [
-        newsType,
         publishedAt,
         destination === 'external' ? 'External' : 'IAHL article',
       ].filter(Boolean)

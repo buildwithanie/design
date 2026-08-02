@@ -10,10 +10,8 @@ import {contentImage} from './objects/contentImage'
 import {contentImageGallery} from './objects/contentImageGallery'
 import {portableContent} from './objects/portableContent'
 import {publication} from './documents/publication'
-import {publicationType} from './documents/publicationType'
 import {multimediaItem} from './documents/multimediaItem'
 import {mediaPage} from './documents/mediaPage'
-import {newsType} from './documents/newsType'
 import {approachValue} from './objects/approachValue'
 import {getInvolvedPage} from './documents/getInvolvedPage'
 import {organizationDetails} from './documents/organizationDetails'
@@ -35,9 +33,7 @@ export const schemaTypes = [
   areaOfWork,
   projectType,
   project,
-  newsType,
   newsItem,
-  publicationType,
   publication,
   multimediaItem,
 ]

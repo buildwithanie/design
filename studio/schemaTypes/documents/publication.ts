@@ -16,15 +16,6 @@ export const publication = defineType({
     }),
 
     defineField({
-      name: 'publicationType',
-      title: 'Publication type',
-      type: 'reference',
-      description: 'Select the type that best describes this resource.',
-      to: [{type: 'publicationType'}],
-      validation: (rule) => rule.required(),
-    }),
-
-    defineField({
       name: 'publishedAt',
       title: 'Publication date',
       type: 'date',
@@ -153,16 +144,14 @@ export const publication = defineType({
   preview: {
     select: {
       title: 'title',
-      publicationType: 'publicationType.title',
       publishedAt: 'publishedAt',
       deliveryType: 'deliveryType',
     },
 
-    prepare({title, publicationType, publishedAt, deliveryType}) {
+    prepare({title, publishedAt, deliveryType}) {
       const year = typeof publishedAt === 'string' ? publishedAt.slice(0, 4) : null
 
       const details = [
-        publicationType,
         year,
         deliveryType === 'external' ? 'External' : 'PDF',
       ].filter(Boolean)

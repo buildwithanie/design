@@ -5,6 +5,7 @@ import Link from "next/link";
 
 import type { HomeSectionProps } from "@/components/home/types";
 import { buttonVariants } from "@/components/ui/button";
+import { formatFullDate } from "@/lib/format-date";
 import { getNewsHref, isExternalNews } from "@/lib/news-link";
 import { urlForImage } from "@/sanity/lib/image";
 
@@ -13,7 +14,6 @@ export function MediaCenter({ homePage }: HomeSectionProps) {
     (story) =>
       getNewsHref(story) &&
       story.coverImage?.asset &&
-      story.newsType?.title &&
       story.summary,
   );
 
@@ -25,7 +25,6 @@ export function MediaCenter({ homePage }: HomeSectionProps) {
     !homePage.mediaHeading ||
     !featuredStory ||
     !featuredStory.coverImage?.asset ||
-    !featuredStory.newsType?.title ||
     !featuredStory.summary
   ) {
     return null;
@@ -103,9 +102,12 @@ export function MediaCenter({ homePage }: HomeSectionProps) {
 
           <div className="grid gap-5 p-6 sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-end lg:gap-12">
             <div>
-              <p className="text-xs font-bold uppercase tracking-[0.14em] text-primary">
-                {featuredStory.newsType.title}
-              </p>
+              <time
+                dateTime={featuredStory.publishedAt}
+                className="text-sm text-muted-foreground"
+              >
+                {formatFullDate(featuredStory.publishedAt)}
+              </time>
 
               <h3 className="mt-3 max-w-2xl text-balance text-2xl leading-tight font-bold sm:text-3xl lg:text-4xl">
                 <Link
@@ -150,7 +152,7 @@ export function MediaCenter({ homePage }: HomeSectionProps) {
             {supportingStories.map((story) => {
               const href = getNewsHref(story);
 
-              if (!href || !story.coverImage?.asset || !story.newsType?.title) {
+              if (!href || !story.coverImage?.asset) {
                 return null;
               }
 
@@ -191,9 +193,12 @@ export function MediaCenter({ homePage }: HomeSectionProps) {
                   </Link>
 
                   <div className="flex flex-col justify-center p-5 sm:p-6 md:px-8">
-                    <p className="text-xs font-bold uppercase tracking-[0.14em] text-(--purple)">
-                      {story.newsType.title}
-                    </p>
+                    <time
+                      dateTime={story.publishedAt}
+                      className="text-sm text-muted-foreground"
+                    >
+                      {formatFullDate(story.publishedAt)}
+                    </time>
 
                     <h3 className="mt-2 max-w-2xl text-xl leading-snug font-bold sm:text-2xl">
                       <Link

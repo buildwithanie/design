@@ -1,3 +1,5 @@
+import { stegaClean } from "@sanity/client/stega";
+
 type NewsLinkInput = {
   destination: "external" | "internal";
   slug: string | null;
@@ -5,7 +7,7 @@ type NewsLinkInput = {
 };
 
 export function getNewsHref(item: NewsLinkInput) {
-  if (item.destination === "external") {
+  if (stegaClean(item.destination) === "external") {
     return item.externalUrl;
   }
 
@@ -13,5 +15,5 @@ export function getNewsHref(item: NewsLinkInput) {
 }
 
 export function isExternalNews(item: NewsLinkInput) {
-  return item.destination === "external";
+  return stegaClean(item.destination) === "external";
 }

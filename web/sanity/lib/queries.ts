@@ -71,7 +71,6 @@ export const HOME_PAGE_QUERY = defineQuery(`
       _type == "newsItem" &&
       defined(publishedAt) &&
       defined(coverImage.asset) &&
-      defined(newsType._ref) &&
       (
         destination == "internal" && defined(slug.current) ||
         destination == "external" && defined(externalUrl)
@@ -86,11 +85,6 @@ export const HOME_PAGE_QUERY = defineQuery(`
         publishedAt,
         externalSource,
         externalUrl,
-
-        newsType-> {
-          title,
-          "slug": slug.current
-        },
 
         coverImage {
           asset,
@@ -264,127 +258,22 @@ export const MEDIA_PAGE_QUERY = defineQuery(`
     _id == "mediaPage"
   ][0] {
     _id,
-    introLabel,
-    introHeading,
-    introDescription,
-    newsSectionLabel,
-    newsSectionHeading,
-    publicationsSectionLabel,
-    publicationsSectionHeading,
-    multimediaSectionLabel,
-    multimediaSectionHeading,
-    multimediaSectionDescription,
-
-    featuredNews-> {
-      _id,
-      destination,
-      title,
-      "slug": slug.current,
-      summary,
-      publishedAt,
-      externalSource,
-      externalUrl,
-
-      newsType-> {
-        title,
-        "slug": slug.current
-      },
-
-      coverImage {
-        asset,
-        crop,
-        hotspot,
-        decorative,
-        alt,
-        "lqip": asset->metadata.lqip
-      }
-    },
-
-    "latestNews": *[
-      _type == "newsItem" &&
-      _id != ^.featuredNews._ref
-    ]
-      | order(publishedAt desc)[0...3] {
-        _id,
-        destination,
-        title,
-        "slug": slug.current,
-        summary,
-        publishedAt,
-        externalSource,
-        externalUrl,
-
-        newsType-> {
-          title,
-          "slug": slug.current
-        },
-
-        coverImage {
-          asset,
-          crop,
-          hotspot,
-          decorative,
-          alt,
-          "lqip": asset->metadata.lqip
-        }
-      },
-
-    "latestPublications": *[
-      _type == "publication"
-    ]
-      | order(publishedAt desc)[0...3] {
-        _id,
-        title,
-        publishedAt,
-        deliveryType,
-        externalUrl,
-        externalSource,
-
-        publicationType-> {
-          title,
-          "slug": slug.current
-        },
-
-        file {
-          asset-> {
-            _id,
-            url,
-            originalFilename,
-            mimeType,
-            size
-          }
-        }
-      },
-
-    "latestMultimedia": *[
-      _type == "multimediaItem"
-    ]
-      | order(publishedAt desc)[0...4] {
-        _id,
-        mediaType,
-        title,
-        "slug": slug.current,
-        summary,
-        publishedAt,
-        youtubeUrl,
-
-        coverImage {
-          asset,
-          crop,
-          hotspot,
-          decorative,
-          alt,
-          "lqip": asset->metadata.lqip
-        }
-      }
+    title,
+    description
   }
 `);
 
 export const NEWS_QUERY = defineQuery(`
   *[
-    _type == "newsItem"
+    _type == "newsItem" &&
+    defined(publishedAt) &&
+    defined(coverImage.asset) &&
+    (
+      destination == "internal" && defined(slug.current) ||
+      destination == "external" && defined(externalUrl)
+    )
   ]
-    | order(publishedAt desc) {
+    | order(publishedAt desc, _id asc) [$start...$end] {
       _id,
       destination,
       title,
@@ -393,11 +282,6 @@ export const NEWS_QUERY = defineQuery(`
       publishedAt,
       externalSource,
       externalUrl,
-
-      newsType-> {
-        title,
-        "slug": slug.current
-      },
 
       coverImage {
         asset,
@@ -421,11 +305,6 @@ export const NEWS_BY_SLUG_QUERY = defineQuery(`
     "slug": slug.current,
     summary,
     publishedAt,
-
-    newsType-> {
-      title,
-      "slug": slug.current
-    },
 
     coverImage {
       asset,
@@ -469,20 +348,20 @@ export const NEWS_BY_SLUG_QUERY = defineQuery(`
 
 export const PUBLICATIONS_QUERY = defineQuery(`
   *[
-    _type == "publication"
+    _type == "publication" &&
+    defined(publishedAt) &&
+    (
+      deliveryType == "file" && defined(file.asset) ||
+      deliveryType == "external" && defined(externalUrl)
+    )
   ]
-    | order(publishedAt desc) {
+    | order(publishedAt desc, _id asc) [$start...$end] {
       _id,
       title,
       publishedAt,
       deliveryType,
       externalUrl,
       externalSource,
-
-      publicationType-> {
-        title,
-        "slug": slug.current
-      },
 
       file {
         asset-> {
@@ -498,9 +377,13 @@ export const PUBLICATIONS_QUERY = defineQuery(`
 
 export const MULTIMEDIA_QUERY = defineQuery(`
   *[
-    _type == "multimediaItem"
+    _type == "multimediaItem" &&
+    mediaType == $mediaType &&
+    defined(slug.current) &&
+    defined(publishedAt) &&
+    defined(coverImage.asset)
   ]
-    | order(publishedAt desc) {
+    | order(publishedAt desc, _id asc) [$start...$end] {
       _id,
       mediaType,
       title,
@@ -557,35 +440,35 @@ export const MULTIMEDIA_BY_SLUG_QUERY = defineQuery(`
   }
 `);
 
-export const NEWS_PAGE_QUERY = defineQuery(`
-  *[
-    _type == "mediaPage" &&
-    _id == "mediaPage"
-  ][0] {
-    newsArchiveLabel,
-    newsArchiveHeading,
-    newsArchiveDescription
-  }
+export const MULTIMEDIA_COUNT_QUERY = defineQuery(`
+  count(*[
+    _type == "multimediaItem" &&
+    mediaType == $mediaType &&
+    defined(slug.current) &&
+    defined(publishedAt) &&
+    defined(coverImage.asset)
+  ])
 `);
 
-export const PUBLICATIONS_PAGE_QUERY = defineQuery(`
-  *[
-    _type == "mediaPage" &&
-    _id == "mediaPage"
-  ][0] {
-    publicationsArchiveLabel,
-    publicationsArchiveHeading,
-    publicationsArchiveDescription
-  }
+export const PUBLICATIONS_COUNT_QUERY = defineQuery(`
+  count(*[
+    _type == "publication" &&
+    defined(publishedAt) &&
+    (
+      deliveryType == "file" && defined(file.asset) ||
+      deliveryType == "external" && defined(externalUrl)
+    )
+  ])
 `);
 
-export const MULTIMEDIA_PAGE_QUERY = defineQuery(`
-  *[
-    _type == "mediaPage" &&
-    _id == "mediaPage"
-  ][0] {
-    multimediaArchiveLabel,
-    multimediaArchiveHeading,
-    multimediaArchiveDescription
-  }
+export const NEWS_COUNT_QUERY = defineQuery(`
+  count(*[
+    _type == "newsItem" &&
+    defined(publishedAt) &&
+    defined(coverImage.asset) &&
+    (
+      destination == "internal" && defined(slug.current) ||
+      destination == "external" && defined(externalUrl)
+    )
+  ])
 `);

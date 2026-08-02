@@ -3,15 +3,13 @@ import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 type MediaArchiveIntroProps = {
-  label: string;
   heading: string;
-  description: string;
+  description?: string;
   backHref?: string;
   backLabel?: string;
 };
 
 export function MediaArchiveIntro({
-  label,
   heading,
   description,
   backHref,
@@ -24,7 +22,7 @@ export function MediaArchiveIntro({
         aria-hidden="true"
       />
 
-      <div className="mx-auto w-[min(1180px,92vw)] py-12 sm:py-16 lg:py-18">
+      <div className="mx-auto w-[min(1180px,92vw)] py-10 sm:py-12 lg:py-14">
         {backHref && backLabel ? (
           <Link
             href={backHref}
@@ -40,19 +38,8 @@ export function MediaArchiveIntro({
         ) : null}
 
         <div className={`${backHref && backLabel ? "mt-9" : ""} max-w-4xl`}>
-          <div className="flex items-center gap-3">
-            <span
-              className="size-2.5 rounded-full bg-(--purple)"
-              aria-hidden="true"
-            />
-
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-              {label}
-            </p>
-          </div>
-
           <span
-            className="mt-7 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
+            className="block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
             aria-hidden="true"
           />
 
@@ -60,9 +47,11 @@ export function MediaArchiveIntro({
             {heading}
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
-            {description}
-          </p>
+          {description ? (
+            <p className="mt-6 max-w-2xl text-lg leading-8 text-muted-foreground">
+              {description}
+            </p>
+          ) : null}
         </div>
       </div>
     </section>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
+import { stegaClean } from "@sanity/client/stega";
 
 import { GalleryDetail } from "@/components/media/gallery-detail";
 import { VideoDetail } from "@/components/media/video-detail";
@@ -91,34 +91,28 @@ export default async function MultimediaDetailPage({
     notFound();
   }
 
+  const mediaType = stegaClean(item.mediaType);
   const youtubeId =
-    item.mediaType === "video" ? getYouTubeVideoId(item.youtubeUrl) : null;
+    mediaType === "video" ? getYouTubeVideoId(item.youtubeUrl) : null;
 
   if (
-    (item.mediaType === "video" && !youtubeId) ||
-    (item.mediaType === "gallery" &&
+    (mediaType === "video" && !youtubeId) ||
+    (mediaType === "gallery" &&
       (!item.galleryImages || item.galleryImages.length < 2))
   ) {
     notFound();
   }
 
-  const coverImageUrl = urlForImage(item.coverImage)
-    .width(1800)
-    .height(900)
-    .fit("crop")
-    .auto("format")
-    .url();
-
-  const coverImageAlt = item.coverImage.decorative
-    ? ""
-    : (item.coverImage.alt ?? "");
-
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <header className="border-b border-border bg-secondary pt-28 pb-10 md:pt-32 md:pb-14">
+      <header
+        className={`border-b border-border bg-secondary pt-28 md:pt-32 ${
+          mediaType === "gallery" ? "pb-8 md:pb-10" : "pb-10 md:pb-14"
+        }`}
+      >
         <div className="mx-auto w-[min(1180px,92vw)]">
           <Link
-            href="/media/multimedia"
+            href={`/media?view=${mediaType === "video" ? "videos" : "galleries"}`}
             className={buttonVariants({
               variant: "ghost",
               size: "sm",
@@ -131,13 +125,13 @@ export default async function MultimediaDetailPage({
               className="size-4"
               aria-hidden="true"
             />
-            All photos and video
+            {mediaType === "video" ? "All videos" : "All galleries"}
           </Link>
 
-          <div className="mx-auto mt-10 max-w-4xl">
+          <div className={`mx-auto max-w-4xl ${mediaType === "gallery" ? "mt-7" : "mt-10"}`}>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold">
               <span className="text-primary">
-                {item.mediaType === "video" ? "Video" : "Gallery"}
+                {mediaType === "video" ? "Video" : "Gallery"}
               </span>
 
               <span className="text-muted-foreground/60" aria-hidden="true">
@@ -152,41 +146,30 @@ export default async function MultimediaDetailPage({
               </time>
             </div>
 
-            <h1 className="mt-5 max-w-4xl text-balance text-4xl leading-[1.02] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-6xl">
+            <h1
+              className={`mt-5 max-w-4xl text-balance leading-[1.02] font-semibold tracking-[-0.035em] ${
+                mediaType === "gallery"
+                  ? "text-4xl sm:text-5xl"
+                  : "text-4xl sm:text-5xl lg:text-6xl"
+              }`}
+            >
               {item.title}
             </h1>
 
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
-              {item.summary}
-            </p>
+            {mediaType === "video" ? (
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
+                {item.summary}
+              </p>
+            ) : null}
           </div>
         </div>
       </header>
 
-      {item.mediaType === "gallery" && item.galleryImages ? (
-        <>
-          <section className="pt-8 sm:pt-10">
-            <div className="mx-auto w-[min(1180px,92vw)]">
-              <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-muted sm:aspect-2/1 lg:aspect-5/2">
-                <Image
-                  src={coverImageUrl}
-                  alt={coverImageAlt}
-                  fill
-                  priority
-                  sizes="92vw"
-                  className="object-cover"
-                  placeholder={item.coverImage.lqip ? "blur" : "empty"}
-                  blurDataURL={item.coverImage.lqip ?? undefined}
-                />
-              </div>
-            </div>
-          </section>
-
-          <GalleryDetail images={item.galleryImages} />
-        </>
+      {mediaType === "gallery" && item.galleryImages ? (
+        <GalleryDetail images={item.galleryImages} />
       ) : null}
 
-      {item.mediaType === "video" && youtubeId ? (
+      {mediaType === "video" && youtubeId ? (
         <VideoDetail
           youtubeId={youtubeId}
           title={item.title}

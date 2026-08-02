@@ -56,13 +56,6 @@ export type Slug = {
   source?: string;
 };
 
-export type PublicationTypeReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "publicationType";
-};
-
 export type SanityFileAssetReference = {
   _ref: string;
   _type: "reference";
@@ -77,7 +70,6 @@ export type Publication = {
   _updatedAt: string;
   _rev: string;
   title: string;
-  publicationType: PublicationTypeReference;
   publishedAt: string;
   deliveryType: "file" | "external";
   file?: {
@@ -89,15 +81,46 @@ export type Publication = {
   externalSource?: string;
 };
 
-export type PublicationType = {
+export type NewsItem = {
   _id: string;
-  _type: "publicationType";
+  _type: "newsItem";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  destination: "internal" | "external";
   title: string;
-  slug: Slug;
+  slug?: Slug;
+  summary: string;
+  publishedAt: string;
+  coverImage: AccessibleImage;
+  externalSource?: string;
+  externalUrl?: string;
+  body?: PortableContent;
 };
+
+export type PortableContent = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h2" | "h3" | "blockquote";
+  listItem?: "bullet" | "number";
+  markDefs?: Array<{
+    href: string;
+    openInNewTab?: boolean;
+    _type: "link";
+    _key: string;
+  }>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  _key: string;
+} & ContentImage | {
+  _key: string;
+} & ContentImageGallery>;
 
 export type AreaOfWorkReference = {
   _ref: string;
@@ -128,30 +151,6 @@ export type Project = {
   coverImage: AccessibleImage;
   body: PortableContent;
 };
-
-export type PortableContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h2" | "h3" | "blockquote";
-  listItem?: "bullet" | "number";
-  markDefs?: Array<{
-    href: string;
-    openInNewTab?: boolean;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  _key: string;
-} & ContentImage | {
-  _key: string;
-} & ContentImageGallery>;
 
 export type ProjectType = {
   _id: string;
@@ -205,74 +204,14 @@ export type GetInvolvedPage = {
   inquiryDescription: string;
 };
 
-export type NewsItemReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "newsItem";
-};
-
 export type MediaPage = {
   _id: string;
   _type: "mediaPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  introLabel: string;
-  introHeading: string;
-  introDescription: string;
-  featuredNews: NewsItemReference;
-  newsSectionLabel: string;
-  newsSectionHeading: string;
-  newsArchiveLabel: string;
-  newsArchiveHeading: string;
-  newsArchiveDescription: string;
-  publicationsSectionLabel: string;
-  publicationsSectionHeading: string;
-  publicationsArchiveLabel: string;
-  publicationsArchiveHeading: string;
-  publicationsArchiveDescription: string;
-  multimediaSectionLabel: string;
-  multimediaSectionHeading: string;
-  multimediaSectionDescription: string;
-  multimediaArchiveLabel: string;
-  multimediaArchiveHeading: string;
-  multimediaArchiveDescription: string;
-};
-
-export type NewsTypeReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "newsType";
-};
-
-export type NewsItem = {
-  _id: string;
-  _type: "newsItem";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  destination: "internal" | "external";
-  newsType: NewsTypeReference;
   title: string;
-  slug?: Slug;
-  summary: string;
-  publishedAt: string;
-  coverImage: AccessibleImage;
-  externalSource?: string;
-  externalUrl?: string;
-  body?: PortableContent;
-};
-
-export type NewsType = {
-  _id: string;
-  _type: "newsType";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title: string;
-  slug: Slug;
+  description: string;
 };
 
 export type ProjectsPage = {
@@ -481,11 +420,11 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | PublicationTypeReference | SanityFileAssetReference | Publication | PublicationType | AreaOfWorkReference | ProjectTypeReference | Project | PortableContent | ProjectType | AreaOfWork | OrganizationDetails | GetInvolvedPage | NewsItemReference | MediaPage | NewsTypeReference | NewsItem | NewsType | ProjectsPage | ProjectReference | HomePage | PartnershipPath | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | SanityFileAssetReference | Publication | NewsItem | PortableContent | AreaOfWorkReference | ProjectTypeReference | Project | ProjectType | AreaOfWork | OrganizationDetails | GetInvolvedPage | MediaPage | ProjectsPage | ProjectReference | HomePage | PartnershipPath | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    visionStatement,    missionStatement,    featuredProjectsHeading,    featuredProjects[]-> {      _id,      title,      "slug": slug.current,      status,      summary,      coverImage {        asset,        crop,        hotspot,        decorative,        alt      },      areaOfWork-> {        title,        "slug": slug.current      },      projectType-> {        title,        "slug": slug.current      }    },    mediaLabel,    mediaHeading,    "latestNews": *[      _type == "newsItem" &&      defined(publishedAt) &&      defined(coverImage.asset) &&      defined(newsType._ref) &&      (        destination == "internal" && defined(slug.current) ||        destination == "external" && defined(externalUrl)      )    ]      | order(publishedAt desc, _id asc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        newsType-> {          title,          "slug": slug.current        },        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      },    approachLabel,    approachHeading,    approachValues[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    },    getInvolvedLabel,    getInvolvedHeading,    getInvolvedDescription  }
+// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    visionStatement,    missionStatement,    featuredProjectsHeading,    featuredProjects[]-> {      _id,      title,      "slug": slug.current,      status,      summary,      coverImage {        asset,        crop,        hotspot,        decorative,        alt      },      areaOfWork-> {        title,        "slug": slug.current      },      projectType-> {        title,        "slug": slug.current      }    },    mediaLabel,    mediaHeading,    "latestNews": *[      _type == "newsItem" &&      defined(publishedAt) &&      defined(coverImage.asset) &&      (        destination == "internal" && defined(slug.current) ||        destination == "external" && defined(externalUrl)      )    ]      | order(publishedAt desc, _id asc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      },    approachLabel,    approachHeading,    approachValues[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    },    getInvolvedLabel,    getInvolvedHeading,    getInvolvedDescription  }
 export type HOME_PAGE_QUERY_RESULT = {
   _id: "homePage";
   heroHeadline: string;
@@ -555,10 +494,6 @@ export type HOME_PAGE_QUERY_RESULT = {
     publishedAt: string;
     externalSource: string | null;
     externalUrl: string | null;
-    newsType: {
-      title: string;
-      slug: string;
-    };
     coverImage: {
       asset: SanityImageAssetReference | null;
       crop: SanityImageCrop | null;
@@ -730,106 +665,16 @@ export type GET_INVOLVED_PAGE_QUERY_RESULT = {
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: MEDIA_PAGE_QUERY
-// Query: *[    _type == "mediaPage" &&    _id == "mediaPage"  ][0] {    _id,    introLabel,    introHeading,    introDescription,    newsSectionLabel,    newsSectionHeading,    publicationsSectionLabel,    publicationsSectionHeading,    multimediaSectionLabel,    multimediaSectionHeading,    multimediaSectionDescription,    featuredNews-> {      _id,      destination,      title,      "slug": slug.current,      summary,      publishedAt,      externalSource,      externalUrl,      newsType-> {        title,        "slug": slug.current      },      coverImage {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    },    "latestNews": *[      _type == "newsItem" &&      _id != ^.featuredNews._ref    ]      | order(publishedAt desc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        newsType-> {          title,          "slug": slug.current        },        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      },    "latestPublications": *[      _type == "publication"    ]      | order(publishedAt desc)[0...3] {        _id,        title,        publishedAt,        deliveryType,        externalUrl,        externalSource,        publicationType-> {          title,          "slug": slug.current        },        file {          asset-> {            _id,            url,            originalFilename,            mimeType,            size          }        }      },    "latestMultimedia": *[      _type == "multimediaItem"    ]      | order(publishedAt desc)[0...4] {        _id,        mediaType,        title,        "slug": slug.current,        summary,        publishedAt,        youtubeUrl,        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      }  }
+// Query: *[    _type == "mediaPage" &&    _id == "mediaPage"  ][0] {    _id,    title,    description  }
 export type MEDIA_PAGE_QUERY_RESULT = {
   _id: "mediaPage";
-  introLabel: string;
-  introHeading: string;
-  introDescription: string;
-  newsSectionLabel: string;
-  newsSectionHeading: string;
-  publicationsSectionLabel: string;
-  publicationsSectionHeading: string;
-  multimediaSectionLabel: string;
-  multimediaSectionHeading: string;
-  multimediaSectionDescription: string;
-  featuredNews: {
-    _id: string;
-    destination: "external" | "internal";
-    title: string;
-    slug: string | null;
-    summary: string;
-    publishedAt: string;
-    externalSource: string | null;
-    externalUrl: string | null;
-    newsType: {
-      title: string;
-      slug: string;
-    };
-    coverImage: {
-      asset: SanityImageAssetReference | null;
-      crop: SanityImageCrop | null;
-      hotspot: SanityImageHotspot | null;
-      decorative: boolean | null;
-      alt: string | null;
-      lqip: string | null;
-    };
-  };
-  latestNews: Array<{
-    _id: string;
-    destination: "external" | "internal";
-    title: string;
-    slug: string | null;
-    summary: string;
-    publishedAt: string;
-    externalSource: string | null;
-    externalUrl: string | null;
-    newsType: {
-      title: string;
-      slug: string;
-    };
-    coverImage: {
-      asset: SanityImageAssetReference | null;
-      crop: SanityImageCrop | null;
-      hotspot: SanityImageHotspot | null;
-      decorative: boolean | null;
-      alt: string | null;
-      lqip: string | null;
-    };
-  }>;
-  latestPublications: Array<{
-    _id: string;
-    title: string;
-    publishedAt: string;
-    deliveryType: "external" | "file";
-    externalUrl: string | null;
-    externalSource: string | null;
-    publicationType: {
-      title: string;
-      slug: string;
-    };
-    file: {
-      asset: {
-        _id: string;
-        url: string;
-        originalFilename: string | null;
-        mimeType: string;
-        size: number;
-      } | null;
-    } | null;
-  }>;
-  latestMultimedia: Array<{
-    _id: string;
-    mediaType: "gallery" | "video";
-    title: string;
-    slug: string;
-    summary: string;
-    publishedAt: string;
-    youtubeUrl: string | null;
-    coverImage: {
-      asset: SanityImageAssetReference | null;
-      crop: SanityImageCrop | null;
-      hotspot: SanityImageHotspot | null;
-      decorative: boolean | null;
-      alt: string | null;
-      lqip: string | null;
-    };
-  }>;
+  title: string;
+  description: string;
 } | null;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: NEWS_QUERY
-// Query: *[    _type == "newsItem"  ]    | order(publishedAt desc) {      _id,      destination,      title,      "slug": slug.current,      summary,      publishedAt,      externalSource,      externalUrl,      newsType-> {        title,        "slug": slug.current      },      coverImage {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    }
+// Query: *[    _type == "newsItem" &&    defined(publishedAt) &&    defined(coverImage.asset) &&    (      destination == "internal" && defined(slug.current) ||      destination == "external" && defined(externalUrl)    )  ]    | order(publishedAt desc, _id asc) [$start...$end] {      _id,      destination,      title,      "slug": slug.current,      summary,      publishedAt,      externalSource,      externalUrl,      coverImage {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    }
 export type NEWS_QUERY_RESULT = Array<{
   _id: string;
   destination: "external" | "internal";
@@ -839,10 +684,6 @@ export type NEWS_QUERY_RESULT = Array<{
   publishedAt: string;
   externalSource: string | null;
   externalUrl: string | null;
-  newsType: {
-    title: string;
-    slug: string;
-  };
   coverImage: {
     asset: SanityImageAssetReference | null;
     crop: SanityImageCrop | null;
@@ -855,17 +696,13 @@ export type NEWS_QUERY_RESULT = Array<{
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: NEWS_BY_SLUG_QUERY
-// Query: *[    _type == "newsItem" &&    destination == "internal" &&    slug.current == $slug  ][0] {    _id,    title,    "slug": slug.current,    summary,    publishedAt,    newsType-> {      title,      "slug": slug.current    },    coverImage {      asset,      crop,      hotspot,      decorative,      alt,      "dimensions": asset->metadata.dimensions,      "lqip": asset->metadata.lqip    },    body[] {      ...,      _type == "contentImage" => {        ...,        asset,        alt,        caption,        credit,        "dimensions": asset->metadata.dimensions,        "lqip": asset->metadata.lqip      },      _type == "contentImageGallery" => {        ...,        images[] {          ...,          asset,          alt,          caption,          credit,          "dimensions": asset->metadata.dimensions,          "lqip": asset->metadata.lqip        }      }    }  }
+// Query: *[    _type == "newsItem" &&    destination == "internal" &&    slug.current == $slug  ][0] {    _id,    title,    "slug": slug.current,    summary,    publishedAt,    coverImage {      asset,      crop,      hotspot,      decorative,      alt,      "dimensions": asset->metadata.dimensions,      "lqip": asset->metadata.lqip    },    body[] {      ...,      _type == "contentImage" => {        ...,        asset,        alt,        caption,        credit,        "dimensions": asset->metadata.dimensions,        "lqip": asset->metadata.lqip      },      _type == "contentImageGallery" => {        ...,        images[] {          ...,          asset,          alt,          caption,          credit,          "dimensions": asset->metadata.dimensions,          "lqip": asset->metadata.lqip        }      }    }  }
 export type NEWS_BY_SLUG_QUERY_RESULT = {
   _id: string;
   title: string;
   slug: string | null;
   summary: string;
   publishedAt: string;
-  newsType: {
-    title: string;
-    slug: string;
-  };
   coverImage: {
     asset: SanityImageAssetReference | null;
     crop: SanityImageCrop | null;
@@ -926,7 +763,7 @@ export type NEWS_BY_SLUG_QUERY_RESULT = {
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: PUBLICATIONS_QUERY
-// Query: *[    _type == "publication"  ]    | order(publishedAt desc) {      _id,      title,      publishedAt,      deliveryType,      externalUrl,      externalSource,      publicationType-> {        title,        "slug": slug.current      },      file {        asset-> {          _id,          url,          originalFilename,          mimeType,          size        }      }    }
+// Query: *[    _type == "publication" &&    defined(publishedAt) &&    (      deliveryType == "file" && defined(file.asset) ||      deliveryType == "external" && defined(externalUrl)    )  ]    | order(publishedAt desc, _id asc) [$start...$end] {      _id,      title,      publishedAt,      deliveryType,      externalUrl,      externalSource,      file {        asset-> {          _id,          url,          originalFilename,          mimeType,          size        }      }    }
 export type PUBLICATIONS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -934,10 +771,6 @@ export type PUBLICATIONS_QUERY_RESULT = Array<{
   deliveryType: "external" | "file";
   externalUrl: string | null;
   externalSource: string | null;
-  publicationType: {
-    title: string;
-    slug: string;
-  };
   file: {
     asset: {
       _id: string;
@@ -951,7 +784,7 @@ export type PUBLICATIONS_QUERY_RESULT = Array<{
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: MULTIMEDIA_QUERY
-// Query: *[    _type == "multimediaItem"  ]    | order(publishedAt desc) {      _id,      mediaType,      title,      "slug": slug.current,      summary,      publishedAt,      youtubeUrl,      coverImage {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    }
+// Query: *[    _type == "multimediaItem" &&    mediaType == $mediaType &&    defined(slug.current) &&    defined(publishedAt) &&    defined(coverImage.asset)  ]    | order(publishedAt desc, _id asc) [$start...$end] {      _id,      mediaType,      title,      "slug": slug.current,      summary,      publishedAt,      youtubeUrl,      coverImage {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    }
 export type MULTIMEDIA_QUERY_RESULT = Array<{
   _id: string;
   mediaType: "gallery" | "video";
@@ -1004,50 +837,38 @@ export type MULTIMEDIA_BY_SLUG_QUERY_RESULT = {
 } | null;
 
 // Source: ../web/sanity/lib/queries.ts
-// Variable: NEWS_PAGE_QUERY
-// Query: *[    _type == "mediaPage" &&    _id == "mediaPage"  ][0] {    newsArchiveLabel,    newsArchiveHeading,    newsArchiveDescription  }
-export type NEWS_PAGE_QUERY_RESULT = {
-  newsArchiveLabel: string;
-  newsArchiveHeading: string;
-  newsArchiveDescription: string;
-} | null;
+// Variable: MULTIMEDIA_COUNT_QUERY
+// Query: count(*[    _type == "multimediaItem" &&    mediaType == $mediaType &&    defined(slug.current) &&    defined(publishedAt) &&    defined(coverImage.asset)  ])
+export type MULTIMEDIA_COUNT_QUERY_RESULT = number;
 
 // Source: ../web/sanity/lib/queries.ts
-// Variable: PUBLICATIONS_PAGE_QUERY
-// Query: *[    _type == "mediaPage" &&    _id == "mediaPage"  ][0] {    publicationsArchiveLabel,    publicationsArchiveHeading,    publicationsArchiveDescription  }
-export type PUBLICATIONS_PAGE_QUERY_RESULT = {
-  publicationsArchiveLabel: string;
-  publicationsArchiveHeading: string;
-  publicationsArchiveDescription: string;
-} | null;
+// Variable: PUBLICATIONS_COUNT_QUERY
+// Query: count(*[    _type == "publication" &&    defined(publishedAt) &&    (      deliveryType == "file" && defined(file.asset) ||      deliveryType == "external" && defined(externalUrl)    )  ])
+export type PUBLICATIONS_COUNT_QUERY_RESULT = number;
 
 // Source: ../web/sanity/lib/queries.ts
-// Variable: MULTIMEDIA_PAGE_QUERY
-// Query: *[    _type == "mediaPage" &&    _id == "mediaPage"  ][0] {    multimediaArchiveLabel,    multimediaArchiveHeading,    multimediaArchiveDescription  }
-export type MULTIMEDIA_PAGE_QUERY_RESULT = {
-  multimediaArchiveLabel: string;
-  multimediaArchiveHeading: string;
-  multimediaArchiveDescription: string;
-} | null;
+// Variable: NEWS_COUNT_QUERY
+// Query: count(*[    _type == "newsItem" &&    defined(publishedAt) &&    defined(coverImage.asset) &&    (      destination == "internal" && defined(slug.current) ||      destination == "external" && defined(externalUrl)    )  ])
+export type NEWS_COUNT_QUERY_RESULT = number;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n\n    visionStatement,\n    missionStatement,\n\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    },\n\n    mediaLabel,\n    mediaHeading,\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      defined(publishedAt) &&\n      defined(coverImage.asset) &&\n      defined(newsType._ref) &&\n      (\n        destination == \"internal\" && defined(slug.current) ||\n        destination == \"external\" && defined(externalUrl)\n      )\n    ]\n      | order(publishedAt desc, _id asc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        newsType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    approachLabel,\n    approachHeading,\n    approachValues[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    getInvolvedLabel,\n    getInvolvedHeading,\n    getInvolvedDescription\n  }\n": HOME_PAGE_QUERY_RESULT;
+    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n\n    visionStatement,\n    missionStatement,\n\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    },\n\n    mediaLabel,\n    mediaHeading,\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      defined(publishedAt) &&\n      defined(coverImage.asset) &&\n      (\n        destination == \"internal\" && defined(slug.current) ||\n        destination == \"external\" && defined(externalUrl)\n      )\n    ]\n      | order(publishedAt desc, _id asc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    approachLabel,\n    approachHeading,\n    approachValues[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    getInvolvedLabel,\n    getInvolvedHeading,\n    getInvolvedDescription\n  }\n": HOME_PAGE_QUERY_RESULT;
     "\n  *[_type == \"project\" && defined(slug.current)]\n    | order(_createdAt desc) {\n      _id,\n      title,\n      \"slug\": slug.current,\n      status,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      },\n      projectType-> {\n        title,\n        \"slug\": slug.current\n      }\n    }\n": PROJECTS_QUERY_RESULT;
     "\n  *[\n    _type == \"project\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    status,\n    summary,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    areaOfWork-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    projectType-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": PROJECT_BY_SLUG_QUERY_RESULT;
     "\n  *[\n    _type == \"projectsPage\" &&\n    _id == \"projectsPage\"\n  ][0] {\n    _id,\n    introLabel,\n    introHeading,\n    introDescription,\n    ctaLabel,\n    ctaHeading,\n    ctaLinkLabel\n  }\n": PROJECTS_PAGE_QUERY_RESULT;
     "\n  {\n    \"page\": *[\n      _type == \"getInvolvedPage\" &&\n      _id == \"getInvolvedPage\"\n    ][0] {\n      _id,\n      introLabel,\n      introHeading,\n      introDescription,\n      partnershipsLabel,\n      partnershipsHeading,\n      partnershipPaths[] {\n        _key,\n        title,\n        description\n      },\n      inquiryLabel,\n      inquiryHeading,\n      inquiryDescription\n    },\n\n    \"organization\": *[\n      _type == \"organizationDetails\" &&\n      _id == \"organizationDetails\"\n    ][0] {\n      _id,\n      publicEmail,\n      postalAddress,\n      phone\n    }\n  }\n": GET_INVOLVED_PAGE_QUERY_RESULT;
-    "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    _id,\n    introLabel,\n    introHeading,\n    introDescription,\n    newsSectionLabel,\n    newsSectionHeading,\n    publicationsSectionLabel,\n    publicationsSectionHeading,\n    multimediaSectionLabel,\n    multimediaSectionHeading,\n    multimediaSectionDescription,\n\n    featuredNews-> {\n      _id,\n      destination,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      externalSource,\n      externalUrl,\n\n      newsType-> {\n        title,\n        \"slug\": slug.current\n      },\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      _id != ^.featuredNews._ref\n    ]\n      | order(publishedAt desc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        newsType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    \"latestPublications\": *[\n      _type == \"publication\"\n    ]\n      | order(publishedAt desc)[0...3] {\n        _id,\n        title,\n        publishedAt,\n        deliveryType,\n        externalUrl,\n        externalSource,\n\n        publicationType-> {\n          title,\n          \"slug\": slug.current\n        },\n\n        file {\n          asset-> {\n            _id,\n            url,\n            originalFilename,\n            mimeType,\n            size\n          }\n        }\n      },\n\n    \"latestMultimedia\": *[\n      _type == \"multimediaItem\"\n    ]\n      | order(publishedAt desc)[0...4] {\n        _id,\n        mediaType,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        youtubeUrl,\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n  }\n": MEDIA_PAGE_QUERY_RESULT;
-    "\n  *[\n    _type == \"newsItem\"\n  ]\n    | order(publishedAt desc) {\n      _id,\n      destination,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      externalSource,\n      externalUrl,\n\n      newsType-> {\n        title,\n        \"slug\": slug.current\n      },\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n": NEWS_QUERY_RESULT;
-    "\n  *[\n    _type == \"newsItem\" &&\n    destination == \"internal\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    summary,\n    publishedAt,\n\n    newsType-> {\n      title,\n      \"slug\": slug.current\n    },\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt,\n      \"dimensions\": asset->metadata.dimensions,\n      \"lqip\": asset->metadata.lqip\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": NEWS_BY_SLUG_QUERY_RESULT;
-    "\n  *[\n    _type == \"publication\"\n  ]\n    | order(publishedAt desc) {\n      _id,\n      title,\n      publishedAt,\n      deliveryType,\n      externalUrl,\n      externalSource,\n\n      publicationType-> {\n        title,\n        \"slug\": slug.current\n      },\n\n      file {\n        asset-> {\n          _id,\n          url,\n          originalFilename,\n          mimeType,\n          size\n        }\n      }\n    }\n": PUBLICATIONS_QUERY_RESULT;
-    "\n  *[\n    _type == \"multimediaItem\"\n  ]\n    | order(publishedAt desc) {\n      _id,\n      mediaType,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      youtubeUrl,\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n": MULTIMEDIA_QUERY_RESULT;
+    "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    _id,\n    title,\n    description\n  }\n": MEDIA_PAGE_QUERY_RESULT;
+    "\n  *[\n    _type == \"newsItem\" &&\n    defined(publishedAt) &&\n    defined(coverImage.asset) &&\n    (\n      destination == \"internal\" && defined(slug.current) ||\n      destination == \"external\" && defined(externalUrl)\n    )\n  ]\n    | order(publishedAt desc, _id asc) [$start...$end] {\n      _id,\n      destination,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      externalSource,\n      externalUrl,\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n": NEWS_QUERY_RESULT;
+    "\n  *[\n    _type == \"newsItem\" &&\n    destination == \"internal\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    summary,\n    publishedAt,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt,\n      \"dimensions\": asset->metadata.dimensions,\n      \"lqip\": asset->metadata.lqip\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": NEWS_BY_SLUG_QUERY_RESULT;
+    "\n  *[\n    _type == \"publication\" &&\n    defined(publishedAt) &&\n    (\n      deliveryType == \"file\" && defined(file.asset) ||\n      deliveryType == \"external\" && defined(externalUrl)\n    )\n  ]\n    | order(publishedAt desc, _id asc) [$start...$end] {\n      _id,\n      title,\n      publishedAt,\n      deliveryType,\n      externalUrl,\n      externalSource,\n\n      file {\n        asset-> {\n          _id,\n          url,\n          originalFilename,\n          mimeType,\n          size\n        }\n      }\n    }\n": PUBLICATIONS_QUERY_RESULT;
+    "\n  *[\n    _type == \"multimediaItem\" &&\n    mediaType == $mediaType &&\n    defined(slug.current) &&\n    defined(publishedAt) &&\n    defined(coverImage.asset)\n  ]\n    | order(publishedAt desc, _id asc) [$start...$end] {\n      _id,\n      mediaType,\n      title,\n      \"slug\": slug.current,\n      summary,\n      publishedAt,\n      youtubeUrl,\n\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n": MULTIMEDIA_QUERY_RESULT;
     "\n  *[\n    _type == \"multimediaItem\" &&\n    slug.current == $slug\n  ][0] {\n    _id,\n    mediaType,\n    title,\n    \"slug\": slug.current,\n    summary,\n    publishedAt,\n    youtubeUrl,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt,\n      \"dimensions\": asset->metadata.dimensions,\n      \"lqip\": asset->metadata.lqip\n    },\n\n    galleryImages[] {\n      _key,\n      asset,\n      crop,\n      hotspot,\n      alt,\n      caption,\n      credit,\n      \"dimensions\": asset->metadata.dimensions,\n      \"lqip\": asset->metadata.lqip\n    }\n  }\n": MULTIMEDIA_BY_SLUG_QUERY_RESULT;
-    "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    newsArchiveLabel,\n    newsArchiveHeading,\n    newsArchiveDescription\n  }\n": NEWS_PAGE_QUERY_RESULT;
-    "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    publicationsArchiveLabel,\n    publicationsArchiveHeading,\n    publicationsArchiveDescription\n  }\n": PUBLICATIONS_PAGE_QUERY_RESULT;
-    "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    multimediaArchiveLabel,\n    multimediaArchiveHeading,\n    multimediaArchiveDescription\n  }\n": MULTIMEDIA_PAGE_QUERY_RESULT;
+    "\n  count(*[\n    _type == \"multimediaItem\" &&\n    mediaType == $mediaType &&\n    defined(slug.current) &&\n    defined(publishedAt) &&\n    defined(coverImage.asset)\n  ])\n": MULTIMEDIA_COUNT_QUERY_RESULT;
+    "\n  count(*[\n    _type == \"publication\" &&\n    defined(publishedAt) &&\n    (\n      deliveryType == \"file\" && defined(file.asset) ||\n      deliveryType == \"external\" && defined(externalUrl)\n    )\n  ])\n": PUBLICATIONS_COUNT_QUERY_RESULT;
+    "\n  count(*[\n    _type == \"newsItem\" &&\n    defined(publishedAt) &&\n    defined(coverImage.asset) &&\n    (\n      destination == \"internal\" && defined(slug.current) ||\n      destination == \"external\" && defined(externalUrl)\n    )\n  ])\n": NEWS_COUNT_QUERY_RESULT;
   }
 }
 

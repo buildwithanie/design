@@ -6,8 +6,7 @@ import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ContentPortableText } from "@/components/content/portable-text";
-import { buttonVariants } from "@/components/ui/button";
-import { formatMonthYear } from "@/lib/format-date";
+import { formatFullDate } from "@/lib/format-date";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { NEWS_BY_SLUG_QUERY } from "@/sanity/lib/queries";
@@ -101,15 +100,11 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <article>
-        <header className="border-b border-border bg-secondary pt-28 pb-10 md:pt-32 md:pb-14">
-          <div className="mx-auto w-[min(1180px,92vw)]">
+        <header className="bg-background pt-28 pb-6 md:pt-32 md:pb-8">
+          <div className="mx-auto w-[92vw] max-w-4xl">
             <Link
-              href="/media/news"
-              className={buttonVariants({
-                variant: "ghost",
-                size: "sm",
-                className: "-ml-3 text-muted-foreground",
-              })}
+              href="/media?view=news"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-muted-foreground transition-colors hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
             >
               <HugeiconsIcon
                 icon={ArrowLeft02Icon}
@@ -120,36 +115,27 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
               All news
             </Link>
 
-            <div className="mx-auto mt-10 max-w-4xl">
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm font-bold">
-                <span className="text-primary">{article.newsType.title}</span>
-
-                <span className="text-muted-foreground/60" aria-hidden="true">
-                  /
-                </span>
-
-                <time
-                  dateTime={article.publishedAt}
-                  className="text-muted-foreground"
-                >
-                  {formatMonthYear(article.publishedAt)}
-                </time>
-              </div>
-
-              <h1 className="mt-5 max-w-4xl text-balance text-4xl leading-[1.02] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-6xl">
+            <div className="mt-6">
+              <h1 className="max-w-4xl text-balance text-4xl leading-[1.02] font-semibold tracking-[-0.035em] sm:text-5xl lg:text-6xl">
                 {article.title}
               </h1>
 
               <p className="mt-6 max-w-3xl text-lg leading-8 text-muted-foreground sm:text-xl">
                 {article.summary}
               </p>
+
+              <div className="mt-5 text-sm text-muted-foreground">
+                <time dateTime={article.publishedAt}>
+                  {formatFullDate(article.publishedAt)}
+                </time>
+              </div>
             </div>
           </div>
         </header>
 
-        <section className="pt-8 sm:pt-10">
-          <div className="mx-auto w-[min(1180px,92vw)]">
-            <div className="relative aspect-4/3 overflow-hidden rounded-xl bg-muted sm:aspect-2/1 lg:aspect-5/2">
+        <section>
+          <div className="mx-auto w-[92vw] max-w-5xl">
+            <div className="relative aspect-4/3 overflow-hidden bg-muted sm:aspect-2/1">
               <Image
                 src={coverImageUrl}
                 alt={coverImageAlt}
@@ -164,7 +150,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
           </div>
         </section>
 
-        <section className="pt-10 pb-8 sm:pt-14 sm:pb-10">
+        <section className="pt-8 pb-8 sm:pt-10 sm:pb-10">
           <div className="mx-auto w-[min(1180px,92vw)]">
             <ContentPortableText value={article.body} />
           </div>
