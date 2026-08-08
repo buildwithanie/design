@@ -35,7 +35,15 @@ export const areaOfWork = defineType({
       type: 'text',
       rows: 3,
       description: 'A short explanation of what this area of work covers.',
-      validation: (rule) => rule.max(240),
+      validation: (rule) => rule.required().max(240),
+    }),
+
+    defineField({
+      name: 'image',
+      title: 'Image',
+      type: 'accessibleImage',
+      description: 'A representative image used when introducing this area of work.',
+      validation: (rule) => rule.required(),
     }),
   ],
 
@@ -43,6 +51,7 @@ export const areaOfWork = defineType({
     select: {
       title: 'title',
       subtitle: 'description',
+      media: 'image',
     },
   },
 })

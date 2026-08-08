@@ -8,6 +8,7 @@ import {structure} from './structure'
 const singletonTypes = new Set([
   'homePage',
   'projectsPage',
+  'workPage',
   'getInvolvedPage',
   'organizationDetails',
 ])

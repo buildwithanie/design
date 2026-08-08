@@ -210,6 +210,53 @@ export const PROJECTS_PAGE_QUERY = defineQuery(`
   }
 `);
 
+export const WORK_PAGE_QUERY = defineQuery(`
+  *[
+    _type == "workPage" &&
+    _id == "workPage"
+  ][0] {
+    _id,
+    introLabel,
+    introHeading,
+
+    workAreas[]-> {
+      _id,
+      title,
+      description,
+      image {
+        asset,
+        crop,
+        hotspot,
+        decorative,
+        alt,
+        "lqip": asset->metadata.lqip
+      }
+    },
+
+    impactHeading,
+    impactMetrics[] {
+      _key,
+      value,
+      label
+    },
+
+    featuredProject-> {
+      _id,
+      title,
+      "slug": slug.current,
+      summary,
+      coverImage {
+        asset,
+        crop,
+        hotspot,
+        decorative,
+        alt,
+        "lqip": asset->metadata.lqip
+      }
+    }
+  }
+`);
+
 export const GET_INVOLVED_PAGE_QUERY = defineQuery(`
   {
     "page": *[

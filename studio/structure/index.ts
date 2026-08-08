@@ -22,6 +22,11 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.listItem()
+        .title('Our Work page')
+        .icon(DocumentTextIcon)
+        .child(S.document().title('Our Work page').schemaType('workPage').documentId('workPage')),
+
+      S.listItem()
         .title('Get involved page')
         .icon(DocumentTextIcon)
         .child(

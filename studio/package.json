@@ -16,11 +16,11 @@
   ],
   "dependencies": {
     "@sanity/icons": "^5.2.1",
-    "@sanity/vision": "^6.8.0",
+    "@sanity/vision": "^6.9.1",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "sanity": "^6.8.0",
-    "styled-components": "^6.4.4"
+    "sanity": "^6.9.1",
+    "styled-components": "^6.5.1"
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^6.0.0",
