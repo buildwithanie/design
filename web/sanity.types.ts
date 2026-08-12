@@ -122,12 +122,37 @@ export type PortableContent = Array<{
   _key: string;
 } & ContentImageGallery>;
 
+export type Partner = {
+  _id: string;
+  _type: "partner";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  logo: AccessibleImage;
+  website?: string;
+};
+
+export type TeamMember = {
+  _id: string;
+  _type: "teamMember";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  role: string;
+  photo: AccessibleImage;
+  biography: string;
+};
+
 export type OrganizationDetails = {
   _id: string;
   _type: "organizationDetails";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
+  visionStatement: string;
+  missionStatement: string;
   publicEmail: string;
   postalAddress: string;
   phone?: string;
@@ -229,6 +254,44 @@ export type AreaOfWork = {
   image: AccessibleImage;
 };
 
+export type TeamMemberReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "teamMember";
+};
+
+export type PartnerReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "partner";
+};
+
+export type AboutPage = {
+  _id: string;
+  _type: "aboutPage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  pageHeading: string;
+  identityHeading: string;
+  identityStatement: string;
+  identityDescription: string;
+  identityImage: AccessibleImage;
+  storyHeading: string;
+  storyStatement: string;
+  storyDescription: string;
+  teamHeading?: string;
+  teamMembers?: Array<{
+    _key: string;
+  } & TeamMemberReference>;
+  partnersHeading?: string;
+  partners?: Array<{
+    _key: string;
+  } & PartnerReference>;
+};
+
 export type HomePage = {
   _id: string;
   _type: "homePage";
@@ -245,8 +308,6 @@ export type HomePage = {
   researchParticipants: Array<{
     _key: string;
   } & NetworkParticipant>;
-  visionStatement: string;
-  missionStatement: string;
   featuredProjectsHeading: string;
   featuredProjects?: Array<{
     _key: string;
@@ -420,11 +481,11 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | SanityFileAssetReference | Publication | NewsItem | PortableContent | OrganizationDetails | GetInvolvedPage | MediaPage | ProjectsPage | AreaOfWorkReference | ProjectReference | WorkPage | Project | AreaOfWork | HomePage | ImpactMetric | PartnershipPath | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = MultimediaItem | SanityImageAssetReference | AccessibleImage | Slug | SanityFileAssetReference | Publication | NewsItem | PortableContent | Partner | TeamMember | OrganizationDetails | GetInvolvedPage | MediaPage | ProjectsPage | AreaOfWorkReference | ProjectReference | WorkPage | Project | AreaOfWork | TeamMemberReference | PartnerReference | AboutPage | HomePage | ImpactMetric | PartnershipPath | ApproachValue | NetworkParticipant | ContentImageGallery | ContentImage | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: HOME_PAGE_QUERY
-// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    visionStatement,    missionStatement,    featuredProjectsHeading,    featuredProjects[]-> {      _id,      title,      "slug": slug.current,      summary,      "hasContent": defined(body[0]),      coverImage {        asset,        crop,        hotspot,        decorative,        alt      },      areaOfWork-> {        title,        "slug": slug.current      }    },    mediaLabel,    mediaHeading,    "latestNews": *[      _type == "newsItem" &&      defined(publishedAt) &&      defined(coverImage.asset) &&      (        destination == "internal" && defined(slug.current) ||        destination == "external" && defined(externalUrl)      )    ]      | order(publishedAt desc, _id asc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      },    approachLabel,    approachHeading,    approachValues[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    },    getInvolvedLabel,    getInvolvedHeading,    getInvolvedDescription  }
+// Query: *[_type == "homePage" && _id == "homePage"][0] {    _id,    heroHeadline,    heroHighlightedText,    heroDescription,    heroImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchHeading,    researchDescription,    researchMapImage {      asset,      crop,      hotspot,      decorative,      alt    },    researchParticipants[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt      }    },    "visionStatement": *[_id == "organizationDetails"][0].visionStatement,    "missionStatement": *[_id == "organizationDetails"][0].missionStatement,    featuredProjectsHeading,    featuredProjects[]-> {      _id,      title,      "slug": slug.current,      summary,      "hasContent": defined(body[0]),      coverImage {        asset,        crop,        hotspot,        decorative,        alt      },      areaOfWork-> {        title,        "slug": slug.current      }    },    mediaLabel,    mediaHeading,    "latestNews": *[      _type == "newsItem" &&      defined(publishedAt) &&      defined(coverImage.asset) &&      (        destination == "internal" && defined(slug.current) ||        destination == "external" && defined(externalUrl)      )    ]      | order(publishedAt desc, _id asc)[0...3] {        _id,        destination,        title,        "slug": slug.current,        summary,        publishedAt,        externalSource,        externalUrl,        coverImage {          asset,          crop,          hotspot,          decorative,          alt,          "lqip": asset->metadata.lqip        }      },    approachLabel,    approachHeading,    approachValues[] {      _key,      title,      description,      image {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      }    },    getInvolvedLabel,    getInvolvedHeading,    getInvolvedDescription  }
 export type HOME_PAGE_QUERY_RESULT = {
   _id: "homePage";
   heroHeadline: string;
@@ -458,8 +519,8 @@ export type HOME_PAGE_QUERY_RESULT = {
       alt: string | null;
     };
   }>;
-  visionStatement: string;
-  missionStatement: string;
+  visionStatement: null | string;
+  missionStatement: null | string;
   featuredProjectsHeading: string;
   featuredProjects: Array<{
     _id: string;
@@ -613,6 +674,66 @@ export type PROJECTS_PAGE_QUERY_RESULT = {
   introLabel: string;
   introHeading: string;
 } | null;
+
+// Source: ../web/sanity/lib/queries.ts
+// Variable: ABOUT_PAGE_QUERY
+// Query: {    "page": *[      _type == "aboutPage" &&      _id == "aboutPage"    ][0] {      _id,      pageHeading,      identityHeading,      identityStatement,      identityDescription,      identityImage {        asset,        crop,        hotspot,        decorative,        alt,        "lqip": asset->metadata.lqip      },      storyHeading,      storyStatement,      storyDescription,      teamHeading,      teamMembers[] {        _key,        ...(@-> {          _id,          name,          role,          biography,          photo {            asset,            crop,            hotspot,            decorative,            alt,            "lqip": asset->metadata.lqip          }        })      },      partnersHeading,      partners[] {        _key,        ...(@-> {          _id,          name,          website,          logo {            asset,            crop,            hotspot,            decorative,            alt,            "lqip": asset->metadata.lqip          }        })      }    },    "organization": *[      _type == "organizationDetails" &&      _id == "organizationDetails"    ][0] {      _id,      missionStatement,      visionStatement    }  }
+export type ABOUT_PAGE_QUERY_RESULT = {
+  page: {
+    _id: "aboutPage";
+    pageHeading: string;
+    identityHeading: string;
+    identityStatement: string;
+    identityDescription: string;
+    identityImage: {
+      asset: SanityImageAssetReference | null;
+      crop: SanityImageCrop | null;
+      hotspot: SanityImageHotspot | null;
+      decorative: boolean | null;
+      alt: string | null;
+      lqip: string | null;
+    };
+    storyHeading: string;
+    storyStatement: string;
+    storyDescription: string;
+    teamHeading: string | null;
+    teamMembers: Array<{
+      _key: string;
+      _id: string;
+      name: string;
+      role: string;
+      biography: string;
+      photo: {
+        asset: SanityImageAssetReference | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        decorative: boolean | null;
+        alt: string | null;
+        lqip: string | null;
+      };
+    }> | null;
+    partnersHeading: string | null;
+    partners: Array<{
+      _key: string;
+      _id: string;
+      name: string;
+      website: string | null;
+      logo: {
+        asset: SanityImageAssetReference | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        decorative: boolean | null;
+        alt: string | null;
+        lqip: string | null;
+      };
+    }> | null;
+  } | null;
+  organization: {
+    _id: "organizationDetails";
+    missionStatement: string;
+    visionStatement: string;
+  } | null;
+};
 
 // Source: ../web/sanity/lib/queries.ts
 // Variable: WORK_PAGE_QUERY
@@ -874,10 +995,11 @@ export type NEWS_COUNT_QUERY_RESULT = number;
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n\n    visionStatement,\n    missionStatement,\n\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      summary,\n      \"hasContent\": defined(body[0]),\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      }\n    },\n\n    mediaLabel,\n    mediaHeading,\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      defined(publishedAt) &&\n      defined(coverImage.asset) &&\n      (\n        destination == \"internal\" && defined(slug.current) ||\n        destination == \"external\" && defined(externalUrl)\n      )\n    ]\n      | order(publishedAt desc, _id asc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    approachLabel,\n    approachHeading,\n    approachValues[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    getInvolvedLabel,\n    getInvolvedHeading,\n    getInvolvedDescription\n  }\n": HOME_PAGE_QUERY_RESULT;
+    "\n  *[_type == \"homePage\" && _id == \"homePage\"][0] {\n    _id,\n\n    heroHeadline,\n    heroHighlightedText,\n    heroDescription,\n    heroImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    researchHeading,\n    researchDescription,\n    researchMapImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n    researchParticipants[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      }\n    },\n\n    \"visionStatement\": *[_id == \"organizationDetails\"][0].visionStatement,\n    \"missionStatement\": *[_id == \"organizationDetails\"][0].missionStatement,\n\n    featuredProjectsHeading,\n    featuredProjects[]-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      summary,\n      \"hasContent\": defined(body[0]),\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      }\n    },\n\n    mediaLabel,\n    mediaHeading,\n\n    \"latestNews\": *[\n      _type == \"newsItem\" &&\n      defined(publishedAt) &&\n      defined(coverImage.asset) &&\n      (\n        destination == \"internal\" && defined(slug.current) ||\n        destination == \"external\" && defined(externalUrl)\n      )\n    ]\n      | order(publishedAt desc, _id asc)[0...3] {\n        _id,\n        destination,\n        title,\n        \"slug\": slug.current,\n        summary,\n        publishedAt,\n        externalSource,\n        externalUrl,\n\n        coverImage {\n          asset,\n          crop,\n          hotspot,\n          decorative,\n          alt,\n          \"lqip\": asset->metadata.lqip\n        }\n      },\n\n    approachLabel,\n    approachHeading,\n    approachValues[] {\n      _key,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    getInvolvedLabel,\n    getInvolvedHeading,\n    getInvolvedDescription\n  }\n": HOME_PAGE_QUERY_RESULT;
     "\n  *[\n    _type == \"project\" &&\n    defined(title) &&\n    defined(slug.current) &&\n    defined(summary) &&\n    defined(coverImage.asset) &&\n    defined(areaOfWork) &&\n    defined(body[0])\n  ]\n    | order(_createdAt desc) {\n      _id,\n      title,\n      \"slug\": slug.current,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt\n      },\n      areaOfWork-> {\n        title,\n        \"slug\": slug.current\n      }\n    }\n": PROJECTS_QUERY_RESULT;
     "\n  *[\n    _type == \"project\" &&\n    slug.current == $slug &&\n    defined(title) &&\n    defined(summary) &&\n    defined(coverImage.asset) &&\n    defined(areaOfWork) &&\n    defined(body[0])\n  ][0] {\n    _id,\n    title,\n    \"slug\": slug.current,\n    status,\n    summary,\n\n    coverImage {\n      asset,\n      crop,\n      hotspot,\n      decorative,\n      alt\n    },\n\n    body[] {\n      ...,\n\n      _type == \"contentImage\" => {\n        ...,\n        asset,\n        alt,\n        caption,\n        credit,\n        \"dimensions\": asset->metadata.dimensions,\n        \"lqip\": asset->metadata.lqip\n      },\n\n      _type == \"contentImageGallery\" => {\n        ...,\n\n        images[] {\n          ...,\n          asset,\n          alt,\n          caption,\n          credit,\n          \"dimensions\": asset->metadata.dimensions,\n          \"lqip\": asset->metadata.lqip\n        }\n      }\n    }\n  }\n": PROJECT_BY_SLUG_QUERY_RESULT;
     "\n  *[\n    _type == \"projectsPage\" &&\n    _id == \"projectsPage\" &&\n    defined(introLabel) &&\n    defined(introHeading)\n  ][0] {\n    _id,\n    introLabel,\n    introHeading\n  }\n": PROJECTS_PAGE_QUERY_RESULT;
+    "\n  {\n    \"page\": *[\n      _type == \"aboutPage\" &&\n      _id == \"aboutPage\"\n    ][0] {\n      _id,\n      pageHeading,\n      identityHeading,\n      identityStatement,\n      identityDescription,\n      identityImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      },\n      storyHeading,\n      storyStatement,\n      storyDescription,\n      teamHeading,\n      teamMembers[] {\n        _key,\n        ...(@-> {\n          _id,\n          name,\n          role,\n          biography,\n          photo {\n            asset,\n            crop,\n            hotspot,\n            decorative,\n            alt,\n            \"lqip\": asset->metadata.lqip\n          }\n        })\n      },\n      partnersHeading,\n      partners[] {\n        _key,\n        ...(@-> {\n          _id,\n          name,\n          website,\n          logo {\n            asset,\n            crop,\n            hotspot,\n            decorative,\n            alt,\n            \"lqip\": asset->metadata.lqip\n          }\n        })\n      }\n    },\n    \"organization\": *[\n      _type == \"organizationDetails\" &&\n      _id == \"organizationDetails\"\n    ][0] {\n      _id,\n      missionStatement,\n      visionStatement\n    }\n  }\n": ABOUT_PAGE_QUERY_RESULT;
     "\n  *[\n    _type == \"workPage\" &&\n    _id == \"workPage\"\n  ][0] {\n    _id,\n    introLabel,\n    introHeading,\n\n    workAreas[]-> {\n      _id,\n      title,\n      description,\n      image {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    },\n\n    impactHeading,\n    impactMetrics[] {\n      _key,\n      value,\n      label\n    },\n\n    featuredProject-> {\n      _id,\n      title,\n      \"slug\": slug.current,\n      summary,\n      coverImage {\n        asset,\n        crop,\n        hotspot,\n        decorative,\n        alt,\n        \"lqip\": asset->metadata.lqip\n      }\n    }\n  }\n": WORK_PAGE_QUERY_RESULT;
     "\n  {\n    \"page\": *[\n      _type == \"getInvolvedPage\" &&\n      _id == \"getInvolvedPage\"\n    ][0] {\n      _id,\n      introLabel,\n      introHeading,\n      introDescription,\n      partnershipsHeading,\n      partnershipPaths[] {\n        _key,\n        title,\n        description\n      },\n      inquiryHeading,\n      inquiryDescription\n    },\n\n    \"organization\": *[\n      _type == \"organizationDetails\" &&\n      _id == \"organizationDetails\"\n    ][0] {\n      _id,\n      publicEmail,\n      postalAddress,\n      phone\n    }\n  }\n": GET_INVOLVED_PAGE_QUERY_RESULT;
     "\n  *[\n    _type == \"mediaPage\" &&\n    _id == \"mediaPage\"\n  ][0] {\n    _id,\n    title,\n    description\n  }\n": MEDIA_PAGE_QUERY_RESULT;

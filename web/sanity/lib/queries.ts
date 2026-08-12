@@ -37,8 +37,8 @@ export const HOME_PAGE_QUERY = defineQuery(`
       }
     },
 
-    visionStatement,
-    missionStatement,
+    "visionStatement": *[_id == "organizationDetails"][0].visionStatement,
+    "missionStatement": *[_id == "organizationDetails"][0].missionStatement,
 
     featuredProjectsHeading,
     featuredProjects[]-> {
@@ -207,6 +207,75 @@ export const PROJECTS_PAGE_QUERY = defineQuery(`
     _id,
     introLabel,
     introHeading
+  }
+`);
+
+export const ABOUT_PAGE_QUERY = defineQuery(`
+  {
+    "page": *[
+      _type == "aboutPage" &&
+      _id == "aboutPage"
+    ][0] {
+      _id,
+      pageHeading,
+      identityHeading,
+      identityStatement,
+      identityDescription,
+      identityImage {
+        asset,
+        crop,
+        hotspot,
+        decorative,
+        alt,
+        "lqip": asset->metadata.lqip
+      },
+      storyHeading,
+      storyStatement,
+      storyDescription,
+      teamHeading,
+      teamMembers[] {
+        _key,
+        ...(@-> {
+          _id,
+          name,
+          role,
+          biography,
+          photo {
+            asset,
+            crop,
+            hotspot,
+            decorative,
+            alt,
+            "lqip": asset->metadata.lqip
+          }
+        })
+      },
+      partnersHeading,
+      partners[] {
+        _key,
+        ...(@-> {
+          _id,
+          name,
+          website,
+          logo {
+            asset,
+            crop,
+            hotspot,
+            decorative,
+            alt,
+            "lqip": asset->metadata.lqip
+          }
+        })
+      }
+    },
+    "organization": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0] {
+      _id,
+      missionStatement,
+      visionStatement
+    }
   }
 `);
 

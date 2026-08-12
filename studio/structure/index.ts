@@ -3,6 +3,7 @@ import CogIcon from '@sanity/icons/Cog'
 import {HomeIcon} from '@sanity/icons/Home'
 import {ImagesIcon} from '@sanity/icons/Images'
 import {TagIcon} from '@sanity/icons/Tag'
+import {UsersIcon} from '@sanity/icons/Users'
 import type {StructureResolver} from 'sanity/structure'
 
 export const structure: StructureResolver = (S) =>
@@ -13,6 +14,28 @@ export const structure: StructureResolver = (S) =>
         .title('Home page')
         .icon(HomeIcon)
         .child(S.document().title('Home page').schemaType('homePage').documentId('homePage')),
+
+      S.listItem()
+        .title('About')
+        .icon(UsersIcon)
+        .child(
+          S.list()
+            .title('About')
+            .items([
+              S.listItem()
+                .title('About page')
+                .icon(DocumentTextIcon)
+                .child(
+                  S.document().title('About page').schemaType('aboutPage').documentId('aboutPage'),
+                ),
+
+              S.divider(),
+
+              S.documentTypeListItem('teamMember').title('Team members').icon(UsersIcon),
+
+              S.documentTypeListItem('partner').title('Partners').icon(UsersIcon),
+            ]),
+        ),
 
       S.listItem()
         .title('Projects page')

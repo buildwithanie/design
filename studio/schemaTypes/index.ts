@@ -17,6 +17,9 @@ import {organizationDetails} from './documents/organizationDetails'
 import {partnershipPath} from './objects/partnershipPath'
 import {impactMetric} from './objects/impactMetric'
 import {workPage} from './documents/workPage'
+import {aboutPage} from './documents/aboutPage'
+import {teamMember} from './documents/teamMember'
+import {partner} from './documents/partner'
 
 export const schemaTypes = [
   accessibleImage,
@@ -28,11 +31,14 @@ export const schemaTypes = [
   partnershipPath,
   impactMetric,
   homePage,
+  aboutPage,
   workPage,
   projectsPage,
   mediaPage,
   getInvolvedPage,
   organizationDetails,
+  teamMember,
+  partner,
   areaOfWork,
   project,
   newsItem,

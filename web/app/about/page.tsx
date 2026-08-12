@@ -1,397 +1,249 @@
 import Image from "next/image";
-import Link from "next/link";
-import {
-  ArrowRight01Icon,
-  ArrowUpRight01Icon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { notFound } from "next/navigation";
 
-const participants = [
-  {
-    title: "Community knowledge",
-    image: "/images/project-community-equity.png",
-    text: "People closest to a health challenge shape the questions and meaning of the work.",
-  },
-  {
-    title: "Scientific inquiry",
-    image: "/images/image.png",
-    text: "Researchers build credible evidence through careful methods, data, and responsible AI.",
-  },
-  {
-    title: "Health practice",
-    image: "/images/project-training.png",
-    text: "Health teams translate knowledge into decisions, services, and stronger local systems.",
-  },
-  {
-    title: "Shared action",
-    image: "/images/iahl-media-meeting.png",
-    text: "Institutions and partners create the conditions for ideas to travel further and last longer.",
-  },
-];
+import { MissionVision } from "@/components/mission-vision";
+import { urlForImage } from "@/sanity/lib/image";
+import { sanityFetch } from "@/sanity/lib/live";
+import { ABOUT_PAGE_QUERY } from "@/sanity/lib/queries";
+import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity.types";
 
-const institutionalFoundations = [
-  {
-    title: "Research governance",
-    text: "Questions, methods, responsibilities, and review points are defined before the work moves forward.",
-    link: "How decisions are guided",
-    href: "/work#selection",
-  },
-  {
-    title: "Ethics and data stewardship",
-    text: "Privacy, consent, transparency, and responsible technology are treated as research requirements.",
-    link: "Our research standards",
-    href: "/work#responsible-ai",
-  },
-  {
-    title: "Partnership accountability",
-    text: "Collaborators work through shared objectives, clear roles, and learning that benefits every participant.",
-    link: "How partnerships work",
-    href: "/get-involved#partner",
-  },
-  {
-    title: "Public value",
-    text: "Evidence is designed to be understandable and useful beyond reports, publications, or technical teams.",
-    link: "From evidence to action",
-    href: "/work#process",
-  },
-];
+export default async function AboutPage() {
+  const { data } = await sanityFetch({
+    query: ABOUT_PAGE_QUERY,
+  });
 
-export default function AboutPage() {
+  const about = data as ABOUT_PAGE_QUERY_RESULT;
+  const page = about.page;
+
+  const hasRequiredContent =
+    page?.pageHeading &&
+    page.identityHeading &&
+    page.identityStatement &&
+    page.identityDescription &&
+    page.identityImage?.asset &&
+    page.storyHeading &&
+    page.storyStatement &&
+    page.storyDescription;
+
+  if (!page || !hasRequiredContent) {
+    notFound();
+  }
+
+  const identityImageUrl = urlForImage(page.identityImage)
+    .width(1000)
+    .height(750)
+    .fit("crop")
+    .auto("format")
+    .url();
+
+  const identityImageAlt = page.identityImage.decorative
+    ? ""
+    : (page.identityImage.alt ?? "");
+
+  const teamMembers =
+    page.teamMembers?.filter((member) => member.photo?.asset) ?? [];
+  const partners =
+    page.partners?.filter((partner) => partner.logo?.asset) ?? [];
+
   return (
     <main className="min-h-screen overflow-x-hidden bg-background text-foreground">
-      <section className="overflow-hidden pt-24">
-        <div className="mx-auto grid w-[min(1600px,100%)] bg-white lg:min-h-162.5 lg:grid-cols-[0.43fr_0.57fr]">
-          <div className="relative isolate flex min-h-140 items-center overflow-hidden bg-secondary px-[6vw] py-14 sm:min-h-150 lg:min-h-162.5 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
-            <div
-              className="pointer-events-none absolute inset-0 -z-20 bg-secondary lg:right-4 lg:rounded-r-[48%]"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute -right-10 top-14 -z-10 hidden size-28 rounded-full border-18 border-(--green)/25 bg-(--purple)/10 lg:block"
-              aria-hidden="true"
-            />
+      <section className="relative isolate overflow-hidden bg-secondary pt-24">
+        <div
+          className="pointer-events-none absolute -right-20 top-24 -z-10 hidden size-56 rounded-full border-30 border-(--purple)/10 lg:block"
+          aria-hidden="true"
+        />
 
-            <div className="max-w-xl">
-              <div className="flex items-center gap-3">
-                <span
-                  className="size-2.5 rounded-full bg-(--purple)"
-                  aria-hidden="true"
-                />
-                <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary">
-                  About IAHL
-                </p>
-              </div>
+        <div className="mx-auto w-[min(1180px,92vw)] pt-12 pb-8 sm:pt-14 sm:pb-10 lg:pt-16 lg:pb-10">
+          <div className="max-w-4xl">
+            <div className="flex items-center gap-3">
               <span
-                className="mt-7 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
+                className="size-2.5 rounded-full bg-(--green)"
                 aria-hidden="true"
               />
-              <h1 className="mt-7 text-balance text-5xl font-bold leading-[1.02] sm:text-6xl lg:text-[4.2rem]">
-                A research lab with a public purpose.
-              </h1>
-              <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
-                IAHL exists to make health research more useful, more inclusive,
-                and closer to the communities it is intended to serve.
+              <p className="text-sm font-bold uppercase tracking-[0.18em] text-(--purple)">
+                About IAHL
               </p>
             </div>
-          </div>
 
-          <div className="flex items-center justify-center bg-white">
+            <span
+              className="mt-6 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
+              aria-hidden="true"
+            />
+
+            <h1 className="mt-6 max-w-3xl text-balance text-5xl leading-[1.03] font-bold sm:text-6xl lg:text-[4rem]">
+              {page.pageHeading}
+            </h1>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-background py-10 sm:py-12 lg:py-14">
+        <div className="mx-auto grid w-[min(1080px,92vw)] gap-9 lg:grid-cols-[0.95fr_1.05fr] lg:items-center lg:gap-16">
+          <div className="relative aspect-4/3 overflow-hidden">
             <Image
-              src="/images/about-hero-research.png"
-              alt="African health researchers connecting laboratory science, data, community engagement, and professional learning"
-              width={1536}
-              height={1024}
-              priority
-              sizes="(max-width: 1024px) 100vw, 57vw"
-              className="h-auto w-full object-contain"
+              src={identityImageUrl}
+              alt={identityImageAlt}
+              fill
+              sizes="(max-width: 1024px) 92vw, 500px"
+              className="object-cover"
+              placeholder={page.identityImage.lqip ? "blur" : "empty"}
+              blurDataURL={page.identityImage.lqip ?? undefined}
             />
           </div>
-        </div>
-      </section>
 
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto max-w-4xl px-[4vw] text-center">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
-            Why IAHL matters
-          </p>
-          <h2 className="mt-5 text-balance text-4xl font-bold leading-tight sm:text-5xl">
-            Health knowledge has greater value when people can shape it, trust
-            it, and use it.
-          </h2>
-          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted-foreground">
-            IAHL works between the first community question and the decisions
-            that follow, helping evidence move in both directions.
-          </p>
-        </div>
-      </section>
-
-      <section className="overflow-hidden border-y border-border bg-white">
-        <div className="mx-auto grid w-[min(1600px,100%)] lg:min-h-160 lg:grid-cols-[0.44fr_0.56fr]">
-          <div className="relative isolate flex min-h-140 items-center overflow-hidden bg-[#f4eaf7] px-[6vw] py-14 sm:min-h-150 lg:min-h-160 lg:bg-transparent lg:px-[7vw] lg:pr-[9vw]">
-            <div
-              className="pointer-events-none absolute inset-0 -z-20 bg-[#f4eaf7] lg:right-4 lg:rounded-r-[48%]"
-              aria-hidden="true"
-            />
-            <div
-              className="pointer-events-none absolute -right-10 bottom-16 -z-10 hidden size-32 rounded-full border-20 border-(--green)/30 bg-(--purple)/10 lg:block"
-              aria-hidden="true"
-            />
-
-            <div className="max-w-xl">
-              <div className="flex items-center gap-3">
-                <span
-                  className="size-2.5 rounded-full bg-(--green)"
-                  aria-hidden="true"
-                />
-                <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
-                  Where research connects
-                </p>
-              </div>
-              <span
-                className="mt-6 block h-1 w-16 bg-[linear-gradient(90deg,var(--purple)_0_25%,var(--cyan)_25%_50%,var(--green)_50%_75%,var(--orange)_75%)]"
-                aria-hidden="true"
-              />
-              <h2 className="mt-6 text-balance text-4xl font-bold leading-tight sm:text-5xl">
-                Rooted in Africa. Open to useful exchange.
-              </h2>
-              <p className="mt-6 max-w-lg text-lg leading-8 text-muted-foreground">
-                IAHL connects locally defined health questions with knowledge,
-                methods, and learning from a wider research community, while
-                keeping African priorities at the center.
-              </p>
-
-              <div className="mt-8 border-l-4 border-(--green) pl-5">
-                <p className="font-bold">Africa remains the point of focus.</p>
-                <p className="mt-2 text-sm leading-7 text-muted-foreground">
-                  The wider map represents the global knowledge and partnership
-                  environment around locally led health research.
-                </p>
-              </div>
-
-              <Link
-                className="mt-8 inline-flex items-center gap-2 font-bold text-primary"
-                href="/get-involved#partner"
-              >
-                Build a research connection
-                <HugeiconsIcon
-                  icon={ArrowUpRight01Icon}
-                  className="size-4"
-                  aria-hidden="true"
-                />
-              </Link>
-            </div>
-          </div>
-
-          <div className="flex min-w-0 flex-col items-center justify-center bg-white px-[4vw] py-10 lg:py-14">
-            <div className="relative w-full">
-              <div
-                className="pointer-events-none absolute inset-x-[12%] bottom-[7%] h-12 rounded-[50%] bg-(--cyan)/10 blur-2xl"
-                aria-hidden="true"
-              />
-              <Image
-                src="/images/africa-global-map.png"
-                alt="World map with Africa highlighted as the center of IAHL's research focus"
-                width={1536}
-                height={1024}
-                sizes="(max-width: 1024px) 92vw, 56vw"
-                className="relative h-auto w-full object-contain"
-              />
-            </div>
-            <p className="mt-3 text-center text-xs font-bold uppercase tracking-[0.14em] text-muted-foreground">
-              Africa-led research in a connected world
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto w-[min(1180px,92vw)]">
-          <div className="grid overflow-hidden border border-border lg:grid-cols-[0.82fr_1.18fr]">
-            <div className="grid content-center px-7 py-12 sm:px-12 lg:px-14">
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
-                Our beginning
-              </p>
-              <h2 className="mt-4 text-balance text-4xl font-bold leading-tight sm:text-5xl">
-                IAHL started with a practical question.
-              </h2>
-              <p className="mt-6 leading-8 text-muted-foreground">
-                Too often, research moves slowly, speaks mainly to institutions,
-                or reaches communities after the important decisions have
-                already been made.
-              </p>
-            </div>
-
-            <div className="grid min-h-97.5 content-between bg-primary p-8 text-primary-foreground sm:p-12 lg:p-16">
-              <span className="text-sm font-bold uppercase tracking-[0.16em] text-primary-foreground/75">
-                The question
-              </span>
-              <blockquote className="max-w-3xl text-balance text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">
-                What if useful health evidence could move at the speed of need?
-              </blockquote>
-              <p className="max-w-xl leading-7 text-primary-foreground/80">
-                That question continues to shape how IAHL listens, researches,
-                builds, and shares knowledge.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-(--charcoal) py-16 text-white sm:py-24">
-        <div className="mx-auto w-[min(1320px,94vw)]">
-          <div className="mb-9 grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-end">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
-                Inside IAHL
-              </p>
-              <h2 className="mt-4 max-w-2xl text-balance text-4xl font-bold leading-tight sm:text-5xl">
-                A working environment built around evidence.
-              </h2>
-            </div>
-            <p className="max-w-xl text-lg leading-8 text-white/65 lg:justify-self-end">
-              Research, learning, technology, and partnership are visible parts
-              of the same system rather than separate activities.
-            </p>
-          </div>
-
-          <Image
-            src="/images/inside-iahl.png"
-            alt="Inside IAHL, showing health research focus areas, an Africa program map, evidence dashboards, and publications"
-            width={1536}
-            height={1024}
-            sizes="(max-width: 1320px) 94vw, 1320px"
-            className="h-auto w-full object-contain"
-          />
-        </div>
-      </section>
-
-      <section className="py-16 sm:py-24">
-        <div className="mx-auto w-[min(1180px,92vw)]">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
-              Who shapes the work
-            </p>
-            <h2 className="mt-4 text-balance text-4xl font-bold leading-tight sm:text-5xl">
-              The strongest research table has more than one kind of expert.
+          <div className="max-w-xl">
+            <h2 className="text-4xl leading-tight font-bold sm:text-5xl">
+              {page.identityHeading}
             </h2>
-          </div>
-
-          <div className="mt-12 grid gap-x-8 gap-y-12 sm:grid-cols-2">
-            {participants.map((participant, index) => (
-              <article
-                className={`${index % 2 === 1 ? "sm:translate-y-12" : ""}`}
-                key={participant.title}
-              >
-                <div className="relative aspect-[1.45] overflow-hidden">
-                  <Image
-                    src={participant.image}
-                    alt=""
-                    fill
-                    sizes="(max-width: 640px) 92vw, 46vw"
-                    className="object-cover"
-                  />
-                </div>
-                <div className="border-t-4 border-primary pt-5">
-                  <h3 className="text-2xl font-bold">{participant.title}</h3>
-                  <p className="mt-3 max-w-xl leading-7 text-muted-foreground">
-                    {participant.text}
-                  </p>
-                </div>
-              </article>
-            ))}
+            <p className="mt-6 text-xl leading-8 text-foreground">
+              {page.identityStatement}
+            </p>
+            <p className="mt-4 text-lg leading-8 text-muted-foreground">
+              {page.identityDescription}
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-[#f3f4f5] py-16 sm:py-20">
-        <div className="mx-auto w-[min(1440px,92vw)]">
-          <p className="text-sm font-bold uppercase tracking-[0.16em] text-primary">
-            How IAHL is structured
-          </p>
+      <section className="border-y border-border bg-[#f3f4f5]">
+        <div className="mx-auto w-[min(860px,88vw)] py-10 text-center sm:py-12 lg:py-14">
+          <h2 className="text-4xl leading-tight font-bold sm:text-5xl">
+            {page.storyHeading}
+          </h2>
 
-          <div className="mt-6 grid gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:gap-14">
-            <div>
-              <div className="flex items-center bg-background/40">
-                <Image
-                  src="/images/research-governance-team.png"
-                  alt="IAHL research team reviewing health evidence, governance data, and public-impact findings"
-                  width={1536}
-                  height={1024}
-                  sizes="(max-width: 1024px) 100vw, 54vw"
-                  className="h-auto w-full object-contain"
-                />
-              </div>
+          <div className="mt-7">
+            <p className="text-balance text-2xl leading-snug font-semibold sm:text-3xl">
+              {page.storyStatement}
+            </p>
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
+              {page.storyDescription}
+            </p>
+          </div>
+        </div>
+      </section>
 
-              <div className="grid border-t border-border sm:grid-cols-2">
-                {institutionalFoundations.slice(2).map((foundation, index) => (
-                  <article
-                    className={`border-b border-border py-7 sm:px-6 ${
-                      index === 0 ? "sm:border-r sm:pl-0" : "sm:pr-0"
-                    }`}
-                    key={foundation.title}
-                  >
-                    <h3 className="text-xl font-bold">{foundation.title}</h3>
-                    <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                      {foundation.text}
-                    </p>
-                    <Link
-                      className="mt-5 flex items-center justify-between text-sm font-bold text-primary"
-                      href={foundation.href}
-                    >
-                      {foundation.link}
-                      <HugeiconsIcon
-                        icon={ArrowRight01Icon}
-                        className="size-4"
-                        aria-hidden="true"
-                      />
-                    </Link>
-                  </article>
-                ))}
-              </div>
-            </div>
+      {about.organization?.missionStatement &&
+      about.organization.visionStatement ? (
+        <section className="border-b border-border bg-background py-10 sm:py-12">
+          <MissionVision
+            missionStatement={about.organization.missionStatement}
+            visionStatement={about.organization.visionStatement}
+          />
+        </section>
+      ) : null}
 
-            <div>
-              <h2 className="max-w-2xl text-balance text-4xl font-bold leading-tight sm:text-5xl">
-                Credibility is built into the way the work is organized.
+      {page.teamHeading && teamMembers.length > 0 ? (
+        <section className="bg-secondary py-12 sm:py-14 lg:py-16">
+          <div className="mx-auto w-[min(1180px,92vw)]">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-balance text-4xl leading-tight font-bold sm:text-5xl">
+                {page.teamHeading}
               </h2>
-              <p className="mt-5 max-w-2xl text-lg leading-8 text-muted-foreground">
-                Strong health research depends on more than a promising idea. It
-                needs clear decisions, responsible methods, accountable
-                relationships, and a path back to public benefit.
-              </p>
+            </div>
 
-              <div className="mt-10 grid border-t border-border sm:grid-cols-2">
-                {institutionalFoundations
-                  .slice(0, 2)
-                  .map((foundation, index) => (
-                    <article
-                      className={`border-b border-border py-7 sm:px-6 ${
-                        index % 2 === 0 ? "sm:border-r sm:pl-0" : "sm:pr-0"
-                      }`}
-                      key={foundation.title}
-                    >
-                      <h3 className="text-xl font-bold">{foundation.title}</h3>
-                      <p className="mt-3 text-sm leading-7 text-muted-foreground">
-                        {foundation.text}
+            <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:mt-11 lg:grid-cols-4">
+              {teamMembers.map((member) => {
+                const photoUrl = urlForImage(member.photo)
+                  .width(570)
+                  .height(712)
+                  .fit("crop")
+                  .auto("format")
+                  .url();
+                const photoAlt = member.photo.decorative
+                  ? ""
+                  : (member.photo.alt ?? "");
+
+                return (
+                  <article
+                    className="overflow-hidden bg-background"
+                    key={member._key}
+                  >
+                    <div className="relative aspect-4/5 overflow-hidden bg-muted">
+                      <Image
+                        src={photoUrl}
+                        alt={photoAlt}
+                        fill
+                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 285px"
+                        className="object-cover"
+                        placeholder={member.photo.lqip ? "blur" : "empty"}
+                        blurDataURL={member.photo.lqip ?? undefined}
+                      />
+                    </div>
+
+                    <div className="p-5">
+                      <h3 className="text-xl leading-tight font-bold">
+                        {member.name}
+                      </h3>
+                      <p className="mt-1 text-sm font-semibold text-primary">
+                        {member.role}
                       </p>
-                      <Link
-                        className="mt-5 flex items-center justify-between text-sm font-bold text-primary"
-                        href={foundation.href}
-                      >
-                        {foundation.link}
-                        <HugeiconsIcon
-                          icon={ArrowRight01Icon}
-                          className="size-4"
-                          aria-hidden="true"
-                        />
-                      </Link>
-                    </article>
-                  ))}
-              </div>
+                      <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                        {member.biography}
+                      </p>
+                    </div>
+                  </article>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
+
+      {page.partnersHeading && partners.length > 0 ? (
+        <section className="border-t border-border bg-background py-12 sm:py-14 lg:py-16">
+          <div className="mx-auto w-[min(1080px,92vw)]">
+            <h2 className="text-center text-balance text-4xl leading-tight font-bold sm:text-5xl">
+              {page.partnersHeading}
+            </h2>
+
+            <div className="mt-9 grid grid-cols-2 gap-x-8 gap-y-7 sm:grid-cols-3 lg:mt-11 lg:grid-cols-5 lg:gap-10">
+              {partners.map((partner) => {
+                const logoUrl = urlForImage(partner.logo)
+                  .width(328)
+                  .auto("format")
+                  .url();
+                const logoAlt = partner.logo.decorative
+                  ? ""
+                  : (partner.logo.alt ?? partner.name);
+                const logo = (
+                  <div className="relative h-24 w-full">
+                    <Image
+                      src={logoUrl}
+                      alt={logoAlt}
+                      fill
+                      sizes="164px"
+                      className="object-contain"
+                      placeholder={partner.logo.lqip ? "blur" : "empty"}
+                      blurDataURL={partner.logo.lqip ?? undefined}
+                    />
+                  </div>
+                );
+
+                return (
+                  <div
+                    className="grid min-h-28 place-items-center px-2"
+                    key={partner._key}
+                  >
+                    {partner.website ? (
+                      <a
+                        href={partner.website}
+                        target="_blank"
+                        rel="noreferrer"
+                        aria-label={`Visit ${partner.name} website`}
+                        className="block w-full transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring"
+                      >
+                        {logo}
+                      </a>
+                    ) : (
+                      logo
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      ) : null}
     </main>
   );
 }
