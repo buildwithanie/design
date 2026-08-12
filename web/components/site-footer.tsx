@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { NewsletterForm } from "./newsletter/newsletter-form";
+import { PrivacySettingsButton } from "./privacy/privacy-settings-button";
 
 const footerLinks = [
   { label: "About", href: "/about" },
@@ -61,9 +62,23 @@ async function Copyright() {
 
   return (
     <div className="border-t border-white/10">
-      <p className="mx-auto w-[min(1180px,92vw)] py-5 text-sm text-white/60">
-        © {year} Innovate AI HealthLab. All rights reserved.
-      </p>
+      <div className="mx-auto flex w-[min(1180px,92vw)] flex-wrap items-center justify-between gap-x-6 gap-y-2 py-5">
+        <p className="text-sm text-white/60">
+          © {year} Innovate AI HealthLab. All rights reserved.
+        </p>
+
+        <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <Link
+            href="/privacy"
+            className="text-sm text-white/60 transition hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+          >
+            Privacy policy
+          </Link>
+          <PrivacySettingsButton
+            enabled={Boolean(process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID)}
+          />
+        </div>
+      </div>
     </div>
   );
 }

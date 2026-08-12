@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { AnalyticsConsent } from "@/components/privacy/analytics-consent";
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -60,6 +62,8 @@ export default function RootLayout({
         {children}
         <SiteFooter />
         <SanityLive includeDrafts={false} />
+        <AnalyticsConsent gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID} />
+        <SpeedInsights />
       </body>
     </html>
   );

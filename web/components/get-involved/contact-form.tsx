@@ -5,7 +5,7 @@ import {
   CheckmarkCircle02Icon,
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { useActionState } from "react";
+import { useActionState, useEffect, useRef } from "react";
 
 import { submitContactInquiry } from "@/app/get-involved/actions";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { trackAnalyticsEvent } from "@/lib/analytics";
 import type { ContactFormState } from "@/lib/validation/contact-inquiry";
 
 const initialState: ContactFormState = {
@@ -28,6 +29,32 @@ export function ContactForm() {
     submitContactInquiry,
     initialState,
   );
+  const lastTrackedState = useRef<ContactFormState | null>(null);
+
+  useEffect(() => {
+    const trackSuccessfulInquiry = () => {
+      if (state.status !== "success" || lastTrackedState.current === state) {
+        return;
+      }
+
+      const wasTracked = trackAnalyticsEvent("generate_lead", {
+        form_name: "partnership_inquiry",
+      });
+
+      if (wasTracked) {
+        lastTrackedState.current = state;
+      }
+    };
+
+    trackSuccessfulInquiry();
+    window.addEventListener("iahl:consent-change", trackSuccessfulInquiry);
+
+    return () =>
+      window.removeEventListener(
+        "iahl:consent-change",
+        trackSuccessfulInquiry,
+      );
+  }, [state]);
 
   return (
     <form action={formAction}>
