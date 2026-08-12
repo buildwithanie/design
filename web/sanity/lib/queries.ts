@@ -37,8 +37,14 @@ export const HOME_PAGE_QUERY = defineQuery(`
       }
     },
 
-    "visionStatement": *[_id == "organizationDetails"][0].visionStatement,
-    "missionStatement": *[_id == "organizationDetails"][0].missionStatement,
+    "visionStatement": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0].visionStatement,
+    "missionStatement": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0].missionStatement,
 
     featuredProjectsHeading,
     featuredProjects[]-> {

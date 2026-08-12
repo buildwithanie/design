@@ -141,11 +141,11 @@ export default async function AboutPage() {
               </h2>
             </div>
 
-            <div className="mt-9 grid gap-5 sm:grid-cols-2 lg:mt-11 lg:grid-cols-4">
+            <div className="mt-9 flex flex-wrap justify-center gap-6 lg:mt-11">
               {teamMembers.map((member) => {
                 const photoUrl = urlForImage(member.photo)
-                  .width(570)
-                  .height(712)
+                  .width(720)
+                  .height(576)
                   .fit("crop")
                   .auto("format")
                   .url();
@@ -155,15 +155,15 @@ export default async function AboutPage() {
 
                 return (
                   <article
-                    className="overflow-hidden bg-background"
+                    className="w-full max-w-[24rem] overflow-hidden bg-background sm:w-[calc(50%_-_0.75rem)] lg:w-[calc(33.333%_-_1rem)]"
                     key={member._key}
                   >
-                    <div className="relative aspect-4/5 overflow-hidden bg-muted">
+                    <div className="relative aspect-5/4 overflow-hidden bg-muted">
                       <Image
                         src={photoUrl}
                         alt={photoAlt}
                         fill
-                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 285px"
+                        sizes="(max-width: 640px) 92vw, (max-width: 1024px) 46vw, 384px"
                         className="object-cover"
                         placeholder={member.photo.lqip ? "blur" : "empty"}
                         blurDataURL={member.photo.lqip ?? undefined}
@@ -196,7 +196,7 @@ export default async function AboutPage() {
               {page.partnersHeading}
             </h2>
 
-            <div className="mt-9 grid grid-cols-2 gap-x-8 gap-y-7 sm:grid-cols-3 lg:mt-11 lg:grid-cols-5 lg:gap-10">
+            <div className="mt-9 flex flex-wrap justify-center gap-x-8 gap-y-7 lg:mt-11 lg:gap-x-10">
               {partners.map((partner) => {
                 const logoUrl = urlForImage(partner.logo)
                   .width(328)
@@ -221,7 +221,7 @@ export default async function AboutPage() {
 
                 return (
                   <div
-                    className="grid min-h-28 place-items-center px-2"
+                    className="grid min-h-28 w-[calc(50%_-_1rem)] max-w-[10.25rem] place-items-center px-2 sm:w-[calc(33.333%_-_1.35rem)] lg:w-[calc(20%_-_2rem)]"
                     key={partner._key}
                   >
                     {partner.website ? (
