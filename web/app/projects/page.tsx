@@ -17,14 +17,20 @@ export const metadata: Metadata = {
 };
 
 export default async function ProjectsPage() {
+  "use cache";
+
   const [{ data: projectsPageData }, { data: projectsData }] =
     await Promise.all([
       sanityFetch({
         query: PROJECTS_PAGE_QUERY,
+        perspective: "published",
+        stega: false,
       }),
 
       sanityFetch({
         query: PROJECTS_QUERY,
+        perspective: "published",
+        stega: false,
       }),
     ]);
 

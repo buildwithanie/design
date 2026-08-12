@@ -28,7 +28,7 @@ export default function RootLayout({
         <SiteHeader />
         {children}
         <SiteFooter />
-        <SanityLive />
+        <SanityLive includeDrafts={false} />
       </body>
     </html>
   );

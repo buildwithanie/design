@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -18,18 +19,25 @@ type NewsDetailPageProps = {
   }>;
 };
 
+async function getNewsArticle(slug: string) {
+  "use cache";
+
+  const { data } = await sanityFetch({
+    query: NEWS_BY_SLUG_QUERY,
+    params: { slug },
+    perspective: "published",
+    stega: false,
+  });
+
+  return data as NEWS_BY_SLUG_QUERY_RESULT;
+}
+
 export async function generateMetadata({
   params,
 }: NewsDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const { data } = await sanityFetch({
-    query: NEWS_BY_SLUG_QUERY,
-    params: { slug },
-    stega: false,
-  });
-
-  const article = data as NEWS_BY_SLUG_QUERY_RESULT;
+  const article = await getNewsArticle(slug);
 
   if (!article || !article.coverImage.asset) {
     notFound();
@@ -72,15 +80,24 @@ export async function generateMetadata({
   };
 }
 
-export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
+export default function NewsDetailPage({ params }: NewsDetailPageProps) {
+  return (
+    <Suspense fallback={<NewsDetailPageFallback />}>
+      <NewsDetailPageFromParams params={params} />
+    </Suspense>
+  );
+}
+
+async function NewsDetailPageFromParams({ params }: NewsDetailPageProps) {
   const { slug } = await params;
 
-  const { data } = await sanityFetch({
-    query: NEWS_BY_SLUG_QUERY,
-    params: { slug },
-  });
+  return <CachedNewsDetailPage slug={slug} />;
+}
 
-  const article = data as NEWS_BY_SLUG_QUERY_RESULT;
+async function CachedNewsDetailPage({ slug }: { slug: string }) {
+  "use cache";
+
+  const article = await getNewsArticle(slug);
 
   if (!article || !article.coverImage.asset || !article.body?.length) {
     notFound();
@@ -157,5 +174,15 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
         </section>
       </article>
     </main>
+  );
+}
+
+function NewsDetailPageFallback() {
+  return (
+    <main
+      className="min-h-screen bg-background pt-28"
+      aria-label="Loading news article"
+      aria-busy="true"
+    />
   );
 }

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 
 import { confirmNewsletterSubscription } from "@/app/actions/newsletter";
 import { buttonVariants } from "@/components/ui/button";
@@ -19,7 +20,17 @@ type NewsletterConfirmationPageProps = {
   }>;
 };
 
-export default async function NewsletterConfirmationPage({
+export default function NewsletterConfirmationPage(
+  props: NewsletterConfirmationPageProps,
+) {
+  return (
+    <Suspense fallback={<NewsletterConfirmationFallback />}>
+      <NewsletterConfirmationContent {...props} />
+    </Suspense>
+  );
+}
+
+async function NewsletterConfirmationContent({
   searchParams,
 }: NewsletterConfirmationPageProps) {
   const { token = "", error } = await searchParams;
@@ -86,5 +97,15 @@ export default async function NewsletterConfirmationPage({
         </div>
       </div>
     </main>
+  );
+}
+
+function NewsletterConfirmationFallback() {
+  return (
+    <main
+      className="min-h-[72dvh] bg-secondary pt-32"
+      aria-label="Loading newsletter confirmation"
+      aria-busy="true"
+    />
   );
 }
