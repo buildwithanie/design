@@ -8,6 +8,8 @@ import { HugeiconsIcon } from "@hugeicons/react";
 
 import { ContentPortableText } from "@/components/content/portable-text";
 import { formatFullDate } from "@/lib/format-date";
+import { JsonLd } from "@/components/json-ld";
+import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { NEWS_BY_SLUG_QUERY } from "@/sanity/lib/queries";
@@ -43,7 +45,8 @@ export async function generateMetadata({
     notFound();
   }
 
-  const title = `${article.title} | Innovate AI HealthLab`;
+  const title = article.title;
+  const socialTitle = `${article.title} | IAHL`;
   const description = article.summary;
 
   const openGraphImage = {
@@ -61,19 +64,24 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `/media/news/${slug}`,
+    },
 
     openGraph: {
-      title,
+      title: socialTitle,
       description,
+      url: `/media/news/${slug}`,
       type: "article",
-      siteName: "Innovate AI HealthLab",
+      siteName: SITE_NAME,
+      locale: "en_KE",
       publishedTime: article.publishedAt,
       images: [openGraphImage],
     },
 
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
       images: [openGraphImage.url],
     },
@@ -113,9 +121,30 @@ async function CachedNewsDetailPage({ slug }: { slug: string }) {
   const coverImageAlt = article.coverImage.decorative
     ? ""
     : (article.coverImage.alt ?? "");
+  const articleUrl = absoluteUrl(`/media/news/${slug}`);
+  const articleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    "@id": `${articleUrl}#article`,
+    url: articleUrl,
+    headline: article.title,
+    description: article.summary,
+    image: coverImageUrl,
+    datePublished: article.publishedAt,
+    mainEntityOfPage: articleUrl,
+    author: {
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+    },
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+    },
+  };
 
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd data={articleJsonLd} />
       <article>
         <header className="bg-background pt-28 pb-6 md:pt-32 md:pb-8">
           <div className="mx-auto w-[92vw] max-w-4xl">

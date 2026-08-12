@@ -45,6 +45,18 @@ export const HOME_PAGE_QUERY = defineQuery(`
       _type == "organizationDetails" &&
       _id == "organizationDetails"
     ][0].missionStatement,
+    "publicEmail": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0].publicEmail,
+    "postalAddress": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0].postalAddress,
+    "phone": *[
+      _type == "organizationDetails" &&
+      _id == "organizationDetails"
+    ][0].phone,
 
     featuredProjectsHeading,
     featuredProjects[]-> {
@@ -583,4 +595,36 @@ export const NEWS_COUNT_QUERY = defineQuery(`
       destination == "external" && defined(externalUrl)
     )
   ])
+`);
+
+export const SITEMAP_QUERY = defineQuery(`
+  {
+    "projects": *[
+      _type == "project" &&
+      defined(slug.current) &&
+      defined(body[0])
+    ] {
+      "slug": slug.current,
+      _updatedAt
+    },
+
+    "news": *[
+      _type == "newsItem" &&
+      destination == "internal" &&
+      defined(slug.current) &&
+      defined(body[0])
+    ] {
+      "slug": slug.current,
+      _updatedAt
+    },
+
+    "multimedia": *[
+      _type == "multimediaItem" &&
+      defined(slug.current) &&
+      defined(coverImage.asset)
+    ] {
+      "slug": slug.current,
+      _updatedAt
+    }
+  }
 `);

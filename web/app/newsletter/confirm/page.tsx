@@ -6,7 +6,8 @@ import { buttonVariants } from "@/components/ui/button";
 import { verifyNewsletterToken } from "@/lib/newsletter/token";
 
 export const metadata: Metadata = {
-  title: "Confirm newsletter subscription | IAHL",
+  title: "Confirm newsletter subscription",
+  alternates: { canonical: "/newsletter/confirm" },
   robots: {
     index: false,
     follow: false,
