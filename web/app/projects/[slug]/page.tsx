@@ -6,7 +6,9 @@ import { Suspense } from "react";
 import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
+import { JsonLd } from "@/components/json-ld";
 import { buttonVariants } from "@/components/ui/button";
+import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { PROJECT_BY_SLUG_QUERY } from "@/sanity/lib/queries";
@@ -41,7 +43,7 @@ export async function generateMetadata({
 
   if (!project) {
     return {
-      title: "Project not found | IAHL",
+      title: "Project not found",
       robots: {
         index: false,
         follow: false,
@@ -49,7 +51,8 @@ export async function generateMetadata({
     };
   }
 
-  const title = `${project.title} | IAHL`;
+  const title = project.title;
+  const socialTitle = `${project.title} | IAHL`;
   const description =
     project.summary ??
     "Explore this research project from Innovate AI HealthLab.";
@@ -70,18 +73,23 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `/projects/${slug}`,
+    },
 
     openGraph: {
-      title,
+      title: socialTitle,
       description,
+      url: `/projects/${slug}`,
       type: "website",
-      siteName: "Innovate AI HealthLab",
+      siteName: SITE_NAME,
+      locale: "en_KE",
       images: openGraphImage ? [openGraphImage] : [],
     },
 
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
       images: openGraphImage ? [openGraphImage.url] : [],
     },
@@ -128,9 +136,23 @@ async function CachedProjectPage({ slug }: { slug: string }) {
     : null;
 
   const statusLabel = project.status ? statusLabels[project.status] : null;
+  const projectJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ResearchProject",
+    "@id": `${absoluteUrl(`/projects/${slug}`)}#project`,
+    url: absoluteUrl(`/projects/${slug}`),
+    name: project.title,
+    description: project.summary,
+    ...(coverImageUrl ? { image: coverImageUrl } : {}),
+    creator: {
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+    },
+  };
 
   return (
     <main className="bg-background">
+      <JsonLd data={projectJsonLd} />
       <section className="border-b border-border bg-muted/30 pt-28 pb-10 md:pt-32 md:pb-14">
         <div className="mx-auto w-[min(1180px,92vw)]">
           <Link

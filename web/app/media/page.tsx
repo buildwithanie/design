@@ -14,6 +14,7 @@ import { MediaPagination } from "@/components/media/media-pagination";
 import { MultimediaArchive } from "@/components/media/multimedia-archive";
 import { NewsArchive } from "@/components/media/news-archive";
 import { PublicationsArchive } from "@/components/media/publications-archive";
+import { createPageMetadata } from "@/lib/seo";
 import { sanityFetch } from "@/sanity/lib/live";
 import {
   MEDIA_PAGE_QUERY,
@@ -28,25 +29,8 @@ import type {
   MEDIA_PAGE_QUERY_RESULT,
 } from "@/sanity.types";
 
-const title = "Media Center | Innovate AI HealthLab";
 const description =
   "News, publications, galleries and videos from Innovate AI HealthLab.";
-
-export const metadata: Metadata = {
-  title,
-  description,
-  openGraph: {
-    title,
-    description,
-    type: "website",
-    siteName: "Innovate AI HealthLab",
-  },
-  twitter: {
-    card: "summary",
-    title,
-    description,
-  },
-};
 
 type MediaPageProps = {
   searchParams: Promise<{
@@ -54,6 +38,29 @@ type MediaPageProps = {
     page?: string | string[];
   }>;
 };
+
+export async function generateMetadata({
+  searchParams,
+}: MediaPageProps): Promise<Metadata> {
+  const query = await searchParams;
+  const requestedView = firstValue(query.view);
+  const requestedPage = parsePage(firstValue(query.page));
+  const view = requestedView && isMediaView(requestedView)
+    ? requestedView
+    : undefined;
+  const params = new URLSearchParams();
+
+  if (view) params.set("view", view);
+  if (requestedPage > 1) params.set("page", String(requestedPage));
+
+  const suffix = params.toString();
+
+  return createPageMetadata({
+    title: view ? mediaViews[view].label : "Media Center",
+    description,
+    path: suffix ? `/media?${suffix}` : "/media",
+  });
+}
 
 function firstValue(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;

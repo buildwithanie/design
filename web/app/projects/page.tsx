@@ -9,12 +9,14 @@ import {
 } from "@/sanity.types";
 import { urlForImage } from "@/sanity/lib/image";
 import { notFound } from "next/navigation";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Projects | Innovate AI HealthLab",
+export const metadata: Metadata = createPageMetadata({
+  title: "Projects",
   description:
     "Explore IAHL projects connecting responsible AI, community knowledge, and research partnerships with real health priorities.",
-};
+  path: "/projects",
+});
 
 export default async function ProjectsPage() {
   "use cache";
@@ -104,7 +106,7 @@ export default async function ProjectsPage() {
                 <Link
                   href={`/projects/${project.slug}`}
                   aria-label={`View ${project.title}`}
-                  className="group relative block aspect-16/9 overflow-hidden rounded-lg bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
+                  className="group relative block aspect-video overflow-hidden rounded-lg bg-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary"
                 >
                   <Image
                     src={coverImageUrl}

@@ -4,7 +4,8 @@ import Link from "next/link";
 import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "Newsletter subscription confirmed | IAHL",
+  title: "Newsletter subscription confirmed",
+  alternates: { canonical: "/newsletter/confirmed" },
   robots: {
     index: false,
     follow: false,

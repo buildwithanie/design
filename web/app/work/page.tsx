@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -5,10 +6,18 @@ import { notFound } from "next/navigation";
 import { ArrowRight02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
+import { createPageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { WORK_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { WORK_PAGE_QUERY_RESULT } from "@/sanity.types";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Our Work",
+  description:
+    "Discover how IAHL combines responsible AI, community knowledge, and research capacity to address locally relevant health priorities.",
+  path: "/work",
+});
 
 export default async function WorkPage() {
   "use cache";
@@ -182,7 +191,7 @@ export default async function WorkPage() {
                 .auto("format")
                 .url();
               const image = (
-                <div className="relative aspect-5/4 w-full max-w-[30rem] overflow-hidden lg:justify-self-end">
+                <div className="relative aspect-5/4 w-full max-w-120 overflow-hidden lg:justify-self-end">
                   <Image
                     src={imageUrl}
                     alt={area.image.decorative ? "" : (area.image.alt ?? "")}
@@ -252,7 +261,7 @@ export default async function WorkPage() {
                   </Link>
                 </div>
 
-                <div className="relative aspect-5/4 w-full max-w-[30rem] overflow-hidden lg:justify-self-end">
+                <div className="relative aspect-5/4 w-full max-w-120 overflow-hidden lg:justify-self-end">
                   <Image
                     src={urlForImage(featuredProject.coverImage)
                       .width(960)

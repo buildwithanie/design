@@ -6,10 +6,12 @@ import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { stegaClean } from "@sanity/client/stega";
 
+import { JsonLd } from "@/components/json-ld";
 import { GalleryDetail } from "@/components/media/gallery-detail";
 import { VideoDetail } from "@/components/media/video-detail";
 import { buttonVariants } from "@/components/ui/button";
 import { formatMonthYear } from "@/lib/format-date";
+import { absoluteUrl, SITE_NAME, SITE_URL } from "@/lib/seo";
 import { getYouTubeVideoId } from "@/lib/youtube";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
@@ -46,7 +48,8 @@ export async function generateMetadata({
     notFound();
   }
 
-  const title = `${item.title} | Innovate AI HealthLab`;
+  const title = item.title;
+  const socialTitle = `${item.title} | IAHL`;
   const description = item.summary;
 
   const openGraphImage = {
@@ -64,19 +67,24 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `/media/multimedia/${slug}`,
+    },
 
     openGraph: {
-      title,
+      title: socialTitle,
       description,
+      url: `/media/multimedia/${slug}`,
       type: item.mediaType === "video" ? "video.other" : "article",
-      siteName: "Innovate AI HealthLab",
+      siteName: SITE_NAME,
+      locale: "en_KE",
       publishedTime: item.publishedAt,
       images: [openGraphImage],
     },
 
     twitter: {
       card: "summary_large_image",
-      title,
+      title: socialTitle,
       description,
       images: [openGraphImage.url],
     },
@@ -122,8 +130,36 @@ async function CachedMultimediaDetailPage({ slug }: { slug: string }) {
     notFound();
   }
 
+  const itemUrl = absoluteUrl(`/media/multimedia/${slug}`);
+  const coverImageUrl = urlForImage(item.coverImage)
+    .width(1200)
+    .height(630)
+    .fit("crop")
+    .auto("format")
+    .url();
+  const multimediaJsonLd = {
+    "@context": "https://schema.org",
+    "@type": mediaType === "video" ? "VideoObject" : "ImageGallery",
+    "@id": `${itemUrl}#multimedia`,
+    url: itemUrl,
+    name: item.title,
+    description: item.summary,
+    thumbnailUrl: coverImageUrl,
+    ...(mediaType === "video"
+      ? {
+          uploadDate: item.publishedAt,
+          embedUrl: `https://www.youtube.com/embed/${youtubeId}`,
+        }
+      : { datePublished: item.publishedAt }),
+    publisher: {
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+    },
+  };
+
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd data={multimediaJsonLd} />
       <header
         className={`border-b border-border bg-secondary pt-28 md:pt-32 ${
           mediaType === "gallery" ? "pb-8 md:pb-10" : "pb-10 md:pb-14"

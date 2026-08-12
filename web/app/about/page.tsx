@@ -1,11 +1,20 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import { MissionVision } from "@/components/mission-vision";
+import { createPageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { sanityFetch } from "@/sanity/lib/live";
 import { ABOUT_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity.types";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "About",
+  description:
+    "Learn about Innovate AI HealthLab, our mission, vision, team, story, and partnerships advancing responsible health research.",
+  path: "/about",
+});
 
 export default async function AboutPage() {
   "use cache";
@@ -159,7 +168,7 @@ export default async function AboutPage() {
 
                 return (
                   <article
-                    className="w-full max-w-[24rem] overflow-hidden bg-background sm:w-[calc(50%_-_0.75rem)] lg:w-[calc(33.333%_-_1rem)]"
+                    className="w-full max-w-[24rem] overflow-hidden bg-background sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)]"
                     key={member._key}
                   >
                     <div className="relative aspect-5/4 overflow-hidden bg-muted">
@@ -225,7 +234,7 @@ export default async function AboutPage() {
 
                 return (
                   <div
-                    className="grid min-h-28 w-[calc(50%_-_1rem)] max-w-[10.25rem] place-items-center px-2 sm:w-[calc(33.333%_-_1.35rem)] lg:w-[calc(20%_-_2rem)]"
+                    className="grid min-h-28 w-[calc(50%-1rem)] max-w-41 place-items-center px-2 sm:w-[calc(33.333%-1.35rem)] lg:w-[calc(20%-2rem)]"
                     key={partner._key}
                   >
                     {partner.website ? (
