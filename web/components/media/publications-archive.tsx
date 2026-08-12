@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { StegaBranded } from "next-sanity";
 
 import {
   getPublicationHref,
@@ -7,7 +8,9 @@ import {
 import type { PUBLICATIONS_QUERY_RESULT } from "@/sanity.types";
 
 type PublicationsArchiveProps = {
-  items: PUBLICATIONS_QUERY_RESULT;
+  items:
+    | PUBLICATIONS_QUERY_RESULT
+    | StegaBranded<PUBLICATIONS_QUERY_RESULT>;
 };
 
 export function PublicationsArchive({ items }: PublicationsArchiveProps) {

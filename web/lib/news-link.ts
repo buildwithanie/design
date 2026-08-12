@@ -1,7 +1,11 @@
-import { stegaClean } from "@sanity/client/stega";
+import { stegaClean, type StegaString } from "@sanity/client/stega";
 
 type NewsLinkInput = {
-  destination: "external" | "internal";
+  destination:
+    | "external"
+    | "internal"
+    | StegaString<"external">
+    | StegaString<"internal">;
   slug: string | null;
   externalUrl: string | null;
 };

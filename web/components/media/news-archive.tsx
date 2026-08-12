@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { StegaBranded } from "next-sanity";
 
 import { formatFullDate } from "@/lib/format-date";
 import { getNewsHref, isExternalNews } from "@/lib/news-link";
@@ -7,7 +8,7 @@ import { urlForImage } from "@/sanity/lib/image";
 import type { NEWS_QUERY_RESULT } from "@/sanity.types";
 
 type NewsArchiveProps = {
-  items: NEWS_QUERY_RESULT;
+  items: NEWS_QUERY_RESULT | StegaBranded<NEWS_QUERY_RESULT>;
 };
 
 export function NewsArchive({ items }: NewsArchiveProps) {

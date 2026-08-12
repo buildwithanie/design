@@ -7,13 +7,14 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { stegaClean } from "@sanity/client/stega";
+import type { StegaBranded } from "next-sanity";
 
 import { formatMonthYear } from "@/lib/format-date";
 import { urlForImage } from "@/sanity/lib/image";
 import type { MULTIMEDIA_QUERY_RESULT } from "@/sanity.types";
 
 type MultimediaArchiveProps = {
-  items: MULTIMEDIA_QUERY_RESULT;
+  items: MULTIMEDIA_QUERY_RESULT | StegaBranded<MULTIMEDIA_QUERY_RESULT>;
 };
 
 export function MultimediaArchive({ items }: MultimediaArchiveProps) {

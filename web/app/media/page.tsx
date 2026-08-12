@@ -26,9 +26,6 @@ import {
 } from "@/sanity/lib/queries";
 import type {
   MEDIA_PAGE_QUERY_RESULT,
-  MULTIMEDIA_QUERY_RESULT,
-  NEWS_QUERY_RESULT,
-  PUBLICATIONS_QUERY_RESULT,
 } from "@/sanity.types";
 
 const title = "Media Center | Innovate AI HealthLab";
@@ -143,16 +140,14 @@ export default async function MediaPage({ searchParams }: MediaPageProps) {
       params: { start, end },
     });
 
-    collection = <NewsArchive items={data as NEWS_QUERY_RESULT} />;
+    collection = <NewsArchive items={data} />;
   } else if (activeView === "publications") {
     const { data } = await sanityFetch({
       query: PUBLICATIONS_QUERY,
       params: { start, end },
     });
 
-    collection = (
-      <PublicationsArchive items={data as PUBLICATIONS_QUERY_RESULT} />
-    );
+    collection = <PublicationsArchive items={data} />;
   } else {
     const { data } = await sanityFetch({
       query: MULTIMEDIA_QUERY,
@@ -163,7 +158,7 @@ export default async function MediaPage({ searchParams }: MediaPageProps) {
       },
     });
 
-    collection = <MultimediaArchive items={data as MULTIMEDIA_QUERY_RESULT} />;
+    collection = <MultimediaArchive items={data} />;
   }
 
   return (

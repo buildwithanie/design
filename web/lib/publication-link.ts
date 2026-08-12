@@ -1,7 +1,11 @@
-import { stegaClean } from "@sanity/client/stega";
+import { stegaClean, type StegaString } from "@sanity/client/stega";
 
 type PublicationLinkInput = {
-  deliveryType: "external" | "file";
+  deliveryType:
+    | "external"
+    | "file"
+    | StegaString<"external">
+    | StegaString<"file">;
   externalUrl: string | null;
   file: {
     asset: {
