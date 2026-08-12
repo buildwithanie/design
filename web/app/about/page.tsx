@@ -8,8 +8,12 @@ import { ABOUT_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { ABOUT_PAGE_QUERY_RESULT } from "@/sanity.types";
 
 export default async function AboutPage() {
+  "use cache";
+
   const { data } = await sanityFetch({
     query: ABOUT_PAGE_QUERY,
+    perspective: "published",
+    stega: false,
   });
 
   const about = data as ABOUT_PAGE_QUERY_RESULT;

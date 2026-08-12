@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { stegaClean } from "@sanity/client/stega";
@@ -21,18 +22,25 @@ type MultimediaDetailPageProps = {
   }>;
 };
 
+async function getMultimediaItem(slug: string) {
+  "use cache";
+
+  const { data } = await sanityFetch({
+    query: MULTIMEDIA_BY_SLUG_QUERY,
+    params: { slug },
+    perspective: "published",
+    stega: false,
+  });
+
+  return data as MULTIMEDIA_BY_SLUG_QUERY_RESULT;
+}
+
 export async function generateMetadata({
   params,
 }: MultimediaDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const { data } = await sanityFetch({
-    query: MULTIMEDIA_BY_SLUG_QUERY,
-    params: { slug },
-    stega: false,
-  });
-
-  const item = data as MULTIMEDIA_BY_SLUG_QUERY_RESULT;
+  const item = await getMultimediaItem(slug);
 
   if (!item || !item.coverImage.asset) {
     notFound();
@@ -75,17 +83,28 @@ export async function generateMetadata({
   };
 }
 
-export default async function MultimediaDetailPage({
+export default function MultimediaDetailPage({
+  params,
+}: MultimediaDetailPageProps) {
+  return (
+    <Suspense fallback={<MultimediaDetailPageFallback />}>
+      <MultimediaDetailPageFromParams params={params} />
+    </Suspense>
+  );
+}
+
+async function MultimediaDetailPageFromParams({
   params,
 }: MultimediaDetailPageProps) {
   const { slug } = await params;
 
-  const { data } = await sanityFetch({
-    query: MULTIMEDIA_BY_SLUG_QUERY,
-    params: { slug },
-  });
+  return <CachedMultimediaDetailPage slug={slug} />;
+}
 
-  const item = data as MULTIMEDIA_BY_SLUG_QUERY_RESULT;
+async function CachedMultimediaDetailPage({ slug }: { slug: string }) {
+  "use cache";
+
+  const item = await getMultimediaItem(slug);
 
   if (!item || !item.coverImage.asset) {
     notFound();
@@ -177,5 +196,15 @@ export default async function MultimediaDetailPage({
         />
       ) : null}
     </main>
+  );
+}
+
+function MultimediaDetailPageFallback() {
+  return (
+    <main
+      className="min-h-screen bg-background pt-28"
+      aria-label="Loading media"
+      aria-busy="true"
+    />
   );
 }

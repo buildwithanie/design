@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { ArrowLeft02Icon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 
@@ -18,18 +19,25 @@ type ProjectPageProps = {
   }>;
 };
 
+async function getProject(slug: string) {
+  "use cache";
+
+  const { data } = await sanityFetch({
+    query: PROJECT_BY_SLUG_QUERY,
+    params: { slug },
+    perspective: "published",
+    stega: false,
+  });
+
+  return data as PROJECT_BY_SLUG_QUERY_RESULT;
+}
+
 export async function generateMetadata({
   params,
 }: ProjectPageProps): Promise<Metadata> {
   const { slug } = await params;
 
-  const { data } = await sanityFetch({
-    query: PROJECT_BY_SLUG_QUERY,
-    params: { slug },
-    stega: false,
-  });
-
-  const project = data as PROJECT_BY_SLUG_QUERY_RESULT;
+  const project = await getProject(slug);
 
   if (!project) {
     return {
@@ -92,15 +100,24 @@ const statusColors = {
   completed: "text-(--purple)",
 } as const;
 
-export default async function ProjectPage({ params }: ProjectPageProps) {
+export default function ProjectPage({ params }: ProjectPageProps) {
+  return (
+    <Suspense fallback={<ProjectPageFallback />}>
+      <ProjectPageFromParams params={params} />
+    </Suspense>
+  );
+}
+
+async function ProjectPageFromParams({ params }: ProjectPageProps) {
   const { slug } = await params;
 
-  const { data } = await sanityFetch({
-    query: PROJECT_BY_SLUG_QUERY,
-    params: { slug },
-  });
+  return <CachedProjectPage slug={slug} />;
+}
 
-  const project = data as PROJECT_BY_SLUG_QUERY_RESULT;
+async function CachedProjectPage({ slug }: { slug: string }) {
+  "use cache";
+
+  const project = await getProject(slug);
 
   if (!project) {
     notFound();
@@ -181,5 +198,15 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </section>
       ) : null}
     </main>
+  );
+}
+
+function ProjectPageFallback() {
+  return (
+    <main
+      className="min-h-screen bg-background pt-28"
+      aria-label="Loading project"
+      aria-busy="true"
+    />
   );
 }

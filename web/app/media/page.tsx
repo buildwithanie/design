@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 
 import { MediaArchiveIntro } from "@/components/media/media-intro";
 import {
@@ -70,16 +70,30 @@ function parsePage(value: string | undefined) {
 }
 
 async function getMediaCounts(): Promise<Record<MediaView, number>> {
+  "use cache";
+
   const [news, publications, galleries, videos] = await Promise.all([
-    sanityFetch({ query: NEWS_COUNT_QUERY }),
-    sanityFetch({ query: PUBLICATIONS_COUNT_QUERY }),
+    sanityFetch({
+      query: NEWS_COUNT_QUERY,
+      perspective: "published",
+      stega: false,
+    }),
+    sanityFetch({
+      query: PUBLICATIONS_COUNT_QUERY,
+      perspective: "published",
+      stega: false,
+    }),
     sanityFetch({
       query: MULTIMEDIA_COUNT_QUERY,
       params: { mediaType: "gallery" },
+      perspective: "published",
+      stega: false,
     }),
     sanityFetch({
       query: MULTIMEDIA_COUNT_QUERY,
       params: { mediaType: "video" },
+      perspective: "published",
+      stega: false,
     }),
   ]);
 
@@ -91,13 +105,42 @@ async function getMediaCounts(): Promise<Record<MediaView, number>> {
   };
 }
 
-export default async function MediaPage({ searchParams }: MediaPageProps) {
+export default function MediaPage({ searchParams }: MediaPageProps) {
+  return (
+    <Suspense fallback={<MediaPageFallback />}>
+      <MediaPageFromSearchParams searchParams={searchParams} />
+    </Suspense>
+  );
+}
+
+async function MediaPageFromSearchParams({ searchParams }: MediaPageProps) {
   const query = await searchParams;
   const requestedView = firstValue(query.view);
   const requestedPage = parsePage(firstValue(query.page));
 
+  return (
+    <CachedMediaPage
+      requestedView={requestedView}
+      requestedPage={requestedPage}
+    />
+  );
+}
+
+async function CachedMediaPage({
+  requestedView,
+  requestedPage,
+}: {
+  requestedView?: string;
+  requestedPage: number;
+}) {
+  "use cache";
+
   const [{ data: pageData }, mediaCounts] = await Promise.all([
-    sanityFetch({ query: MEDIA_PAGE_QUERY }),
+    sanityFetch({
+      query: MEDIA_PAGE_QUERY,
+      perspective: "published",
+      stega: false,
+    }),
     getMediaCounts(),
   ]);
 
@@ -138,6 +181,8 @@ export default async function MediaPage({ searchParams }: MediaPageProps) {
     const { data } = await sanityFetch({
       query: NEWS_QUERY,
       params: { start, end },
+      perspective: "published",
+      stega: false,
     });
 
     collection = <NewsArchive items={data} />;
@@ -145,6 +190,8 @@ export default async function MediaPage({ searchParams }: MediaPageProps) {
     const { data } = await sanityFetch({
       query: PUBLICATIONS_QUERY,
       params: { start, end },
+      perspective: "published",
+      stega: false,
     });
 
     collection = <PublicationsArchive items={data} />;
@@ -156,6 +203,8 @@ export default async function MediaPage({ searchParams }: MediaPageProps) {
         end,
         mediaType: activeView === "galleries" ? "gallery" : "video",
       },
+      perspective: "published",
+      stega: false,
     });
 
     collection = <MultimediaArchive items={data} />;
@@ -178,5 +227,15 @@ export default async function MediaPage({ searchParams }: MediaPageProps) {
         view={activeView}
       />
     </main>
+  );
+}
+
+function MediaPageFallback() {
+  return (
+    <main
+      className="min-h-screen bg-background pt-32"
+      aria-label="Loading Media Center"
+      aria-busy="true"
+    />
   );
 }

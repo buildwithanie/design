@@ -11,8 +11,12 @@ import { WORK_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { WORK_PAGE_QUERY_RESULT } from "@/sanity.types";
 
 export default async function WorkPage() {
+  "use cache";
+
   const { data } = await sanityFetch({
     query: WORK_PAGE_QUERY,
+    perspective: "published",
+    stega: false,
   });
 
   const workPage = data as WORK_PAGE_QUERY_RESULT;

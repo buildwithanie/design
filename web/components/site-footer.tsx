@@ -49,12 +49,21 @@ export function SiteFooter() {
         <NewsletterForm />
       </div>
 
-      <div className="border-t border-white/10">
-        <p className="mx-auto w-[min(1180px,92vw)] py-5 text-sm text-white/60">
-          © {new Date().getFullYear()} Innovate AI HealthLab. All rights
-          reserved.
-        </p>
-      </div>
+      <Copyright />
     </footer>
+  );
+}
+
+async function Copyright() {
+  "use cache";
+
+  const year = new Date().getFullYear();
+
+  return (
+    <div className="border-t border-white/10">
+      <p className="mx-auto w-[min(1180px,92vw)] py-5 text-sm text-white/60">
+        © {year} Innovate AI HealthLab. All rights reserved.
+      </p>
+    </div>
   );
 }

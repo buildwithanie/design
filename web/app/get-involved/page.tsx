@@ -8,8 +8,12 @@ import { GET_INVOLVED_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { GET_INVOLVED_PAGE_QUERY_RESULT } from "@/sanity.types";
 
 export default async function GetInvolvedPage() {
+  "use cache";
+
   const { data } = await sanityFetch({
     query: GET_INVOLVED_PAGE_QUERY,
+    perspective: "published",
+    stega: false,
   });
 
   const getInvolved = data as GET_INVOLVED_PAGE_QUERY_RESULT;

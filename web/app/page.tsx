@@ -12,8 +12,12 @@ import { HOME_PAGE_QUERY } from "@/sanity/lib/queries";
 import type { HOME_PAGE_QUERY_RESULT } from "@/sanity.types";
 
 export default async function Home() {
+  "use cache";
+
   const { data } = await sanityFetch({
     query: HOME_PAGE_QUERY,
+    perspective: "published",
+    stega: false,
   });
 
   const homePage = data as HOME_PAGE_QUERY_RESULT;
